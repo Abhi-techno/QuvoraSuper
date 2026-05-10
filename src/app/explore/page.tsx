@@ -10,11 +10,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getPlaceholderById } from '@/lib/placeholder-images';
 
 export default function ExplorePage() {
-  const heroPromo = getPlaceholderById('hero-promo');
-  
   const recommendations = [
     {
       itemId: 'static-1',
@@ -105,12 +102,11 @@ export default function ExplorePage() {
 
       <section className="relative h-44 rounded-3xl overflow-hidden shadow-lg border border-white/10 group">
         <Image 
-          src={heroPromo.imageUrl} 
-          alt={heroPromo.description} 
+          src="https://picsum.photos/seed/promo/800/400" 
+          alt="Promotion" 
           width={800}
           height={400}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          data-ai-hint={heroPromo.imageHint}
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-5">

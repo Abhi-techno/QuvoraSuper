@@ -109,7 +109,7 @@ export default function LandingPage() {
         <div className="max-w-md mx-auto w-full space-y-8">
           <div className="space-y-3 text-center">
             <div className="inline-flex items-center gap-2 text-primary font-bold tracking-[0.2em] text-[9px] uppercase glass px-4 py-1.5 rounded-full border-none">
-              <Sparkles className="w-3 h-3" />
+              <span className="animate-pulse">●</span>
               PWA Optimized
             </div>
             <h1 className="text-5xl font-black tracking-tighter leading-[0.9]">
