@@ -14,44 +14,44 @@ const slides = [
   { 
     id: '1', 
     title: 'Your World. One Place.', 
-    subtitle: "India's first AI-powered vernacular marketplace. Faster, safer, smarter.",
+    subtitle: "India's first AI-powered vernacular marketplace.",
     icon: Globe,
-    gradient: 'from-blue-600/20 to-indigo-600/20'
+    gradient: 'from-blue-600/10 to-indigo-600/10'
   },
   { 
     id: '2', 
     title: 'Premium Cars & Bikes', 
-    subtitle: 'Verified listings with real-time AI inspections and direct seller contact.',
+    subtitle: 'Verified listings with real-time AI inspections.',
     icon: Car,
-    gradient: 'from-orange-600/20 to-red-600/20'
+    gradient: 'from-orange-600/10 to-red-600/10'
   },
   { 
     id: '3', 
     title: 'Latest Gadgets', 
-    subtitle: 'Find the best deals on mobiles and electronics with AI price insights.',
+    subtitle: 'Find the best deals with AI price insights.',
     icon: Smartphone,
-    gradient: 'from-emerald-600/20 to-teal-600/20'
+    gradient: 'from-emerald-600/10 to-teal-600/10'
   },
   { 
     id: '4', 
     title: 'Modern Living', 
-    subtitle: 'Upgrade your home with handpicked furniture and home appliances.',
+    subtitle: 'Upgrade your home with handpicked furniture.',
     icon: Home,
-    gradient: 'from-purple-600/20 to-pink-600/20'
+    gradient: 'from-purple-600/10 to-pink-600/10'
   },
   { 
     id: '5', 
     title: 'Local Community', 
-    subtitle: 'Buy and sell safely in your neighborhood. Verified profiles only.',
+    subtitle: 'Buy and sell safely in your neighborhood.',
     icon: Sparkles,
-    gradient: 'from-yellow-600/20 to-amber-600/20'
+    gradient: 'from-yellow-600/10 to-amber-600/10'
   },
   { 
     id: '6', 
     title: 'Secure Trading', 
-    subtitle: 'Zero middlemen, zero commission. 100% trust with Liquid Glass security.',
+    subtitle: 'Zero middlemen. 100% trust with Liquid Glass.',
     icon: Shield,
-    gradient: 'from-cyan-600/20 to-blue-600/20'
+    gradient: 'from-cyan-600/10 to-blue-600/10'
   }
 ];
 
@@ -70,13 +70,13 @@ export default function LandingPage() {
 
   if (loading) return (
     <div className="h-screen w-full bg-background flex items-center justify-center">
-      <div className="w-12 h-12 rounded-2xl bg-primary animate-pulse shadow-2xl shadow-primary/20" />
+      <div className="w-10 h-10 rounded-xl bg-primary animate-pulse shadow-2xl shadow-primary/20" />
     </div>
   );
 
   return (
     <div className="fixed inset-0 h-screen w-full bg-background overflow-hidden flex flex-col">
-      {/* Narrative Carousel Background */}
+      {/* Immersive Adaptive Carousel */}
       <div className="absolute inset-0 z-0" ref={emblaRef}>
         <div className="flex h-full">
           {slides.map((slide) => (
@@ -87,13 +87,13 @@ export default function LandingPage() {
                 slide.gradient
               )}
             >
-              <div className="max-w-xs text-center space-y-8 animate-in fade-in zoom-in-95 duration-1000">
-                <div className="w-24 h-24 mx-auto glass rounded-[2rem] flex items-center justify-center text-primary shadow-2xl border-white/20">
-                  <slide.icon className="w-12 h-12" />
+              <div className="max-w-[280px] text-center space-y-6 animate-in fade-in zoom-in-95 duration-1000">
+                <div className="w-20 h-20 mx-auto glass rounded-3xl flex items-center justify-center text-primary shadow-xl border-white/20">
+                  <slide.icon className="w-10 h-10" />
                 </div>
-                <div className="space-y-4">
-                  <h2 className="text-4xl font-black tracking-tighter leading-tight drop-shadow-sm">{slide.title}</h2>
-                  <p className="text-base text-muted-foreground font-medium leading-relaxed px-4 opacity-80">
+                <div className="space-y-3">
+                  <h2 className="text-3xl font-black tracking-tighter leading-tight drop-shadow-sm">{slide.title}</h2>
+                  <p className="text-sm text-muted-foreground font-medium leading-snug px-2 opacity-80">
                     {slide.subtitle}
                   </p>
                 </div>
@@ -103,25 +103,25 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Progress Indicators */}
-      <div className="absolute top-16 left-8 right-8 flex gap-2 z-20">
+      {/* Adaptive Progress Indicators */}
+      <div className="absolute top-14 left-8 right-8 flex gap-1.5 z-20">
         {slides.map((_, i) => (
-          <div key={i} className="h-1 flex-1 bg-primary/10 rounded-full overflow-hidden">
-            <div className="h-full bg-primary/40 w-full animate-in fade-in duration-1000" />
+          <div key={i} className="h-0.5 flex-1 bg-primary/5 rounded-full overflow-hidden">
+            <div className="h-full bg-primary/20 w-full animate-in fade-in duration-1000" />
           </div>
         ))}
       </div>
 
-      {/* iOS Liquid Glass Action Bar */}
+      {/* Compact iOS Liquid Glass Action Bar */}
       <div className="absolute bottom-0 left-0 right-0 z-30">
-        <div className="glass-thick pt-8 pb-12 px-8 rounded-t-[3rem] border-t border-white/20 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
-          <div className="max-w-md mx-auto flex flex-col gap-4">
+        <div className="glass-thick pt-6 pb-10 px-6 rounded-t-[2.5rem] border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+          <div className="max-w-md mx-auto flex flex-col gap-3">
             <AuthModal 
               defaultTab="register"
               trigger={
-                <Button className="h-16 rounded-2xl w-full text-lg font-bold shadow-xl shadow-primary/20 group transition-all active:scale-95">
+                <Button className="h-14 rounded-2xl w-full text-base font-bold shadow-lg shadow-primary/20 group transition-all active:scale-[0.98]">
                   Create Account / Continue
-                  <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               } 
             />
@@ -129,25 +129,25 @@ export default function LandingPage() {
             <AuthModal 
               defaultTab="login"
               trigger={
-                <Button variant="ghost" className="h-14 rounded-2xl w-full text-base font-bold text-muted-foreground hover:text-foreground active:scale-95">
+                <Button variant="ghost" className="h-12 rounded-2xl w-full text-xs font-bold text-muted-foreground hover:text-foreground active:scale-[0.98] uppercase tracking-widest">
                   Login Options
                 </Button>
               }
             />
 
-            <div className="flex items-center justify-center gap-2 mt-2 opacity-40">
+            <div className="flex items-center justify-center gap-1.5 mt-1 opacity-30">
               <Shield className="w-3 h-3" />
-              <span className="text-[10px] font-bold uppercase tracking-widest">Liquid Glass Security</span>
+              <span className="text-[8px] font-bold uppercase tracking-[0.2em]">Liquid Glass Secured</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Floating Logo Badge */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20">
-        <div className="glass px-4 py-2 rounded-full border-none flex items-center gap-2 shadow-lg">
-          <div className="w-5 h-5 rounded-lg bg-primary flex items-center justify-center text-white font-black text-xs">Q</div>
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/60">Quvora Redefined</span>
+      <div className="absolute top-18 left-1/2 -translate-x-1/2 z-20">
+        <div className="glass px-3 py-1.5 rounded-full border-none flex items-center gap-2 shadow-sm">
+          <div className="w-4 h-4 rounded-md bg-primary flex items-center justify-center text-white font-black text-[10px]">Q</div>
+          <span className="text-[8px] font-black uppercase tracking-[0.2em] text-foreground/40">Quvora Redefined</span>
         </div>
       </div>
     </div>
