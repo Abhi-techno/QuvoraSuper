@@ -60,26 +60,6 @@ const personalizedHomeFeedRecommendationsPrompt = ai.definePrompt({
   name: 'personalizedHomeFeedRecommendationsPrompt',
   input: {schema: PersonalizedHomeFeedRecommendationsInputSchema},
   output: {schema: PersonalizedHomeFeedRecommendationsOutputSchema},
-  config: {
-    safetySettings: [
-      {
-        category: 'HARM_CATEGORY_HATE_SPEECH',
-        threshold: 'BLOCK_NONE',
-      },
-      {
-        category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-        threshold: 'BLOCK_NONE',
-      },
-      {
-        category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-        threshold: 'BLOCK_NONE',
-      },
-      {
-        category: 'HARM_CATEGORY_HARASSMENT',
-        threshold: 'BLOCK_NONE',
-      },
-    ],
-  },
   prompt: `You are an expert marketplace recommendation engine for Quvora, an Indian marketplace platform.
 Your task is to generate 5-10 distinct item recommendations for the user based on their browsing history, expressed interests, and current location.
 Focus on typical marketplace categories found in India such as Mobiles, Cars, Bikes, Electronics, Furniture, Jobs, Fashion, Real Estate, etc.
@@ -88,13 +68,11 @@ Invent plausible item details including title, description, price (using Indian 
 CRITICAL INSTRUCTION FOR IMAGES:
 For the "imageUrl" field, you MUST ONLY use URLs from picsum.photos. 
 Use this exact format: https://picsum.photos/seed/<unique_slug>/400/400
-Replace <unique_slug> with a unique, descriptive slug for each item (e.g., iphone15pro, vintagebike, modernsofa).
 
 STRICT OUTPUT INSTRUCTIONS:
 - Return response in strict JSON format.
-- Do not use markdown (no \`\`\`json blocks).
+- Do not use markdown backticks (no \`\`\`json).
 - Ensure all fields match the requested schema exactly.
-- The root object must have exactly one key: "recommendedItems".
 
 User ID: {{{userId}}}
 Browsing History:
@@ -164,48 +142,46 @@ const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
     outputSchema: PersonalizedHomeFeedRecommendationsOutputSchema,
   },
   async (input) => {
-    // 1. Check for API key presence
+    // 1. Pre-flight check: Validate API Key
     const apiKey = process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY || '';
-    if (!apiKey || apiKey.startsWith('your_api_key')) {
-      console.warn('AI Recommendations: No valid API Key found. Using fallback.');
+    if (!apiKey || apiKey.includes('your_api_key')) {
+      console.log('AI Recommendations: No valid API Key. Using fallback.');
       return FALLBACK_DATA;
     }
 
     try {
-      // 2. Safe call - avoid direct destructuring to catch null/undefined results
+      // 2. Safe execution: Avoid destructuring to prevent crash if prompt throws malformed object
       const result = await personalizedHomeFeedRecommendationsPrompt(input);
       
       if (!result) {
-        console.warn('AI Recommendations: Prompt returned null result.');
+        console.warn('AI Recommendations: Prompt returned empty result.');
         return FALLBACK_DATA;
       }
 
       if (!result.output) {
-        console.warn('AI Recommendations: Prompt result missing output property.');
+        console.warn('AI Recommendations: Prompt result missing output field.');
         return FALLBACK_DATA;
       }
 
       return result.output;
     } catch (e: any) {
-      // 3. Advanced Diagnostic Logging
-      const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown Flow Error');
-      
-      // Categorize common errors for cleaner logging
-      const isAuthError = errorMessage.includes('API key') || errorMessage.includes('403');
-      const isModelError = errorMessage.includes('404') || errorMessage.includes('model not found');
-      
-      if (isAuthError || isModelError) {
-        console.log('AI Recommendations: Service configuration error. Using fallback.');
+      // 3. Advanced Diagnostic Logging: Extract real error details from the opaque SDK exception
+      const errorDetail = {
+        message: e?.message || 'Unknown Flow Error',
+        status: e?.status || 'N/A',
+        stack: e?.stack || 'No stack trace available',
+        raw: typeof e === 'object' ? JSON.stringify(e) : String(e)
+      };
+
+      if (errorDetail.message.includes('API key not valid') || errorDetail.message.includes('403')) {
+        console.log('AI Recommendations: Authentication failure. Using fallback.');
+      } else if (errorDetail.message.includes('404') || errorDetail.message.includes('not found')) {
+        console.warn('AI Recommendations: Model routing issue (404). Check genkit.ts config.');
       } else {
-        // Deep error logging for unexpected failures
-        console.error('FULL AI FLOW ERROR:', {
-          message: errorMessage,
-          stack: e?.stack,
-          raw: JSON.stringify(e, null, 2)
-        });
+        console.error('AI RECOMMENDATION SYSTEM CRASH:', errorDetail);
       }
       
-      // 4. Guaranteed fallback return to prevent UI crash
+      // 4. Guaranteed Non-Blocking Return
       return FALLBACK_DATA;
     }
   }
