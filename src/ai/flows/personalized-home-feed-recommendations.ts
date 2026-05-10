@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Provides personalized home feed recommendations to users.
@@ -126,9 +127,14 @@ const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
       }
       return output;
     } catch (e: any) {
-      // Enhanced error logging to avoid logging empty {}
-      const errorMessage = e?.message || e?.stack || (typeof e === 'string' ? e : JSON.stringify(e));
-      console.error('Genkit personalizedHomeFeedRecommendationsFlow error:', errorMessage);
+      // Gracefully handle common API key configuration issues during local dev
+      const errorMessage = e?.message || '';
+      if (errorMessage.includes('API key not valid') || errorMessage.includes('your_api_key_here')) {
+        // Log a more helpful dev message instead of a full crash log
+        console.log('AI Recommendations: Using fallback data. (Add a valid GEMINI_API_KEY to .env to enable)');
+      } else {
+        console.error('Genkit personalizedHomeFeedRecommendationsFlow error:', errorMessage || e);
+      }
       
       // Return high-quality fallback data instead of crashing the page
       return {

@@ -14,14 +14,13 @@ import {
   MessageCircle, 
   Sparkles,
   ChevronRight,
-  ChevronLeft
+  HelpCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 
 export default function ListingDetailPage() {
@@ -61,7 +60,7 @@ export default function ListingDetailPage() {
           <div className="flex h-full">
             {listing.images.map((img, i) => (
               <div key={i} className="relative min-w-full h-[45vh]">
-                <Image src={img} alt="Product" fill className="object-cover" />
+                <Image src={img} alt="Product" fill sizes="100vw" className="object-cover" priority={i === 0} />
               </div>
             ))}
           </div>

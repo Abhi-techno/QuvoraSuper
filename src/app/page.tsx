@@ -30,7 +30,8 @@ export default async function Home() {
       currentLocation: 'Mumbai'
     });
   } catch (error: any) {
-    console.error("AI recommendations failed:", error?.message || error);
+    // This catch is usually redundant as the flow itself handles fallbacks, 
+    // but kept for absolute safety in server component rendering
     recommendations = {
       recommendedItems: [
         {
@@ -158,6 +159,7 @@ export default async function Home() {
                     src={item.imageUrl} 
                     alt={item.title} 
                     fill 
+                    sizes="(max-width: 768px) 50vw, 33vw"
                     className="object-cover"
                     data-ai-hint={item.category}
                   />
@@ -195,7 +197,14 @@ export default async function Home() {
               <div key={i} className="w-64 flex-shrink-0">
                 <Card className="glass border-none overflow-hidden">
                   <div className="relative h-40">
-                    <Image src={`https://picsum.photos/seed/trend${i}/400/300`} alt="Trend" fill className="object-cover" data-ai-hint="trending item" />
+                    <Image 
+                      src={`https://picsum.photos/seed/trend${i}/400/300`} 
+                      alt="Trend" 
+                      fill 
+                      sizes="(max-width: 768px) 100vw, 400px"
+                      className="object-cover" 
+                      data-ai-hint="trending item" 
+                    />
                   </div>
                   <CardContent className="p-4 flex flex-col gap-1">
                     <h3 className="font-bold whitespace-normal line-clamp-2">2022 Toyota Fortuner Sigma 4 - Low Miles</h3>

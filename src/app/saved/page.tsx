@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Heart, MapPin, Search } from 'lucide-react';
+import { Heart, MapPin } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -49,7 +49,13 @@ export default function SavedItemsPage() {
           <Link key={item.id} href={`/listing/${item.id}`}>
             <Card className="glass border-none overflow-hidden relative">
               <div className="relative aspect-square">
-                <Image src={item.image} alt={item.title} fill className={`object-cover ${item.status === 'Sold' ? 'grayscale opacity-50' : ''}`} />
+                <Image 
+                  src={item.image} 
+                  alt={item.title} 
+                  fill 
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className={`object-cover ${item.status === 'Sold' ? 'grayscale opacity-50' : ''}`} 
+                />
                 {item.status === 'Sold' && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span className="bg-black/60 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Sold</span>
