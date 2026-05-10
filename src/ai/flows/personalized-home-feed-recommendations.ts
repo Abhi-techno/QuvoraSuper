@@ -164,7 +164,7 @@ const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
   },
   async (input) => {
     // 1. Check for API key presence
-    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENAI_API_KEY || '';
+    const apiKey = process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY || '';
     if (!apiKey || apiKey === 'your_api_key_here') {
       console.log('AI Recommendations: No valid API Key found. Using fallback.');
       return FALLBACK_DATA;
