@@ -6,15 +6,17 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Sparkles, ChevronRight, ArrowRight } from 'lucide-react';
+import { Sparkles, ArrowRight } from 'lucide-react';
 import { AuthModal } from '@/components/auth/auth-modal';
 import { getPlaceholderById } from '@/lib/placeholder-images';
+import { useUser } from '@/firebase';
+import { useRouter } from 'next/navigation';
 
 const slides = [
   {
     id: 'slide-1',
     title: 'Your World. One Place.',
-    subtitle: 'India\'s fastest growing AI-powered local marketplace.',
+    subtitle: "India's fastest growing AI-powered local marketplace.",
     badge: 'VERNACULAR FIRST'
   },
   {
@@ -50,9 +52,19 @@ const slides = [
 ];
 
 export default function LandingPage() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+  const router = useRouter();
+  const { user, loading } = useUser();
+  const [emblaRef] = useEmblaCarousel({ loop: true }, [
     Autoplay({ delay: 4000, stopOnInteraction: false })
   ]);
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.push('/explore');
+    }
+  }, [user, loading, router]);
+
+  if (loading) return null;
 
   return (
     <div className="relative h-screen w-full bg-[#0D1B2A] overflow-hidden">
@@ -117,9 +129,9 @@ export default function LandingPage() {
               <Button 
                 variant="ghost" 
                 className="flex-1 h-14 rounded-2xl glass text-white/60 font-bold border-white/10 hover:text-white"
-                asChild
+                onClick={() => router.push('/explore')}
               >
-                <a href="/explore">Guest View</a>
+                Guest View
               </Button>
             </div>
           </div>
