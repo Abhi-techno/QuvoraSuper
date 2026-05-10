@@ -10,8 +10,8 @@ export function AppNav({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Hide nav on onboarding and splash
-  const hideNav = pathname === '/onboarding' || pathname === '/splash' || pathname === '/login';
+  // Hide nav on entry flow routes
+  const hideNav = ['/splash', '/onboarding', '/login', '/verify', '/register'].includes(pathname);
 
   useEffect(() => {
     const handleScroll = () => {

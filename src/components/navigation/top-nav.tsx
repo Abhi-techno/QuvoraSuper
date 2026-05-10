@@ -2,7 +2,7 @@
 "use client"
 
 import { usePathname, useRouter } from 'next/navigation';
-import { ChevronLeft, MapPin, Bell, User, Search, Share2, Heart, HelpCircle, X } from 'lucide-react';
+import { ChevronLeft, MapPin, Bell, Search, Share2, Heart, HelpCircle, X, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
@@ -20,6 +20,8 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
     if (pathname === '/chat') return 'chat-list';
     if (pathname === '/me') return 'profile';
     if (pathname.startsWith('/post')) return 'post';
+    if (pathname === '/notifications') return 'notifications';
+    if (pathname === '/saved') return 'saved';
     return 'default';
   };
 
@@ -27,8 +29,8 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
 
   return (
     <header className={cn(
-      "ios-top-nav sticky top-0 w-full z-50",
-      isScrolled && "bg-background/80"
+      "ios-top-nav sticky top-0 w-full z-50 transition-all duration-300",
+      isScrolled ? "bg-background/80 shadow-sm" : "bg-transparent"
     )}>
       {context === 'home' && (
         <div className="flex items-center justify-between w-full">
@@ -41,13 +43,13 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
           </Button>
           <div className="flex items-center gap-2">
             <Link href="/notifications">
-              <Button size="icon" variant="ghost" className="relative">
+              <Button size="icon" variant="ghost" className="relative glass rounded-full h-9 w-9">
                 <Bell className="w-5 h-5" />
                 <span className="absolute top-2 right-2 w-2 h-2 bg-accent rounded-full border-2 border-background" />
               </Button>
             </Link>
             <Link href="/me">
-              <Avatar className="w-8 h-8 border border-white/20">
+              <Avatar className="w-9 h-9 border-2 border-primary/20">
                 <AvatarImage src="https://picsum.photos/seed/user/150/150" />
                 <AvatarFallback>U</AvatarFallback>
               </Avatar>
@@ -58,42 +60,43 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
 
       {context === 'detail' && (
         <div className="flex items-center justify-between w-full">
-          <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full">
+          <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full bg-black/20 text-white border-none">
             <ChevronLeft className="w-6 h-6" />
           </Button>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="glass rounded-full">
+            <Button variant="ghost" size="icon" className="glass rounded-full bg-black/20 text-white border-none">
               <Share2 className="w-5 h-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="glass rounded-full">
+            <Button variant="ghost" size="icon" className="glass rounded-full bg-black/20 text-white border-none">
               <Heart className="w-5 h-5" />
             </Button>
           </div>
         </div>
       )}
 
-      {context === 'browse' && (
+      {(context === 'browse' || context === 'notifications' || context === 'saved') && (
         <div className="flex items-center justify-between w-full">
-          <Button variant="ghost" size="icon" onClick={() => router.back()}>
+          <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full">
             <ChevronLeft className="w-6 h-6" />
           </Button>
-          <h1 className="text-lg font-semibold">Browse Categories</h1>
-          <Button variant="ghost" size="icon">
-            <Search className="w-5 h-5" />
-          </Button>
+          <h1 className="text-lg font-bold">
+            {context === 'browse' ? 'Browse' : 
+             context === 'notifications' ? 'Notifications' : 'Saved Items'}
+          </h1>
+          <div className="w-10" />
         </div>
       )}
 
       {context === 'post' && (
         <div className="flex items-center justify-between w-full">
-          <Button variant="ghost" size="icon" onClick={() => router.push('/')}>
+          <Button variant="ghost" size="icon" onClick={() => router.push('/')} className="glass rounded-full">
             <X className="w-6 h-6" />
           </Button>
           <div className="text-center">
-            <h1 className="text-sm font-semibold">Post Ad</h1>
-            <p className="text-[10px] text-muted-foreground">Step 1 of 5</p>
+            <h1 className="text-sm font-bold">Post Ad</h1>
+            <p className="text-[10px] text-muted-foreground font-bold tracking-widest uppercase">Step 1 of 5</p>
           </div>
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" className="glass rounded-full">
             <HelpCircle className="w-5 h-5" />
           </Button>
         </div>
@@ -106,8 +109,8 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
             {context === 'profile' ? 'My Quvora' : 'Messages'}
           </h1>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon">
-              {context === 'profile' ? <Bell className="w-5 h-5" /> : <Search className="w-5 h-5" />}
+            <Button variant="ghost" size="icon" className="glass rounded-full">
+              {context === 'profile' ? <Settings className="w-5 h-5" /> : <Search className="w-5 h-5" />}
             </Button>
           </div>
         </div>
