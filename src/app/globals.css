@@ -5,46 +5,46 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 224 71.4% 4.1%;
+    --foreground: 0 0% 0%;
     --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
+    --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
+    --popover-foreground: 0 0% 0%;
     --primary: 199 89% 48%; /* Sky Blue */
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
     --accent: 199 89% 48%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
     --ring: 199 89% 48%;
     --radius: 1.25rem;
   }
 
   .dark {
-    --background: 0 0% 0%; /* Deep Black */
-    --foreground: 210 40% 98%;
+    --background: 0 0% 0%; /* Pure Black */
+    --foreground: 0 0% 100%;
     --card: 0 0% 3%;
-    --card-foreground: 210 40% 98%;
+    --card-foreground: 0 0% 100%;
     --popover: 0 0% 3%;
-    --popover-foreground: 210 40% 98%;
+    --popover-foreground: 0 0% 100%;
     --primary: 199 89% 48%; /* Sky Blue */
     --primary-foreground: 0 0% 100%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 60%;
     --accent: 199 89% 48%;
-    --accent-foreground: 210 40% 98%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
     --ring: 199 89% 48%;
   }
 }
@@ -68,28 +68,28 @@
 }
 
 .glass {
-  @apply backdrop-blur-[24px] saturate-[180%] border border-white/20;
+  @apply backdrop-blur-[24px] saturate-[180%] border border-white/10;
   background-color: hsla(0, 0%, 100%, 0.05);
 }
 
 .dark .glass {
-  background-color: hsla(0, 0%, 100%, 0.03);
+  background-color: hsla(0, 0%, 100%, 0.02);
   @apply border-white/5;
 }
 
 .glass-thick {
-  @apply backdrop-blur-[40px] saturate-[200%] border-t border-white/20;
-  background-color: hsla(0, 0%, 100%, 0.1);
+  @apply backdrop-blur-[40px] saturate-[200%] border-t border-white/10;
+  background-color: hsla(0, 0%, 100%, 0.08);
 }
 
 .dark .glass-thick {
-  background-color: hsla(0, 0%, 0%, 0.6);
+  background-color: hsla(0, 0%, 0%, 0.85);
   @apply border-white/5;
 }
 
 .ios-tab-bar {
   @apply fixed bottom-4 left-4 right-4 h-14 rounded-[2rem] glass-thick flex items-center justify-around px-4 z-50;
-  box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.3);
 }
 
 .ios-top-nav {
@@ -102,12 +102,12 @@
 
 @keyframes float {
   0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(2deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
   100% { transform: translateY(0px) rotate(0deg); }
 }
 
 .animate-float {
-  animation: float 5s ease-in-out infinite;
+  animation: float 4s ease-in-out infinite;
 }
 
 ::-webkit-scrollbar {
