@@ -7,70 +7,53 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import Image from 'next/image';
 import Link from 'next/link';
-import { personalizedHomeFeedRecommendations } from '@/ai/flows/personalized-home-feed-recommendations';
 import { getPlaceholderById } from '@/lib/placeholder-images';
 
-export default async function Home() {
+export default function Home() {
   // Centralized placeholder images
   const heroPromo = getPlaceholderById('hero-promo');
-  const fallbackImages = [
-    getPlaceholderById('fallback-iphone'),
-    getPlaceholderById('fallback-sofa'),
-    getPlaceholderById('fallback-bike'),
-    getPlaceholderById('fallback-macbook'),
-  ];
-
-  // Gracefully handle AI recommendations failure with fallback data
-  let recommendations;
-  try {
-    recommendations = await personalizedHomeFeedRecommendations({
-      userId: 'user_123',
-      browsingHistory: ['iphone 15', 'used car', 'mountain bike'],
-      expressedInterests: ['Electronics', 'Cars'],
-      currentLocation: 'Mumbai'
-    });
-  } catch (error: any) {
-    recommendations = {
-      recommendedItems: [
-        {
-          itemId: 'fallback-1',
-          title: fallbackImages[0].description,
-          description: 'Like new condition, 256GB',
-          price: '₹1,15,000',
-          imageUrl: fallbackImages[0].imageUrl,
-          location: 'Andheri, Mumbai',
-          category: 'Mobiles'
-        },
-        {
-          itemId: 'fallback-2',
-          title: fallbackImages[1].description,
-          description: 'Premium fabric, 6 months old',
-          price: '₹28,500',
-          imageUrl: fallbackImages[1].imageUrl,
-          location: 'Powai, Mumbai',
-          category: 'Furniture'
-        },
-        {
-          itemId: 'fallback-3',
-          title: fallbackImages[2].description,
-          description: '2022 model, single owner',
-          price: '₹1,85,000',
-          imageUrl: fallbackImages[2].imageUrl,
-          location: 'Bandra, Mumbai',
-          category: 'Bikes'
-        },
-        {
-          itemId: 'fallback-4',
-          title: fallbackImages[3].description,
-          description: '8GB/256GB, Space Grey',
-          price: '₹72,000',
-          imageUrl: fallbackImages[3].imageUrl,
-          location: 'Colaba, Mumbai',
-          category: 'Electronics'
-        }
-      ]
-    };
-  }
+  
+  // Static recommendations for stability
+  const recommendations = {
+    recommendedItems: [
+      {
+        itemId: 'static-1',
+        title: 'iPhone 15 Pro Max',
+        description: 'Like new condition, 256GB',
+        price: '₹1,15,000',
+        imageUrl: 'https://picsum.photos/seed/f1/400/400',
+        location: 'Andheri, Mumbai',
+        category: 'Mobiles'
+      },
+      {
+        itemId: 'static-2',
+        title: 'Modern L-Shaped Sofa',
+        description: 'Premium fabric, 6 months old',
+        price: '₹28,500',
+        imageUrl: 'https://picsum.photos/seed/f2/400/400',
+        location: 'Powai, Mumbai',
+        category: 'Furniture'
+      },
+      {
+        itemId: 'static-3',
+        title: 'Royal Enfield Classic 350',
+        description: '2022 model, single owner',
+        price: '₹1,85,000',
+        imageUrl: 'https://picsum.photos/seed/f3/400/400',
+        location: 'Bandra, Mumbai',
+        category: 'Bikes'
+      },
+      {
+        itemId: 'static-4',
+        title: 'MacBook Air M2',
+        description: '8GB/256GB, Space Grey',
+        price: '₹72,000',
+        imageUrl: 'https://picsum.photos/seed/f4/400/400',
+        location: 'Colaba, Mumbai',
+        category: 'Electronics'
+      }
+    ]
+  };
 
   const mainCategories = [
     { label: 'Mobiles', icon: '📱' },
@@ -141,16 +124,16 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* AI Recommendations */}
+      {/* Recommendations */}
       <section>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-accent animate-pulse" />
-            <h2 className="text-lg font-bold tracking-tight">AI Handpicked for You</h2>
+            <Sparkles className="w-5 h-5 text-accent" />
+            <h2 className="text-lg font-bold tracking-tight">Handpicked for You</h2>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          {recommendations.recommendedItems.slice(0, 4).map((item: any, idx: number) => (
+          {recommendations.recommendedItems.map((item, idx) => (
             <Link key={item.itemId} href={`/listing/${item.itemId}`}>
               <Card className="glass border-none overflow-hidden transition-transform active:scale-95">
                 <div className="relative aspect-square w-full">
@@ -160,7 +143,6 @@ export default async function Home() {
                     fill 
                     sizes="(max-width: 768px) 50vw, 33vw"
                     className="object-cover"
-                    data-ai-hint={item.category}
                     priority={idx < 2}
                   />
                   <div className="absolute top-2 right-2 glass p-1.5 rounded-full">
@@ -203,7 +185,6 @@ export default async function Home() {
                       fill 
                       sizes="(max-width: 768px) 100vw, 400px"
                       className="object-cover" 
-                      data-ai-hint="trending item" 
                     />
                   </div>
                   <CardContent className="p-4 flex flex-col gap-1">
