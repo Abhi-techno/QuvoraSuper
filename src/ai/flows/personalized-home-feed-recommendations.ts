@@ -60,7 +60,7 @@ const prompt = ai.definePrompt({
   name: 'personalizedHomeFeedRecommendationsPrompt',
   input: {schema: PersonalizedHomeFeedRecommendationsInputSchema},
   output: {schema: PersonalizedHomeFeedRecommendationsOutputSchema},
-  // CORRECT: model is a top-level property, NOT inside config/generationConfig
+  // Ensure model is at the top level and correctly identified for Genkit 1.x
   model: 'googleai/gemini-1.5-flash',
   prompt: `You are an expert marketplace recommendation engine for Quvora, an Indian marketplace platform.
 Your task is to generate 5-10 distinct item recommendations for the user based on their browsing history, expressed interests, and current location.
@@ -73,7 +73,7 @@ Use this exact format: https://picsum.photos/seed/<unique_slug>/400/400
 
 STRICT OUTPUT INSTRUCTIONS:
 - Return response in strict JSON format.
-- Do not use markdown backticks (no \`\`\`json).
+- DO NOT use markdown backticks (no \`\`\`json).
 - Ensure all fields match the requested schema exactly.
 
 User ID: {{{userId}}}
@@ -135,10 +135,10 @@ export async function personalizedHomeFeedRecommendations(
   input: PersonalizedHomeFeedRecommendationsInput
 ): Promise<PersonalizedHomeFeedRecommendationsOutput> {
   try {
-    // Attempt the AI prompt call with safe access
+    // Attempt the AI prompt call
     const result = await prompt(input);
     
-    // Check for output explicitly
+    // Check for output explicitly with safe access
     if (!result || !result.output) {
       console.warn('AI Recommendations: Prompt returned no valid output. Using fallback data.');
       return FALLBACK_DATA;
@@ -146,14 +146,12 @@ export async function personalizedHomeFeedRecommendations(
 
     return result.output;
   } catch (e: any) {
-    // Log detailed error information for debugging while ensuring the UI doesn't crash
+    // Log detailed error information to avoid the "{}" display issue
     const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown error during AI generation');
-    console.error('AI FLOW ERROR:', errorMessage);
+    const errorStack = e?.stack || 'No stack trace available';
     
-    // Specific check for the generationConfig/model error we just fixed
-    if (errorMessage.includes('model') && errorMessage.includes('generation_config')) {
-      console.error('CRITICAL: AI call failed because model name was inside generation_config. This should be fixed now.');
-    }
+    console.error('AI FLOW ERROR:', errorMessage);
+    console.error('AI FLOW STACK:', errorStack);
     
     // Always return fallback data to maintain a working UI
     return FALLBACK_DATA;
