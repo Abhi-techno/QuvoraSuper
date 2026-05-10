@@ -14,20 +14,40 @@ export function BottomNav() {
     { label: 'Browse', icon: Grid, href: '/browse' },
     { label: 'Chat', icon: MessageCircle, href: '/chat', badge: 3 },
     { label: 'Me', icon: User, href: '/me' },
-    { label: 'Post Ad', icon: Plus, href: '/post', isFab: true },
   ];
 
   return (
-    <nav className="ios-tab-bar">
-      {tabs.map((tab) => {
-        const Icon = tab.icon;
-        const isActive = pathname === tab.href;
+    <>
+      {/* Floating Action Button (Post Ad) - Positioned separately above the navigation bar */}
+      <Link 
+        href="/post" 
+        className="fixed bottom-24 right-6 z-50 flex flex-col items-center group animate-in slide-in-from-bottom-8 duration-500 delay-300"
+      >
+        <div className="post-ad-fab shadow-[0_15px_40px_-5px_rgba(255,107,43,0.4)] border-2 border-white/20">
+          <Plus className="w-8 h-8" />
+        </div>
+        <span className="text-[10px] font-bold text-accent mt-2 uppercase tracking-widest glass px-3 py-1 rounded-full shadow-lg">
+          Post Ad
+        </span>
+      </Link>
 
-        if (tab.isFab) {
+      <nav className="ios-tab-bar">
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          const isActive = pathname === tab.href;
+
           return (
-            <Link key={tab.href} href={tab.href} className="flex flex-col items-center">
-              <div className="post-ad-fab">
-                <Plus className="w-8 h-8" />
+            <Link key={tab.href} href={tab.href} className="flex flex-col items-center gap-1 group">
+              <div className="relative">
+                <Icon className={cn(
+                  "w-6 h-6 transition-all group-active:scale-90",
+                  isActive ? "text-primary fill-primary/20" : "text-muted-foreground"
+                )} />
+                {tab.badge && (
+                  <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] text-white">
+                    {tab.badge}
+                  </span>
+                )}
               </div>
               <span className={cn(
                 "text-[10px] font-medium transition-colors",
@@ -37,30 +57,8 @@ export function BottomNav() {
               </span>
             </Link>
           );
-        }
-
-        return (
-          <Link key={tab.href} href={tab.href} className="flex flex-col items-center gap-1 group">
-            <div className="relative">
-              <Icon className={cn(
-                "w-6 h-6 transition-all group-active:scale-90",
-                isActive ? "text-primary fill-primary/20" : "text-muted-foreground"
-              )} />
-              {tab.badge && (
-                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] text-white">
-                  {tab.badge}
-                </span>
-              )}
-            </div>
-            <span className={cn(
-              "text-[10px] font-medium transition-colors",
-              isActive ? "text-primary" : "text-muted-foreground"
-            )}>
-              {tab.label}
-            </span>
-          </Link>
-        );
-      })}
-    </nav>
+        })}
+      </nav>
+    </>
   );
 }

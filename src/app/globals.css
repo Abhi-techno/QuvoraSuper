@@ -91,7 +91,7 @@
 }
 
 .post-ad-fab {
-  @apply -translate-y-6 w-14 h-14 rounded-full bg-accent text-white shadow-lg flex items-center justify-center transition-transform hover:scale-110 active:scale-95;
+  @apply w-14 h-14 rounded-full bg-accent text-white shadow-lg flex items-center justify-center transition-transform hover:scale-110 active:scale-95;
   background-image: linear-gradient(135deg, hsl(17 100% 65%), hsl(17 100% 57%));
 }
 
