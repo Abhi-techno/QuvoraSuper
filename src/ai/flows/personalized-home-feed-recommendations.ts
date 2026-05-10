@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview Provides personalized home feed recommendations to users.
@@ -107,6 +106,47 @@ Current Location: {{{currentLocation}}}
 Generate recommendations in the specified JSON format. Ensure all fields are populated with realistic-sounding data.`,
 });
 
+const FALLBACK_DATA: PersonalizedHomeFeedRecommendationsOutput = {
+  recommendedItems: [
+    {
+      itemId: 'fallback-iphone',
+      title: 'iPhone 15 Pro Max',
+      description: 'Like new condition, 256GB, Natural Titanium.',
+      price: '₹1,15,000',
+      imageUrl: 'https://picsum.photos/seed/f1/400/400',
+      location: 'Andheri, Mumbai',
+      category: 'Mobiles'
+    },
+    {
+      itemId: 'fallback-sofa',
+      title: 'Modern L-Shaped Sofa',
+      description: 'Premium grey fabric, 6 months old, no stains.',
+      price: '₹28,500',
+      imageUrl: 'https://picsum.photos/seed/f2/400/400',
+      location: 'Powai, Mumbai',
+      category: 'Furniture'
+    },
+    {
+      itemId: 'fallback-bike',
+      title: 'Royal Enfield Classic 350',
+      description: '2022 model, single owner, matte black.',
+      price: '₹1,85,000',
+      imageUrl: 'https://picsum.photos/seed/f3/400/400',
+      location: 'Bandra, Mumbai',
+      category: 'Bikes'
+    },
+    {
+      itemId: 'fallback-macbook',
+      title: 'MacBook Air M2',
+      description: '8GB/256GB, Space Grey, battery 98%.',
+      price: '₹72,000',
+      imageUrl: 'https://picsum.photos/seed/f4/400/400',
+      location: 'Colaba, Mumbai',
+      category: 'Electronics'
+    }
+  ]
+};
+
 export async function personalizedHomeFeedRecommendations(
   input: PersonalizedHomeFeedRecommendationsInput
 ): Promise<PersonalizedHomeFeedRecommendationsOutput> {
@@ -120,6 +160,15 @@ const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
     outputSchema: PersonalizedHomeFeedRecommendationsOutputSchema,
   },
   async (input) => {
+    // Pre-emptively check for valid API key to avoid slow server startup timeouts
+    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENAI_API_KEY || '';
+    const isApiKeyMissing = !apiKey || apiKey === 'your_api_key_here' || apiKey === '';
+
+    if (isApiKeyMissing) {
+      console.log('AI Recommendations: API key missing, using fallback data.');
+      return FALLBACK_DATA;
+    }
+
     try {
       const {output} = await personalizedHomeFeedRecommendationsPrompt(input);
       if (!output) {
@@ -130,53 +179,11 @@ const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
       // Gracefully handle common API key configuration issues during local dev
       const errorMessage = e?.message || '';
       if (errorMessage.includes('API key not valid') || errorMessage.includes('your_api_key_here')) {
-        // Log a more helpful dev message instead of a full crash log
         console.log('AI Recommendations: Using fallback data. (Add a valid GEMINI_API_KEY to .env to enable)');
       } else {
         console.error('Genkit personalizedHomeFeedRecommendationsFlow error:', errorMessage || e);
       }
-      
-      // Return high-quality fallback data instead of crashing the page
-      return {
-        recommendedItems: [
-          {
-            itemId: 'fallback-iphone',
-            title: 'iPhone 15 Pro Max',
-            description: 'Like new condition, 256GB, Natural Titanium.',
-            price: '₹1,15,000',
-            imageUrl: 'https://picsum.photos/seed/f1/400/400',
-            location: 'Andheri, Mumbai',
-            category: 'Mobiles'
-          },
-          {
-            itemId: 'fallback-sofa',
-            title: 'Modern L-Shaped Sofa',
-            description: 'Premium grey fabric, 6 months old, no stains.',
-            price: '₹28,500',
-            imageUrl: 'https://picsum.photos/seed/f2/400/400',
-            location: 'Powai, Mumbai',
-            category: 'Furniture'
-          },
-          {
-            itemId: 'fallback-bike',
-            title: 'Royal Enfield Classic 350',
-            description: '2022 model, single owner, matte black.',
-            price: '₹1,85,000',
-            imageUrl: 'https://picsum.photos/seed/f3/400/400',
-            location: 'Bandra, Mumbai',
-            category: 'Bikes'
-          },
-          {
-            itemId: 'fallback-macbook',
-            title: 'MacBook Air M2',
-            description: '8GB/256GB, Space Grey, battery 98%.',
-            price: '₹72,000',
-            imageUrl: 'https://picsum.photos/seed/f4/400/400',
-            location: 'Colaba, Mumbai',
-            category: 'Electronics'
-          }
-        ]
-      };
+      return FALLBACK_DATA;
     }
   }
 );
