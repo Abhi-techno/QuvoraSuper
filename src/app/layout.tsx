@@ -3,7 +3,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { AppNav } from '@/components/navigation/app-nav';
 import { Toaster } from '@/components/ui/toaster';
-import { initializeFirebase, FirebaseClientProvider } from '@/firebase';
+import { FirebaseClientProvider } from '@/firebase';
 
 export const metadata: Metadata = {
   title: 'Quvora Marketplace | Your World. One Place.',
@@ -15,8 +15,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { firebaseApp, firestore, auth } = initializeFirebase();
-
   return (
     <html lang="en" className="dark">
       <head>
@@ -25,7 +23,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased selection:bg-primary selection:text-white">
-        <FirebaseClientProvider firebaseApp={firebaseApp} firestore={firestore} auth={auth}>
+        <FirebaseClientProvider>
           <AppNav>
             <main className="min-h-screen pb-24">
               {children}

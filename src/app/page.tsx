@@ -1,7 +1,7 @@
 
-"use client";
+'use client';
 
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
@@ -13,42 +13,12 @@ import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 
 const slides = [
-  {
-    id: 'slide-1',
-    title: 'Your World. One Place.',
-    subtitle: "India's fastest growing AI-powered local marketplace.",
-    badge: 'VERNACULAR FIRST'
-  },
-  {
-    id: 'slide-2',
-    title: 'Premium Cars & Bikes',
-    subtitle: 'Verified listings from trusted sellers in your city.',
-    badge: '100% VERIFIED'
-  },
-  {
-    id: 'slide-3',
-    title: 'Latest Gadgets',
-    subtitle: 'Upgrade your tech with smart price suggestions.',
-    badge: 'AI PRICING'
-  },
-  {
-    id: 'slide-4',
-    title: 'Modern Living',
-    subtitle: 'Furniture and decor that fits your lifestyle.',
-    badge: 'HOME & DECOR'
-  },
-  {
-    id: 'slide-5',
-    title: 'Local Community',
-    subtitle: 'Buy and sell within your neighborhood safely.',
-    badge: 'LOCAL FIRST'
-  },
-  {
-    id: 'slide-6',
-    title: 'Secure Trading',
-    subtitle: 'Direct chat with sellers. No hidden middlemen.',
-    badge: 'SECURE CHAT'
-  }
+  { id: 'slide-1', title: 'Your World. One Place.' },
+  { id: 'slide-2', title: 'Premium Cars & Bikes' },
+  { id: 'slide-3', title: 'Latest Gadgets' },
+  { id: 'slide-4', title: 'Modern Living' },
+  { id: 'slide-5', title: 'Local Community' },
+  { id: 'slide-6', title: 'Secure Trading' }
 ];
 
 export default function LandingPage() {
@@ -112,7 +82,7 @@ export default function LandingPage() {
               defaultTab="register"
               trigger={
                 <Button className="h-16 rounded-2xl w-full text-lg font-bold shadow-2xl shadow-primary/20 bg-primary hover:bg-primary/90">
-                  Get Started <ArrowRight className="ml-2 w-5 h-5" />
+                  Create Account / Continue <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               }
             />
@@ -122,13 +92,13 @@ export default function LandingPage() {
                 defaultTab="login"
                 trigger={
                   <Button variant="ghost" className="flex-1 h-14 rounded-2xl glass text-white font-bold border-white/10">
-                    Login
+                    Login Options
                   </Button>
                 }
               />
               <Button 
                 variant="ghost" 
-                className="flex-1 h-14 rounded-2xl glass text-white/60 font-bold border-white/10 hover:text-white"
+                className="flex-1 h-14 rounded-2xl glass text-white/40 font-bold border-white/10 hover:text-white"
                 onClick={() => router.push('/explore')}
               >
                 Guest View
