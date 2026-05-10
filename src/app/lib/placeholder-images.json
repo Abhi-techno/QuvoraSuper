@@ -1,0 +1,53 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-iphone",
+      "description": "Latest iPhone 15 Pro",
+      "imageUrl": "https://picsum.photos/seed/123/800/600",
+      "imageHint": "iphone smartphone"
+    },
+    {
+      "id": "cat-mobiles",
+      "description": "Mobile Phones",
+      "imageUrl": "https://picsum.photos/seed/mob/200/200",
+      "imageHint": "mobile phone"
+    },
+    {
+      "id": "cat-cars",
+      "description": "Cars",
+      "imageUrl": "https://picsum.photos/seed/car/200/200",
+      "imageHint": "luxury car"
+    },
+    {
+      "id": "cat-electronics",
+      "description": "Electronics",
+      "imageUrl": "https://picsum.photos/seed/elec/200/200",
+      "imageHint": "laptop camera"
+    },
+    {
+      "id": "listing-bike",
+      "description": "Royal Enfield Classic 350",
+      "imageUrl": "https://picsum.photos/seed/bike/400/300",
+      "imageHint": "motorcycle bike"
+    },
+    {
+      "id": "listing-sofa",
+      "description": "Modern L-shaped Sofa",
+      "imageUrl": "https://picsum.photos/seed/sofa/400/300",
+      "imageHint": "sofa furniture"
+    },
+    {
+      "id": "listing-apartment",
+      "description": "2BHK Apartment in Mumbai",
+      "imageUrl": "https://picsum.photos/seed/apt/400/300",
+      "imageHint": "apartment building"
+    },
+    {
+      "id": "profile-avatar",
+      "description": "User profile avatar",
+      "imageUrl": "https://picsum.photos/seed/user/150/150",
+      "imageHint": "person portrait"
+    }
+  ]
+}
