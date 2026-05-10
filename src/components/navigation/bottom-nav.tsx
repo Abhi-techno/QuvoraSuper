@@ -1,7 +1,7 @@
 
 "use client"
 
-import { Home, Grid, Plus, MessageCircle, User } from 'lucide-react';
+import { Home, Grid, Plus, MessageCircle, User, Package } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -12,6 +12,7 @@ export function BottomNav() {
   const tabs = [
     { label: 'Home', icon: Home, href: '/' },
     { label: 'Browse', icon: Grid, href: '/browse' },
+    { label: 'My Ads', icon: Package, href: '/my-ads' },
     { label: 'Chat', icon: MessageCircle, href: '/chat', badge: 3 },
     { label: 'Me', icon: User, href: '/me' },
   ];
