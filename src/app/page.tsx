@@ -4,9 +4,7 @@
 import React, { useEffect } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
-import { Button } from '@/components/ui/button';
-import { Sparkles, ArrowRight, ShieldCheck, Zap, Globe, Car, Smartphone, Home, Shield } from 'lucide-react';
-import { AuthModal } from '@/components/auth/auth-modal';
+import { Zap, Globe, Car, Smartphone, Home, Shield } from 'lucide-react';
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -101,56 +99,6 @@ export default function LandingPage() {
               </div>
             </div>
           ))}
-        </div>
-      </div>
-
-      {/* Content Overlay */}
-      <div className="relative z-10 mt-auto px-6 pb-12 sm:pb-16 bg-gradient-to-t from-background via-background/90 to-transparent pt-20">
-        <div className="max-w-md mx-auto w-full space-y-8">
-          <div className="space-y-3 text-center">
-            <div className="inline-flex items-center gap-2 text-primary font-bold tracking-[0.2em] text-[9px] uppercase glass px-4 py-1.5 rounded-full border-none">
-              <span className="animate-pulse">●</span>
-              PWA Optimized
-            </div>
-            <h1 className="text-5xl font-black tracking-tighter leading-[0.9]">
-              Quvora <br />
-              <span className="text-primary">Redefined.</span>
-            </h1>
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <AuthModal 
-              defaultTab="register"
-              trigger={
-                <Button className="h-14 rounded-2xl w-full text-base font-bold shadow-xl shadow-primary/20 bg-primary hover:bg-primary/90 active:scale-95 transition-all">
-                  Create Account / Continue <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              }
-            />
-            
-            <div className="flex items-center gap-3">
-              <AuthModal 
-                defaultTab="login"
-                trigger={
-                  <Button variant="outline" className="flex-1 h-12 rounded-xl glass text-foreground font-bold border-none active:scale-95 transition-all text-xs">
-                    Login Options
-                  </Button>
-                }
-              />
-              <Button 
-                variant="ghost" 
-                className="flex-1 h-12 rounded-xl glass text-muted-foreground font-bold border-none hover:text-foreground active:scale-95 transition-all text-xs"
-                onClick={() => router.push('/explore')}
-              >
-                Guest View
-              </Button>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center gap-2 text-muted-foreground/30 text-[8px] uppercase tracking-[0.3em] font-bold">
-            <ShieldCheck className="w-3 h-3" />
-            Liquid Glass Security
-          </div>
         </div>
       </div>
 
