@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Provides personalized home feed recommendations to users.
@@ -60,7 +61,6 @@ const prompt = ai.definePrompt({
   name: 'personalizedHomeFeedRecommendationsPrompt',
   input: {schema: PersonalizedHomeFeedRecommendationsInputSchema},
   output: {schema: PersonalizedHomeFeedRecommendationsOutputSchema},
-  // Ensure model is at the top level and correctly identified for Genkit 1.x
   model: 'googleai/gemini-1.5-flash',
   prompt: `You are an expert marketplace recommendation engine for Quvora, an Indian marketplace platform.
 Your task is to generate 5-10 distinct item recommendations for the user based on their browsing history, expressed interests, and current location.
@@ -138,20 +138,22 @@ export async function personalizedHomeFeedRecommendations(
     // Attempt the AI prompt call
     const result = await prompt(input);
     
-    // Check for output explicitly with safe access
+    // Safety check: ensure result and output exist
     if (!result || !result.output) {
-      console.warn('AI Recommendations: Prompt returned no valid output. Using fallback data.');
+      console.warn('AI Flow: Received null or empty output from Genkit prompt.');
       return FALLBACK_DATA;
     }
 
     return result.output;
   } catch (e: any) {
-    // Log detailed error information to avoid the "{}" display issue
-    const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown error during AI generation');
-    const errorStack = e?.stack || 'No stack trace available';
+    // Robust error logging to identify root causes (like 403 Forbidden)
+    const errorMessage = e?.message || 'Unknown error during AI generation';
+    console.error('GENKIT FLOW ERROR:', errorMessage);
     
-    console.error('AI FLOW ERROR:', errorMessage);
-    console.error('AI FLOW STACK:', errorStack);
+    // Check for specific "blocked" or "403" messages to help the user
+    if (errorMessage.includes('blocked') || errorMessage.includes('403')) {
+      console.error('HINT: Please enable the "Generative Language API" in your Google Cloud Console.');
+    }
     
     // Always return fallback data to maintain a working UI
     return FALLBACK_DATA;
