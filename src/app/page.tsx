@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useEffect } from 'react';
@@ -6,26 +5,26 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
 import { AuthModal } from '@/components/auth/auth-modal';
 import { getPlaceholderById } from '@/lib/placeholder-images';
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 
 const slides = [
-  { id: 'slide-1', title: 'Your World. One Place.' },
-  { id: 'slide-2', title: 'Premium Cars & Bikes' },
-  { id: 'slide-3', title: 'Latest Gadgets' },
-  { id: 'slide-4', title: 'Modern Living' },
-  { id: 'slide-5', title: 'Local Community' },
-  { id: 'slide-6', title: 'Secure Trading' }
+  { id: 'slide-1', title: 'Your World. One Place.', subtitle: 'India\'s first AI-powered vernacular marketplace.' },
+  { id: 'slide-2', title: 'Premium Cars & Bikes', subtitle: 'Verified listings with real-time AI inspections.' },
+  { id: 'slide-3', title: 'Latest Gadgets', subtitle: 'Find the best deals on mobiles and electronics.' },
+  { id: 'slide-4', title: 'Modern Living', subtitle: 'Upgrade your home with handpicked furniture.' },
+  { id: 'slide-5', title: 'Local Community', subtitle: 'Buy and sell safely in your neighborhood.' },
+  { id: 'slide-6', title: 'Secure Trading', subtitle: 'Zero middlemen, zero commission, 100% trust.' }
 ];
 
 export default function LandingPage() {
   const router = useRouter();
   const { user, loading } = useUser();
-  const [emblaRef] = useEmblaCarousel({ loop: true }, [
-    Autoplay({ delay: 4000, stopOnInteraction: false })
+  const [emblaRef] = useEmblaCarousel({ loop: true, duration: 30 }, [
+    Autoplay({ delay: 5000, stopOnInteraction: false })
   ]);
 
   useEffect(() => {
@@ -34,7 +33,11 @@ export default function LandingPage() {
     }
   }, [user, loading, router]);
 
-  if (loading) return null;
+  if (loading) return (
+    <div className="h-screen w-full bg-[#0D1B2A] flex items-center justify-center">
+      <div className="w-12 h-12 rounded-2xl bg-primary animate-bounce shadow-2xl shadow-primary/50" />
+    </div>
+  );
 
   return (
     <div className="relative h-screen w-full bg-[#0D1B2A] overflow-hidden">
@@ -49,11 +52,11 @@ export default function LandingPage() {
                   src={imageData.imageUrl}
                   alt={slide.title}
                   fill
-                  className="object-cover opacity-60"
+                  className="object-cover opacity-50 scale-105"
                   priority
                   data-ai-hint={imageData.imageHint}
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#0D1B2A]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-[#0D1B2A]" />
               </div>
             );
           })}
@@ -61,19 +64,19 @@ export default function LandingPage() {
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 h-full flex flex-col justify-end px-6 pb-12">
-        <div className="max-w-md mx-auto w-full space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+      <div className="relative z-10 h-full flex flex-col justify-end px-6 pb-20">
+        <div className="max-w-md mx-auto w-full space-y-10 animate-in fade-in slide-in-from-bottom-12 duration-1000">
           <div className="space-y-4">
-            <div className="flex items-center gap-2 text-primary font-bold tracking-widest text-[10px] uppercase bg-primary/10 w-fit px-3 py-1 rounded-full border border-primary/20">
-              <Sparkles className="w-3 h-3" />
-              Powered by Quvora AI
+            <div className="flex items-center gap-2 text-primary font-bold tracking-[0.2em] text-[10px] uppercase glass w-fit px-4 py-1.5 rounded-full border-none">
+              <Sparkles className="w-3.5 h-3.5" />
+              Liquid Glass Experience
             </div>
-            <h1 className="text-5xl font-bold tracking-tight text-white leading-[1.1]">
-              Quvora <br />
-              Marketplace
+            <h1 className="text-6xl font-extrabold tracking-tighter text-white leading-[0.95] drop-shadow-2xl">
+              Marketplace <br />
+              <span className="text-primary">Redefined.</span>
             </h1>
-            <p className="text-lg text-white/70 leading-relaxed font-medium">
-              India's first vernacular-first, AI-powered marketplace for everything.
+            <p className="text-lg text-white/80 leading-relaxed font-medium max-w-[85%]">
+              Discover a faster, safer, and smarter way to trade in your community.
             </p>
           </div>
 
@@ -81,8 +84,8 @@ export default function LandingPage() {
             <AuthModal 
               defaultTab="register"
               trigger={
-                <Button className="h-16 rounded-2xl w-full text-lg font-bold shadow-2xl shadow-primary/20 bg-primary hover:bg-primary/90">
-                  Create Account / Continue <ArrowRight className="ml-2 w-5 h-5" />
+                <Button className="h-20 rounded-[2rem] w-full text-xl font-bold shadow-2xl shadow-primary/30 bg-primary hover:bg-primary/90 active:scale-95 transition-all">
+                  Create new account / continue <ArrowRight className="ml-2 w-6 h-6" />
                 </Button>
               }
             />
@@ -91,14 +94,14 @@ export default function LandingPage() {
               <AuthModal 
                 defaultTab="login"
                 trigger={
-                  <Button variant="ghost" className="flex-1 h-14 rounded-2xl glass text-white font-bold border-white/10">
-                    Login Options
+                  <Button variant="ghost" className="flex-1 h-16 rounded-[1.75rem] glass text-white font-bold border-none active:scale-95 transition-all">
+                    Login options
                   </Button>
                 }
               />
               <Button 
                 variant="ghost" 
-                className="flex-1 h-14 rounded-2xl glass text-white/40 font-bold border-white/10 hover:text-white"
+                className="flex-1 h-16 rounded-[1.75rem] glass text-white/40 font-bold border-none hover:text-white active:scale-95 transition-all"
                 onClick={() => router.push('/explore')}
               >
                 Guest View
@@ -106,19 +109,18 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="text-center">
-            <p className="text-[10px] text-white/30 tracking-widest uppercase font-bold">
-              Trusted by 1M+ Users across India
-            </p>
+          <div className="flex items-center justify-center gap-2 text-white/30 text-[9px] uppercase tracking-[0.3em] font-bold">
+            <ShieldCheck className="w-3 h-3" />
+            End-to-End Encrypted Deals
           </div>
         </div>
       </div>
 
       {/* Slide Indicators */}
-      <div className="absolute top-12 left-6 right-6 flex gap-1.5 z-20">
+      <div className="absolute top-16 left-8 right-8 flex gap-2 z-20">
         {slides.map((_, i) => (
-          <div key={i} className="h-1 flex-1 bg-white/10 rounded-full overflow-hidden">
-            <div className="h-full bg-primary/40 w-full" />
+          <div key={i} className="h-1.5 flex-1 glass rounded-full overflow-hidden border-none">
+            <div className="h-full bg-primary/40 w-full animate-in fade-in duration-500" />
           </div>
         ))}
       </div>
