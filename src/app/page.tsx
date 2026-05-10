@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -17,42 +16,42 @@ const slides = [
     title: 'Your World. One Place.', 
     subtitle: "India's first AI-powered vernacular marketplace.",
     icon: Globe,
-    gradient: 'from-blue-600/20 to-indigo-900/40'
+    gradient: 'from-sky-500/10 to-sky-900/30'
   },
   { 
     id: '2', 
     title: 'Premium Cars & Bikes', 
     subtitle: 'Verified listings with real-time AI inspections.',
     icon: Car,
-    gradient: 'from-orange-600/20 to-red-900/40'
+    gradient: 'from-sky-400/10 to-sky-800/20'
   },
   { 
     id: '3', 
     title: 'Latest Gadgets', 
     subtitle: 'Find the best deals with AI price insights.',
     icon: Smartphone,
-    gradient: 'from-emerald-600/20 to-teal-900/40'
+    gradient: 'from-sky-300/10 to-sky-700/20'
   },
   { 
     id: '4', 
     title: 'Modern Living', 
     subtitle: 'Upgrade your home with handpicked furniture.',
     icon: Home,
-    gradient: 'from-purple-600/20 to-pink-900/40'
+    gradient: 'from-sky-200/10 to-sky-600/20'
   },
   { 
     id: '5', 
     title: 'Local Community', 
     subtitle: 'Buy and sell safely in your neighborhood.',
     icon: Sparkles,
-    gradient: 'from-yellow-600/20 to-amber-900/40'
+    gradient: 'from-sky-400/10 to-sky-600/30'
   },
   { 
     id: '6', 
     title: 'Secure Trading', 
     subtitle: 'Zero middlemen. 100% trust with Liquid Glass.',
     icon: Shield,
-    gradient: 'from-cyan-600/20 to-blue-900/40'
+    gradient: 'from-sky-500/20 to-sky-900/40'
   }
 ];
 
@@ -109,7 +108,7 @@ export default function LandingPage() {
               onClick={toggleTheme}
             >
               {theme === 'dark' ? (
-                <Sun className="w-3.5 h-3.5 text-yellow-400" />
+                <Sun className="w-3.5 h-3.5 text-sky-400" />
               ) : (
                 <Moon className="w-3.5 h-3.5 text-primary" />
               )}
@@ -155,7 +154,7 @@ export default function LandingPage() {
         {/* Adaptive Progress Indicators */}
         <div className="absolute top-[15%] left-10 right-10 flex gap-2 z-20">
           {slides.map((_, i) => (
-            <div key={i} className="h-0.5 flex-1 bg-white/5 rounded-full overflow-hidden">
+            <div key={i} className="h-0.5 flex-1 bg-primary/10 rounded-full overflow-hidden">
               <div className="h-full bg-primary/40 w-full" />
             </div>
           ))}
