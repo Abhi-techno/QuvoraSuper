@@ -41,10 +41,12 @@ export function AppNav({ children }: { children: React.ReactNode }) {
   if (shouldHideNav) return <>{children}</>;
 
   return (
-    <>
+    <div className="flex flex-col h-screen overflow-hidden">
       <TopNav isScrolled={isScrolled} />
-      {children}
+      <div className="flex-1 overflow-y-auto overscroll-behavior-none">
+        {children}
+      </div>
       <BottomNav />
-    </>
+    </div>
   );
 }

@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useEffect } from 'react';
@@ -23,7 +24,7 @@ const slides = [
 export default function LandingPage() {
   const router = useRouter();
   const { user, loading } = useUser();
-  const [emblaRef] = useEmblaCarousel({ loop: true, duration: 30 }, [
+  const [emblaRef] = useEmblaCarousel({ loop: true, duration: 40 }, [
     Autoplay({ delay: 5000, stopOnInteraction: false })
   ]);
 
@@ -35,12 +36,12 @@ export default function LandingPage() {
 
   if (loading) return (
     <div className="h-screen w-full bg-[#0D1B2A] flex items-center justify-center">
-      <div className="w-10 h-10 rounded-xl bg-primary animate-bounce shadow-2xl shadow-primary/50" />
+      <div className="w-12 h-12 rounded-2xl bg-primary animate-pulse shadow-2xl shadow-primary/40" />
     </div>
   );
 
   return (
-    <div className="relative h-screen w-full bg-[#0D1B2A] overflow-hidden">
+    <div className="fixed inset-0 h-screen w-full bg-[#050A10] overflow-hidden">
       {/* Background Carousel */}
       <div className="absolute inset-0 z-0" ref={emblaRef}>
         <div className="flex h-full">
@@ -52,11 +53,11 @@ export default function LandingPage() {
                   src={imageData.imageUrl}
                   alt={slide.title}
                   fill
-                  className="object-cover opacity-60 scale-105"
+                  className="object-cover opacity-50 scale-105"
                   priority
                   data-ai-hint={imageData.imageHint}
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-[#0D1B2A]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-[#050A10]" />
               </div>
             );
           })}
@@ -64,28 +65,28 @@ export default function LandingPage() {
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 h-full flex flex-col justify-end px-6 pb-12">
-        <div className="max-w-md mx-auto w-full space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-primary font-bold tracking-[0.1em] text-[9px] uppercase glass w-fit px-3 py-1 rounded-full border-none">
-              <Sparkles className="w-3 h-3" />
+      <div className="relative z-10 h-full flex flex-col justify-end px-8 pb-16">
+        <div className="max-w-md mx-auto w-full space-y-10 animate-in fade-in slide-in-from-bottom-12 duration-1000">
+          <div className="space-y-4 text-center sm:text-left">
+            <div className="flex items-center gap-2 text-primary font-bold tracking-[0.2em] text-[10px] uppercase glass w-fit px-4 py-1.5 rounded-full border-none mx-auto sm:mx-0">
+              <Sparkles className="w-3.5 h-3.5" />
               Liquid Glass Experience
             </div>
-            <h1 className="text-5xl font-extrabold tracking-tighter text-white leading-[0.95] drop-shadow-xl">
-              Marketplace <br />
+            <h1 className="text-6xl font-black tracking-tighter text-white leading-[0.9] drop-shadow-2xl">
+              Quvora <br />
               <span className="text-primary">Redefined.</span>
             </h1>
-            <p className="text-base text-white/80 leading-relaxed font-medium max-w-[80%]">
-              Discover a faster, safer, and smarter way to trade in your community.
+            <p className="text-lg text-white/70 leading-relaxed font-medium max-w-[90%] mx-auto sm:mx-0">
+              India's first vernacular-first, AI-powered marketplace. Faster, safer, smarter.
             </p>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
             <AuthModal 
               defaultTab="register"
               trigger={
-                <Button className="h-16 rounded-2xl w-full text-lg font-bold shadow-xl shadow-primary/20 bg-primary hover:bg-primary/90 active:scale-95 transition-all">
-                  Create new account / continue <ArrowRight className="ml-2 w-5 h-5" />
+                <Button className="h-16 rounded-[1.5rem] w-full text-xl font-bold shadow-2xl shadow-primary/30 bg-primary hover:bg-primary/90 active:scale-95 transition-all">
+                  Create new account / continue <ArrowRight className="ml-2 w-6 h-6" />
                 </Button>
               }
             />
@@ -94,14 +95,14 @@ export default function LandingPage() {
               <AuthModal 
                 defaultTab="login"
                 trigger={
-                  <Button variant="ghost" className="flex-1 h-12 rounded-xl glass text-white font-bold border-none active:scale-95 transition-all text-sm">
+                  <Button variant="ghost" className="flex-1 h-14 rounded-[1.25rem] glass text-white font-bold border-none active:scale-95 transition-all text-sm">
                     Login options
                   </Button>
                 }
               />
               <Button 
                 variant="ghost" 
-                className="flex-1 h-12 rounded-xl glass text-white/40 font-bold border-none hover:text-white active:scale-95 transition-all text-sm"
+                className="flex-1 h-14 rounded-[1.25rem] glass text-white/40 font-bold border-none hover:text-white active:scale-95 transition-all text-sm"
                 onClick={() => router.push('/explore')}
               >
                 Guest View
@@ -109,18 +110,18 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="flex items-center justify-center gap-2 text-white/30 text-[8px] uppercase tracking-[0.2em] font-bold">
-            <ShieldCheck className="w-3 h-3" />
+          <div className="flex items-center justify-center gap-2 text-white/20 text-[9px] uppercase tracking-[0.3em] font-bold">
+            <ShieldCheck className="w-3.5 h-3.5" />
             End-to-End Encrypted Deals
           </div>
         </div>
       </div>
 
       {/* Slide Indicators */}
-      <div className="absolute top-12 left-6 right-6 flex gap-1.5 z-20">
+      <div className="absolute top-16 left-8 right-8 flex gap-2 z-20">
         {slides.map((_, i) => (
-          <div key={i} className="h-1 flex-1 glass rounded-full overflow-hidden border-none">
-            <div className="h-full bg-primary/30 w-full animate-in fade-in duration-500" />
+          <div key={i} className="h-1 flex-1 glass rounded-full overflow-hidden border-none opacity-40">
+            <div className="h-full bg-primary/50 w-full animate-in fade-in duration-700" />
           </div>
         ))}
       </div>
