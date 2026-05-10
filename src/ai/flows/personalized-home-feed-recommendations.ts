@@ -61,7 +61,6 @@ const prompt = ai.definePrompt({
   name: 'personalizedHomeFeedRecommendationsPrompt',
   input: {schema: PersonalizedHomeFeedRecommendationsInputSchema},
   output: {schema: PersonalizedHomeFeedRecommendationsOutputSchema},
-  model: 'googleai/gemini-1.5-flash',
   prompt: `You are an expert marketplace recommendation engine for Quvora, an Indian marketplace platform.
 Your task is to generate 5-10 distinct item recommendations for the user based on their browsing history, expressed interests, and current location.
 Focus on typical marketplace categories found in India such as Mobiles, Cars, Bikes, Electronics, Furniture, Jobs, Fashion, Real Estate, etc.
@@ -146,12 +145,14 @@ export async function personalizedHomeFeedRecommendations(
 
     return result.output;
   } catch (e: any) {
-    // Robust error logging to identify root causes (like 403 Forbidden)
-    const errorMessage = e?.message || 'Unknown error during AI generation';
+    // Extract the descriptive error message to avoid logging empty objects "{}"
+    const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown error during AI generation');
     console.error('GENKIT FLOW ERROR:', errorMessage);
     
-    // Check for specific "blocked" or "403" messages to help the user
-    if (errorMessage.includes('blocked') || errorMessage.includes('403')) {
+    // Check for common authentication or configuration issues to guide the user
+    if (errorMessage.includes('API key not valid')) {
+      console.error('HINT: Your GOOGLE_GENAI_API_KEY is missing or invalid. Please check your .env file.');
+    } else if (errorMessage.includes('blocked') || errorMessage.includes('403')) {
       console.error('HINT: Please enable the "Generative Language API" in your Google Cloud Console.');
     }
     
