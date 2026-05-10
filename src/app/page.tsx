@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -6,7 +7,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { Sparkles, Globe, Car, Smartphone, Home, Shield, ChevronRight, MapPin, Bell } from 'lucide-react';
+import { Sparkles, Globe, Car, Smartphone, Home, Shield, ChevronRight, MapPin, Bell, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AuthModal } from '@/components/auth/auth-modal';
 
@@ -58,9 +59,25 @@ const slides = [
 export default function LandingPage() {
   const router = useRouter();
   const { user, loading } = useUser();
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const [emblaRef] = useEmblaCarousel({ loop: true, duration: 40 }, [
     Autoplay({ delay: 5000, stopOnInteraction: false })
   ]);
+
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains('dark');
+    setTheme(isDark ? 'dark' : 'light');
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
 
   useEffect(() => {
     if (!loading && user) {
@@ -85,6 +102,18 @@ export default function LandingPage() {
             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/60">Quvora</span>
           </div>
           <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="glass h-8 w-8 rounded-full border-none transition-transform active:scale-90"
+              onClick={toggleTheme}
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-3.5 h-3.5 text-yellow-400" />
+              ) : (
+                <Moon className="w-3.5 h-3.5 text-primary" />
+              )}
+            </Button>
             <Button variant="ghost" size="icon" className="glass h-8 w-8 rounded-full border-none">
               <MapPin className="w-3.5 h-3.5 text-primary" />
             </Button>
