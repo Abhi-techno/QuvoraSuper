@@ -21,14 +21,11 @@ export function BottomNav() {
       {/* Floating Action Button (Post Ad) - Positioned separately above the navigation bar */}
       <Link 
         href="/post" 
-        className="fixed bottom-24 right-6 z-50 flex flex-col items-center group animate-in slide-in-from-bottom-8 duration-500 delay-300"
+        className="fixed bottom-20 right-6 z-50 flex flex-col items-center group animate-in slide-in-from-bottom-8 duration-500 delay-300"
       >
         <div className="post-ad-fab shadow-[0_15px_40px_-5px_rgba(255,107,43,0.4)] border-2 border-white/20">
           <Plus className="w-8 h-8" />
         </div>
-        <span className="text-[10px] font-bold text-accent mt-2 uppercase tracking-widest glass px-3 py-1 rounded-full shadow-lg">
-          Post Ad
-        </span>
       </Link>
 
       <nav className="ios-tab-bar">
