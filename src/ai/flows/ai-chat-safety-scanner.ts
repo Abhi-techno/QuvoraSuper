@@ -7,8 +7,8 @@
  * - ChatSafetyScannerOutput - The return type for the chatSafetyScanner function.
  */
 
-import {ai, googleAIPlugin} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const ChatSafetyScannerInputSchema = z.object({
   message: z.string().describe('The chat message to be scanned for suspicious content.'),
@@ -38,7 +38,7 @@ export async function chatSafetyScanner(input: ChatSafetyScannerInput): Promise<
 
 const chatSafetyScannerPrompt = ai.definePrompt({
   name: 'chatSafetyScannerPrompt',
-  model: googleAIPlugin.model('gemini-1.5-flash'),
+  model: 'googleai/gemini-1.5-flash',
   input: {schema: ChatSafetyScannerInputSchema},
   output: {schema: ChatSafetyScannerOutputSchema},
   prompt: `You are an AI assistant designed to detect suspicious content in chat messages. Your task is to identify phone numbers, email addresses, and external links.

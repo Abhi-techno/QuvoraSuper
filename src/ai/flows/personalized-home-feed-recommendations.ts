@@ -7,7 +7,7 @@
  * - PersonalizedHomeFeedRecommendationsOutput - The return type for the recommendation function.
  */
 
-import {ai, googleAIPlugin} from '@/ai/genkit';
+import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const PersonalizedHomeFeedRecommendationsInputSchema = z.object({
@@ -58,7 +58,7 @@ export type PersonalizedHomeFeedRecommendationsOutput = z.infer<
 
 const prompt = ai.definePrompt({
   name: 'personalizedHomeFeedRecommendationsPrompt',
-  model: googleAIPlugin.model('gemini-1.5-flash'),
+  model: 'googleai/gemini-1.5-flash',
   input: {schema: PersonalizedHomeFeedRecommendationsInputSchema},
   output: {schema: PersonalizedHomeFeedRecommendationsOutputSchema},
   prompt: `You are an expert marketplace recommendation engine for Quvora, an Indian marketplace platform.
@@ -144,7 +144,7 @@ export async function personalizedHomeFeedRecommendations(
 
     return result.output;
   } catch (e: any) {
-    // Extract the descriptive error message to avoid logging empty objects "{}"
+    // Extract descriptive info for logging
     const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown error during AI generation');
     const errorStack = e?.stack || 'No stack trace available';
     

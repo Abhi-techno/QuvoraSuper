@@ -7,7 +7,7 @@
  * - ChatAssistantOutput - The return type for the getChatAssistance function.
  */
 
-import { ai, googleAIPlugin } from '@/ai/genkit';
+import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
 const ChatAssistantInputSchema = z.object({
@@ -42,7 +42,7 @@ export async function getChatAssistance(input: ChatAssistantInput): Promise<Chat
 
 const prompt = ai.definePrompt({
   name: 'chatAssistantPrompt',
-  model: googleAIPlugin.model('gemini-1.5-flash'),
+  model: 'googleai/gemini-1.5-flash',
   input: { schema: ChatAssistantInputSchema },
   output: { schema: ChatAssistantOutputSchema },
   prompt: `You are an AI-powered chat assistant for a marketplace app. Your goal is to help users communicate efficiently and make informed decisions during chat and negotiation for a product listing.
