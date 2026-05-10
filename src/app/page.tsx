@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Search, Mic, Camera, ChevronRight, TrendingUp, Sparkles, MapPin, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -134,6 +135,7 @@ export default async function Home() {
           height={400}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           data-ai-hint={heroPromo.imageHint}
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-5">
           <Badge className="w-fit mb-2 bg-accent hover:bg-accent/90">Featured</Badge>
@@ -151,7 +153,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          {recommendations.recommendedItems.slice(0, 4).map((item: any) => (
+          {recommendations.recommendedItems.slice(0, 4).map((item: any, idx: number) => (
             <Link key={item.itemId} href={`/listing/${item.itemId}`}>
               <Card className="glass border-none overflow-hidden transition-transform active:scale-95">
                 <div className="relative aspect-square w-full">
@@ -162,6 +164,7 @@ export default async function Home() {
                     sizes="(max-width: 768px) 50vw, 33vw"
                     className="object-cover"
                     data-ai-hint={item.category}
+                    priority={idx < 2}
                   />
                   <div className="absolute top-2 right-2 glass p-1.5 rounded-full">
                     <Heart className="w-4 h-4 text-white" />
