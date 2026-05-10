@@ -42,7 +42,7 @@ const PersonalizedHomeFeedRecommendationsOutputSchema = z.object({
         imageUrl: z
           .string()
           .describe(
-            'A placeholder URL for the item image. ALWAYS use the format: https://picsum.photos/seed/<random_slug>/400/400'
+            'A placeholder URL for the item image. ALWAYS use the format: https://picsum.photos/seed/<unique_slug>/400/400'
           ),
         location: z
           .string()
@@ -134,7 +134,8 @@ const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
       }
       return output;
     } catch (e: any) {
-      console.error('Genkit personalizedHomeFeedRecommendationsFlow error:', e);
+      const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown Genkit Error');
+      console.error('Genkit personalizedHomeFeedRecommendationsFlow error:', errorMessage);
       throw e;
     }
   }
