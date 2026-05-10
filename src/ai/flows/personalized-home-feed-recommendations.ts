@@ -154,6 +154,8 @@ export async function personalizedHomeFeedRecommendations(
       console.error('HINT: Your GOOGLE_GENAI_API_KEY is missing or invalid. Please check your .env file.');
     } else if (errorMessage.includes('blocked') || errorMessage.includes('403')) {
       console.error('HINT: Please enable the "Generative Language API" in your Google Cloud Console.');
+    } else if (errorMessage.includes('404')) {
+      console.error('HINT: The model gemini-1.5-flash might be temporarily unavailable in your region on the v1beta endpoint.');
     }
     
     // Always return fallback data to maintain a working UI
