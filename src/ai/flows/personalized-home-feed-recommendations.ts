@@ -56,7 +56,7 @@ export type PersonalizedHomeFeedRecommendationsOutput = z.infer<
   typeof PersonalizedHomeFeedRecommendationsOutputSchema
 >;
 
-const personalizedHomeFeedRecommendationsPrompt = ai.definePrompt({
+const prompt = ai.definePrompt({
   name: 'personalizedHomeFeedRecommendationsPrompt',
   input: {schema: PersonalizedHomeFeedRecommendationsInputSchema},
   output: {schema: PersonalizedHomeFeedRecommendationsOutputSchema},
@@ -132,57 +132,23 @@ const FALLBACK_DATA: PersonalizedHomeFeedRecommendationsOutput = {
 export async function personalizedHomeFeedRecommendations(
   input: PersonalizedHomeFeedRecommendationsInput
 ): Promise<PersonalizedHomeFeedRecommendationsOutput> {
-  return personalizedHomeFeedRecommendationsFlow(input);
-}
-
-const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
-  {
-    name: 'personalizedHomeFeedRecommendationsFlow',
-    inputSchema: PersonalizedHomeFeedRecommendationsInputSchema,
-    outputSchema: PersonalizedHomeFeedRecommendationsOutputSchema,
-  },
-  async (input) => {
-    // 1. Pre-flight check: Validate API Key
-    const apiKey = process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY || '';
-    if (!apiKey || apiKey.includes('your_api_key')) {
-      console.log('AI Recommendations: No valid API Key. Using fallback.');
+  try {
+    // Attempt the AI prompt
+    const result = await prompt(input);
+    
+    // Check for output
+    if (!result?.output) {
+      console.warn('AI Recommendations: Prompt returned null or empty output.');
       return FALLBACK_DATA;
     }
 
-    try {
-      // 2. Safe execution: Avoid destructuring to prevent crash if prompt throws malformed object
-      const result = await personalizedHomeFeedRecommendationsPrompt(input);
-      
-      if (!result) {
-        console.warn('AI Recommendations: Prompt returned empty result.');
-        return FALLBACK_DATA;
-      }
-
-      if (!result.output) {
-        console.warn('AI Recommendations: Prompt result missing output field.');
-        return FALLBACK_DATA;
-      }
-
-      return result.output;
-    } catch (e: any) {
-      // 3. Advanced Diagnostic Logging: Extract real error details from the opaque SDK exception
-      const errorDetail = {
-        message: e?.message || 'Unknown Flow Error',
-        status: e?.status || 'N/A',
-        stack: e?.stack || 'No stack trace available',
-        raw: typeof e === 'object' ? JSON.stringify(e) : String(e)
-      };
-
-      if (errorDetail.message.includes('API key not valid') || errorDetail.message.includes('403')) {
-        console.log('AI Recommendations: Authentication failure. Using fallback.');
-      } else if (errorDetail.message.includes('404') || errorDetail.message.includes('not found')) {
-        console.warn('AI Recommendations: Model routing issue (404). Check genkit.ts config.');
-      } else {
-        console.error('AI RECOMMENDATION SYSTEM CRASH:', errorDetail);
-      }
-      
-      // 4. Guaranteed Non-Blocking Return
-      return FALLBACK_DATA;
-    }
+    return result.output;
+  } catch (e: any) {
+    // Improved logging: specifically extract the message to avoid the "{}" display issue
+    const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown error during AI generation');
+    console.error('AI FLOW ERROR:', errorMessage);
+    
+    // Fallback gracefully so the UI doesn't crash
+    return FALLBACK_DATA;
   }
-);
+}
