@@ -1,4 +1,3 @@
-
 "use client"
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -30,26 +29,26 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
   return (
     <header className={cn(
       "ios-top-nav sticky top-0 w-full z-50 transition-all duration-300",
-      isScrolled ? "bg-background/80 shadow-sm" : "bg-transparent"
+      isScrolled ? "bg-background/80 glass-thick" : "bg-transparent"
     )}>
       {context === 'home' && (
         <div className="flex items-center justify-between w-full">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-xl">Q</div>
+          <Link href="/explore" className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-primary/20">Q</div>
           </Link>
-          <Button variant="ghost" className="glass h-9 rounded-full px-4 flex items-center gap-1">
-            <MapPin className="w-3.5 h-3.5 text-primary" />
-            <span className="text-xs font-medium">Mumbai, MH</span>
+          <Button variant="ghost" className="glass h-8 rounded-full px-3 flex items-center gap-1 border-none">
+            <MapPin className="w-3 h-3 text-primary" />
+            <span className="text-[10px] font-bold">Mumbai</span>
           </Button>
           <div className="flex items-center gap-2">
             <Link href="/notifications">
-              <Button size="icon" variant="ghost" className="relative glass rounded-full h-9 w-9">
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-2 right-2 w-2 h-2 bg-accent rounded-full border-2 border-background" />
+              <Button size="icon" variant="ghost" className="relative glass rounded-full h-8 w-8 border-none">
+                <Bell className="w-4 h-4" />
+                <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-accent rounded-full border border-background" />
               </Button>
             </Link>
             <Link href="/me">
-              <Avatar className="w-9 h-9 border-2 border-primary/20">
+              <Avatar className="w-8 h-8 border border-primary/20">
                 <AvatarImage src="https://picsum.photos/seed/user/150/150" />
                 <AvatarFallback>U</AvatarFallback>
               </Avatar>
@@ -60,57 +59,56 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
 
       {context === 'detail' && (
         <div className="flex items-center justify-between w-full">
-          <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full bg-black/20 text-white border-none">
-            <ChevronLeft className="w-6 h-6" />
+          <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full bg-black/20 text-white border-none h-8 w-8">
+            <ChevronLeft className="w-5 h-5" />
           </Button>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="glass rounded-full bg-black/20 text-white border-none">
-              <Share2 className="w-5 h-5" />
+            <Button variant="ghost" size="icon" className="glass rounded-full bg-black/20 text-white border-none h-8 w-8">
+              <Share2 className="w-4 h-4" />
             </Button>
-            <Button variant="ghost" size="icon" className="glass rounded-full bg-black/20 text-white border-none">
-              <Heart className="w-5 h-5" />
+            <Button variant="ghost" size="icon" className="glass rounded-full bg-black/20 text-white border-none h-8 w-8">
+              <Heart className="w-4 h-4" />
             </Button>
           </div>
         </div>
       )}
 
       {(context === 'browse' || context === 'notifications' || context === 'saved') && (
-        <div className="flex items-center justify-between w-full">
-          <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full">
-            <ChevronLeft className="w-6 h-6" />
+        <div className="flex items-center justify-between w-full px-2">
+          <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full h-8 w-8 border-none">
+            <ChevronLeft className="w-5 h-5" />
           </Button>
-          <h1 className="text-lg font-bold">
+          <h1 className="text-sm font-bold uppercase tracking-widest">
             {context === 'browse' ? 'Browse' : 
-             context === 'notifications' ? 'Notifications' : 'Saved Items'}
+             context === 'notifications' ? 'Alerts' : 'Saved'}
           </h1>
-          <div className="w-10" />
+          <div className="w-8" />
         </div>
       )}
 
       {context === 'post' && (
-        <div className="flex items-center justify-between w-full">
-          <Button variant="ghost" size="icon" onClick={() => router.push('/')} className="glass rounded-full">
-            <X className="w-6 h-6" />
+        <div className="flex items-center justify-between w-full px-2">
+          <Button variant="ghost" size="icon" onClick={() => router.push('/explore')} className="glass rounded-full h-8 w-8 border-none">
+            <X className="w-5 h-5" />
           </Button>
           <div className="text-center">
-            <h1 className="text-sm font-bold">Post Ad</h1>
-            <p className="text-[10px] text-muted-foreground font-bold tracking-widest uppercase">Step 1 of 5</p>
+            <h1 className="text-[10px] font-bold uppercase tracking-widest">Post Ad</h1>
           </div>
-          <Button variant="ghost" size="icon" className="glass rounded-full">
-            <HelpCircle className="w-5 h-5" />
+          <Button variant="ghost" size="icon" className="glass rounded-full h-8 w-8 border-none">
+            <HelpCircle className="w-4 h-4" />
           </Button>
         </div>
       )}
 
       {(context === 'profile' || context === 'chat-list') && (
-        <div className="flex items-center justify-between w-full">
-          <div className="w-10" />
-          <h1 className="text-lg font-bold">
+        <div className="flex items-center justify-between w-full px-2">
+          <div className="w-8" />
+          <h1 className="text-sm font-bold uppercase tracking-widest">
             {context === 'profile' ? 'My Quvora' : 'Messages'}
           </h1>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="glass rounded-full">
-              {context === 'profile' ? <Settings className="w-5 h-5" /> : <Search className="w-5 h-5" />}
+            <Button variant="ghost" size="icon" className="glass rounded-full h-8 w-8 border-none">
+              {context === 'profile' ? <Settings className="w-4 h-4" /> : <Search className="w-4 h-4" />}
             </Button>
           </div>
         </div>
