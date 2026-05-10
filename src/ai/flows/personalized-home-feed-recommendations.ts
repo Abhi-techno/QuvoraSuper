@@ -90,6 +90,11 @@ For the "imageUrl" field, you MUST ONLY use URLs from picsum.photos.
 Use this exact format: https://picsum.photos/seed/<unique_slug>/400/400
 Replace <unique_slug> with a unique, descriptive slug for each item (e.g., iphone15pro, vintagebike, modernsofa).
 
+STRICT OUTPUT INSTRUCTIONS:
+- Return response in strict JSON format.
+- Do not use markdown (no \`\`\`json blocks).
+- Ensure all fields match the requested schema exactly.
+
 User ID: {{{userId}}}
 Browsing History:
 {{#each browsingHistory}}
@@ -101,9 +106,7 @@ Expressed Interests:
 - {{{this}}}
 {{/each}}
 
-Current Location: {{{currentLocation}}}
-
-Generate recommendations in the specified JSON format. Ensure all fields are populated with realistic-sounding data.`,
+Current Location: {{{currentLocation}}}`,
 });
 
 const FALLBACK_DATA: PersonalizedHomeFeedRecommendationsOutput = {
@@ -160,32 +163,44 @@ const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
     outputSchema: PersonalizedHomeFeedRecommendationsOutputSchema,
   },
   async (input) => {
-    // Pre-emptively check for valid API key to avoid slow server startup timeouts
+    // 1. Check for API key presence
     const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_GENAI_API_KEY || '';
-    const isApiKeyMissing = !apiKey || apiKey === 'your_api_key_here' || apiKey === '';
-
-    if (isApiKeyMissing) {
-      console.log('AI Recommendations: No API Key found, using fallback.');
+    if (!apiKey || apiKey === 'your_api_key_here') {
+      console.log('AI Recommendations: No valid API Key found. Using fallback.');
       return FALLBACK_DATA;
     }
 
     try {
-      const {output} = await personalizedHomeFeedRecommendationsPrompt(input);
-      if (!output) {
-        throw new Error('No recommendations were generated.');
+      // 2. Safe call - avoid direct destructuring to catch null/undefined results
+      const result = await personalizedHomeFeedRecommendationsPrompt(input);
+      
+      if (!result) {
+        console.warn('AI Recommendations: Prompt returned null result.');
+        return FALLBACK_DATA;
       }
-      return output;
+
+      if (!result.output) {
+        console.warn('AI Recommendations: Prompt result missing output property.');
+        return FALLBACK_DATA;
+      }
+
+      return result.output;
     } catch (e: any) {
-      // Improved error detection
-      const errorMsg = e?.message || (typeof e === 'string' ? e : '');
-      const isConfigError = errorMsg.includes('API key') || errorMsg.includes('404') || errorMsg.includes('not found');
+      // 3. Improved error logging
+      const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown Error');
+      const isConfigError = errorMessage.includes('API key') || errorMessage.includes('404') || errorMessage.includes('403');
       
       if (isConfigError) {
-        console.log('AI Recommendations: Configuration or Model error, using fallback.');
+        console.log('AI Recommendations: Service configuration error. Using fallback.');
       } else {
-        console.error('Genkit flow execution error:', errorMsg || 'Unknown error');
+        console.error('AI Recommendation Flow Error:', {
+          message: errorMessage,
+          stack: e?.stack,
+          raw: JSON.stringify(e, null, 2)
+        });
       }
       
+      // 4. Guaranteed fallback return
       return FALLBACK_DATA;
     }
   }
