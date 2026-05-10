@@ -42,7 +42,7 @@ const PersonalizedHomeFeedRecommendationsOutputSchema = z.object({
         imageUrl: z
           .string()
           .describe(
-            'A placeholder URL for the item image, e.g., "https://example.com/item1.jpg".'
+            'A placeholder URL for the item image. ALWAYS use the format: https://picsum.photos/seed/<random_string>/400/400'
           ),
         location: z
           .string()
@@ -70,6 +70,11 @@ const personalizedHomeFeedRecommendationsPrompt = ai.definePrompt({
 Your task is to generate 5-10 distinct item recommendations for the user based on their browsing history, expressed interests, and current location.
 Focus on typical marketplace categories found in India such as Mobiles, Cars, Bikes, Electronics, Furniture, Jobs, Fashion, Real Estate, etc.
 Invent plausible item details including title, description, price (using Indian Rupee symbol ₹), a placeholder image URL, location, and category.
+
+CRITICAL INSTRUCTION FOR IMAGES:
+For the "imageUrl" field, you MUST ONLY use URLs from picsum.photos. 
+Use this exact format: https://picsum.photos/seed/{{itemId}}/400/400
+Replace {{itemId}} with a unique, descriptive slug for each item (e.g., iphone15pro, vintagebike, modernsofa).
 
 User ID: {{{userId}}}
 Browsing History:
