@@ -1,17 +1,23 @@
 
-"use client"
+"use client";
 
 import React, { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { TopNav } from './top-nav';
 import { BottomNav } from './bottom-nav';
 
 export function AppNav({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Hide nav on entry flow routes
-  const hideNav = ['/splash', '/onboarding', '/login', '/verify', '/register'].includes(pathname);
+  // Auth Guard Logic (Mocked for Demo)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Hide nav on entry flow routes and Landing Page
+  const isLandingPage = pathname === '/';
+  const hideNavOnRoutes = ['/splash', '/onboarding', '/login', '/verify', '/register'];
+  const shouldHideNav = hideNavOnRoutes.includes(pathname) || isLandingPage;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,7 +27,17 @@ export function AppNav({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (hideNav) return <>{children}</>;
+  // Simplified Dashboard Access Check
+  // In a real app, this would use the useUser hook from Firebase
+  useEffect(() => {
+    const protectedRoutes = ['/me', '/chat', '/post', '/my-ads', '/notifications', '/saved'];
+    if (protectedRoutes.includes(pathname) && !isLoggedIn) {
+      // For demo, we don't strictly redirect yet to allow UI review
+      // router.push('/');
+    }
+  }, [pathname, isLoggedIn, router]);
+
+  if (shouldHideNav) return <>{children}</>;
 
   return (
     <>

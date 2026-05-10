@@ -1,3 +1,4 @@
+
 {
   "placeholderImages": [
     {
@@ -7,28 +8,40 @@
       "imageHint": "luxury watch"
     },
     {
-      "id": "fallback-iphone",
-      "description": "iPhone 15 Pro Max",
-      "imageUrl": "https://picsum.photos/seed/f1/400/400",
-      "imageHint": "iphone smartphone"
+      "id": "slide-1",
+      "description": "Mobile Marketplace",
+      "imageUrl": "https://picsum.photos/seed/slide1/800/1200",
+      "imageHint": "smartphone marketplace"
     },
     {
-      "id": "fallback-sofa",
-      "description": "Modern L-Shaped Sofa",
-      "imageUrl": "https://picsum.photos/seed/f2/400/400",
-      "imageHint": "sofa furniture"
+      "id": "slide-2",
+      "description": "Premium Cars",
+      "imageUrl": "https://picsum.photos/seed/slide2/800/1200",
+      "imageHint": "luxury car"
     },
     {
-      "id": "fallback-bike",
-      "description": "Royal Enfield Classic 350",
-      "imageUrl": "https://picsum.photos/seed/f3/400/400",
-      "imageHint": "motorcycle bike"
+      "id": "slide-3",
+      "description": "Smart Electronics",
+      "imageUrl": "https://picsum.photos/seed/slide3/800/1200",
+      "imageHint": "laptop computer"
     },
     {
-      "id": "fallback-macbook",
-      "description": "MacBook Air M2",
-      "imageUrl": "https://picsum.photos/seed/f4/400/400",
-      "imageHint": "laptop electronics"
+      "id": "slide-4",
+      "description": "Modern Furniture",
+      "imageUrl": "https://picsum.photos/seed/slide4/800/1200",
+      "imageHint": "modern sofa"
+    },
+    {
+      "id": "slide-5",
+      "description": "Local Community",
+      "imageUrl": "https://picsum.photos/seed/slide5/800/1200",
+      "imageHint": "people community"
+    },
+    {
+      "id": "slide-6",
+      "description": "Verified Safety",
+      "imageUrl": "https://picsum.photos/seed/slide6/800/1200",
+      "imageHint": "security shield"
     }
   ]
 }

@@ -1,207 +1,145 @@
-import React from 'react';
-import { Search, Mic, Camera, ChevronRight, TrendingUp, Sparkles, MapPin, Heart } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+
+"use client";
+
+import React, { useEffect, useCallback } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Sparkles, ChevronRight, ArrowRight } from 'lucide-react';
+import { AuthModal } from '@/components/auth/auth-modal';
 import { getPlaceholderById } from '@/lib/placeholder-images';
 
-export default function Home() {
-  // Centralized placeholder images
-  const heroPromo = getPlaceholderById('hero-promo');
-  
-  // Static recommendations for stability
-  const recommendations = {
-    recommendedItems: [
-      {
-        itemId: 'static-1',
-        title: 'iPhone 15 Pro Max',
-        description: 'Like new condition, 256GB',
-        price: '₹1,15,000',
-        imageUrl: 'https://picsum.photos/seed/f1/400/400',
-        location: 'Andheri, Mumbai',
-        category: 'Mobiles'
-      },
-      {
-        itemId: 'static-2',
-        title: 'Modern L-Shaped Sofa',
-        description: 'Premium fabric, 6 months old',
-        price: '₹28,500',
-        imageUrl: 'https://picsum.photos/seed/f2/400/400',
-        location: 'Powai, Mumbai',
-        category: 'Furniture'
-      },
-      {
-        itemId: 'static-3',
-        title: 'Royal Enfield Classic 350',
-        description: '2022 model, single owner',
-        price: '₹1,85,000',
-        imageUrl: 'https://picsum.photos/seed/f3/400/400',
-        location: 'Bandra, Mumbai',
-        category: 'Bikes'
-      },
-      {
-        itemId: 'static-4',
-        title: 'MacBook Air M2',
-        description: '8GB/256GB, Space Grey',
-        price: '₹72,000',
-        imageUrl: 'https://picsum.photos/seed/f4/400/400',
-        location: 'Colaba, Mumbai',
-        category: 'Electronics'
-      }
-    ]
-  };
+const slides = [
+  {
+    id: 'slide-1',
+    title: 'Your World. One Place.',
+    subtitle: 'India\'s fastest growing AI-powered local marketplace.',
+    badge: 'VERNACULAR FIRST'
+  },
+  {
+    id: 'slide-2',
+    title: 'Premium Cars & Bikes',
+    subtitle: 'Verified listings from trusted sellers in your city.',
+    badge: '100% VERIFIED'
+  },
+  {
+    id: 'slide-3',
+    title: 'Latest Gadgets',
+    subtitle: 'Upgrade your tech with smart price suggestions.',
+    badge: 'AI PRICING'
+  },
+  {
+    id: 'slide-4',
+    title: 'Modern Living',
+    subtitle: 'Furniture and decor that fits your lifestyle.',
+    badge: 'HOME & DECOR'
+  },
+  {
+    id: 'slide-5',
+    title: 'Local Community',
+    subtitle: 'Buy and sell within your neighborhood safely.',
+    badge: 'LOCAL FIRST'
+  },
+  {
+    id: 'slide-6',
+    title: 'Secure Trading',
+    subtitle: 'Direct chat with sellers. No hidden middlemen.',
+    badge: 'SECURE CHAT'
+  }
+];
 
-  const mainCategories = [
-    { label: 'Mobiles', icon: '📱' },
-    { label: 'Cars', icon: '🚗' },
-    { label: 'Bikes', icon: '🏍️' },
-    { label: 'Electronics', icon: '💻' },
-    { label: 'Furniture', icon: '🛋️' },
-    { label: 'Jobs', icon: '💼' },
-    { label: 'Properties', icon: '🏠' },
-    { label: 'Fashion', icon: '👕' },
-  ];
+export default function LandingPage() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({ delay: 4000, stopOnInteraction: false })
+  ]);
 
   return (
-    <div className="flex flex-col gap-6 px-4 pt-4 animate-in fade-in duration-700">
-      {/* Search Header */}
-      <div className="relative flex items-center group">
-        <Search className="absolute left-3 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-        <Input 
-          className="pl-10 pr-20 h-12 glass rounded-2xl border-none ring-offset-background placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary" 
-          placeholder="Search for anything..." 
-        />
-        <div className="absolute right-2 flex gap-1">
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-primary">
-            <Mic className="w-4 h-4" />
-          </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-primary">
-            <Camera className="w-4 h-4" />
-          </Button>
+    <div className="relative h-screen w-full bg-[#0D1B2A] overflow-hidden">
+      {/* Background Carousel */}
+      <div className="absolute inset-0 z-0" ref={emblaRef}>
+        <div className="flex h-full">
+          {slides.map((slide) => {
+            const imageData = getPlaceholderById(slide.id);
+            return (
+              <div key={slide.id} className="relative flex-[0_0_100%] h-full">
+                <Image
+                  src={imageData.imageUrl}
+                  alt={slide.title}
+                  fill
+                  className="object-cover opacity-60"
+                  priority
+                  data-ai-hint={imageData.imageHint}
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#0D1B2A]" />
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* Categories Horizontal Scroll */}
-      <section>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-bold tracking-tight">Browse Categories</h2>
-          <Link href="/browse" className="text-xs font-medium text-primary flex items-center">
-            See All <ChevronRight className="w-3 h-3 ml-0.5" />
-          </Link>
-        </div>
-        <ScrollArea className="w-full whitespace-nowrap">
-          <div className="flex space-x-3 pb-2">
-            {mainCategories.map((cat) => (
-              <Button key={cat.label} variant="outline" className="h-20 w-20 flex-col gap-1.5 glass border-none rounded-2xl transition-transform active:scale-95">
-                <span className="text-2xl">{cat.icon}</span>
-                <span className="text-[10px] font-semibold">{cat.label}</span>
+      {/* Content Overlay */}
+      <div className="relative z-10 h-full flex flex-col justify-end px-6 pb-12">
+        <div className="max-w-md mx-auto w-full space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-primary font-bold tracking-widest text-[10px] uppercase bg-primary/10 w-fit px-3 py-1 rounded-full border border-primary/20">
+              <Sparkles className="w-3 h-3" />
+              Powered by Quvora AI
+            </div>
+            <h1 className="text-5xl font-bold tracking-tight text-white leading-[1.1]">
+              Quvora <br />
+              Marketplace
+            </h1>
+            <p className="text-lg text-white/70 leading-relaxed font-medium">
+              India's first vernacular-first, AI-powered marketplace for everything.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <AuthModal 
+              defaultTab="register"
+              trigger={
+                <Button className="h-16 rounded-2xl w-full text-lg font-bold shadow-2xl shadow-primary/20 bg-primary hover:bg-primary/90">
+                  Get Started <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              }
+            />
+            
+            <div className="flex items-center gap-4">
+              <AuthModal 
+                defaultTab="login"
+                trigger={
+                  <Button variant="ghost" className="flex-1 h-14 rounded-2xl glass text-white font-bold border-white/10">
+                    Login
+                  </Button>
+                }
+              />
+              <Button 
+                variant="ghost" 
+                className="flex-1 h-14 rounded-2xl glass text-white/60 font-bold border-white/10 hover:text-white"
+                asChild
+              >
+                <a href="/explore">Guest View</a>
               </Button>
-            ))}
+            </div>
           </div>
-          <ScrollBar orientation="horizontal" className="invisible" />
-        </ScrollArea>
-      </section>
 
-      {/* Hero Banner Carousel (Static for MVP) */}
-      <section className="relative h-44 rounded-3xl overflow-hidden shadow-lg border border-white/10 group">
-        <Image 
-          src={heroPromo.imageUrl} 
-          alt={heroPromo.description} 
-          width={800}
-          height={400}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          data-ai-hint={heroPromo.imageHint}
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-5">
-          <Badge className="w-fit mb-2 bg-accent hover:bg-accent/90">Featured</Badge>
-          <h3 className="text-white text-xl font-bold leading-tight">Upgrade Your Style with<br/>Premium Watches</h3>
-          <p className="text-white/70 text-xs mt-1">Starting from ₹4,999</p>
+          <div className="text-center">
+            <p className="text-[10px] text-white/30 tracking-widest uppercase font-bold">
+              Trusted by 1M+ Users across India
+            </p>
+          </div>
         </div>
-      </section>
+      </div>
 
-      {/* Recommendations */}
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-accent" />
-            <h2 className="text-lg font-bold tracking-tight">Handpicked for You</h2>
+      {/* Slide Indicators */}
+      <div className="absolute top-12 left-6 right-6 flex gap-1.5 z-20">
+        {slides.map((_, i) => (
+          <div key={i} className="h-1 flex-1 bg-white/10 rounded-full overflow-hidden">
+            <div className="h-full bg-primary/40 w-full" />
           </div>
-        </div>
-        <div className="grid grid-cols-2 gap-4">
-          {recommendations.recommendedItems.map((item, idx) => (
-            <Link key={item.itemId} href={`/listing/${item.itemId}`}>
-              <Card className="glass border-none overflow-hidden transition-transform active:scale-95">
-                <div className="relative aspect-square w-full">
-                  <Image 
-                    src={item.imageUrl} 
-                    alt={item.title} 
-                    fill 
-                    sizes="(max-width: 768px) 50vw, 33vw"
-                    className="object-cover"
-                    priority={idx < 2}
-                  />
-                  <div className="absolute top-2 right-2 glass p-1.5 rounded-full">
-                    <Heart className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-                <CardContent className="p-3">
-                  <p className="text-[10px] font-bold text-accent uppercase tracking-wider">{item.category}</p>
-                  <h3 className="text-sm font-semibold truncate mt-0.5">{item.title}</h3>
-                  <p className="text-lg font-bold text-primary mt-1">{item.price}</p>
-                  <div className="flex items-center gap-1 mt-2 text-[10px] text-muted-foreground">
-                    <MapPin className="w-2.5 h-2.5" />
-                    <span className="truncate">{item.location}</span>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Trending Section */}
-      <section className="pb-8">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-primary" />
-            <h2 className="text-lg font-bold tracking-tight">Trending in Mumbai</h2>
-          </div>
-          <Link href="/browse" className="text-xs font-medium text-primary">View All</Link>
-        </div>
-        <ScrollArea className="w-full whitespace-nowrap">
-          <div className="flex space-x-4 pb-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="w-64 flex-shrink-0">
-                <Card className="glass border-none overflow-hidden">
-                  <div className="relative h-40">
-                    <Image 
-                      src={`https://picsum.photos/seed/trend${i}/400/300`} 
-                      alt="Trend" 
-                      fill 
-                      sizes="(max-width: 768px) 100vw, 400px"
-                      className="object-cover" 
-                    />
-                  </div>
-                  <CardContent className="p-4 flex flex-col gap-1">
-                    <h3 className="font-bold whitespace-normal line-clamp-2">2022 Toyota Fortuner Sigma 4 - Low Miles</h3>
-                    <p className="text-xl font-bold text-primary">₹32,50,000</p>
-                    <div className="flex justify-between items-center mt-2">
-                      <span className="text-xs text-muted-foreground">Powai, Mumbai</span>
-                      <span className="text-[10px] glass px-2 py-0.5 rounded-full">2 hrs ago</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
-          <ScrollBar orientation="horizontal" className="invisible" />
-        </ScrollArea>
-      </section>
+        ))}
+      </div>
     </div>
   );
 }
