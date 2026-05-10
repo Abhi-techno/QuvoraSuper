@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Search, Mic, Camera, ChevronRight, TrendingUp, Sparkles, MapPin, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -31,8 +30,6 @@ export default async function Home() {
       currentLocation: 'Mumbai'
     });
   } catch (error: any) {
-    // This catch is usually redundant as the flow itself handles fallbacks, 
-    // but kept for absolute safety in server component rendering
     recommendations = {
       recommendedItems: [
         {
@@ -192,7 +189,7 @@ export default async function Home() {
             <TrendingUp className="w-5 h-5 text-primary" />
             <h2 className="text-lg font-bold tracking-tight">Trending in Mumbai</h2>
           </div>
-          <Link href="/trending" className="text-xs font-medium text-primary">View All</Link>
+          <Link href="/browse" className="text-xs font-medium text-primary">View All</Link>
         </div>
         <ScrollArea className="w-full whitespace-nowrap">
           <div className="flex space-x-4 pb-4">

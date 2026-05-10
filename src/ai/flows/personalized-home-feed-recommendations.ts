@@ -58,6 +58,7 @@ export type PersonalizedHomeFeedRecommendationsOutput = z.infer<
 
 const personalizedHomeFeedRecommendationsPrompt = ai.definePrompt({
   name: 'personalizedHomeFeedRecommendationsPrompt',
+  model: 'googleai/gemini-1.5-flash',
   input: {schema: PersonalizedHomeFeedRecommendationsInputSchema},
   output: {schema: PersonalizedHomeFeedRecommendationsOutputSchema},
   config: {
@@ -165,7 +166,6 @@ const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
     const isApiKeyMissing = !apiKey || apiKey === 'your_api_key_here' || apiKey === '';
 
     if (isApiKeyMissing) {
-      console.log('AI Recommendations: API key missing, using fallback data.');
       return FALLBACK_DATA;
     }
 
@@ -176,10 +176,16 @@ const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
       }
       return output;
     } catch (e: any) {
-      // Gracefully handle common API key configuration issues during local dev
       const errorMessage = e?.message || '';
-      if (errorMessage.includes('API key not valid') || errorMessage.includes('your_api_key_here')) {
-        console.log('AI Recommendations: Using fallback data. (Add a valid GEMINI_API_KEY to .env to enable)');
+      // Check for common configuration or availability errors
+      const isExpectedError = 
+        errorMessage.includes('API key not valid') || 
+        errorMessage.includes('not found') || 
+        errorMessage.includes('404') ||
+        errorMessage.includes('v1beta');
+
+      if (isExpectedError) {
+        console.log('AI Recommendations: Using fallback data (Config/Model issue).');
       } else {
         console.error('Genkit personalizedHomeFeedRecommendationsFlow error:', errorMessage || e);
       }
