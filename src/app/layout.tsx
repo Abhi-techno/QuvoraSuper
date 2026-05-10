@@ -1,8 +1,10 @@
+
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { AppNav } from '@/components/navigation/app-nav';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
+import React from 'react';
 
 export const metadata: Metadata = {
   title: 'Quvora',
@@ -28,9 +30,14 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
+  params
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<any>;
 }>) {
+  // Unwrap params for Next.js 15 compatibility
+  React.use(params);
+
   return (
     <html lang="en" className="dark">
       <head>

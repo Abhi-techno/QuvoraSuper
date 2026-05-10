@@ -1,6 +1,7 @@
+
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, use } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { useUser } from '@/firebase';
@@ -55,7 +56,17 @@ const slides = [
   }
 ];
 
-export default function LandingPage() {
+export default function LandingPage({
+  params,
+  searchParams
+}: {
+  params: Promise<any>;
+  searchParams: Promise<any>;
+}) {
+  // Unwrap promises for Next.js 15
+  use(params);
+  use(searchParams);
+
   const router = useRouter();
   const { user, loading } = useUser();
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');

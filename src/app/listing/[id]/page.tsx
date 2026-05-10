@@ -1,7 +1,7 @@
 
 "use client"
 
-import React from 'react';
+import React, { use } from 'react';
 import Image from 'next/image';
 import { 
   Heart, 
@@ -21,11 +21,19 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-export default function ListingDetailPage() {
+export default function ListingDetailPage({ 
+  params,
+  searchParams
+}: { 
+  params: Promise<{ id: string }>;
+  searchParams: Promise<any>;
+}) {
   const router = useRouter();
-  const { id } = useParams();
+  // Unwrap params and searchParams for Next.js 15
+  const { id } = use(params);
+  use(searchParams);
 
   // Mock data
   const listing = {

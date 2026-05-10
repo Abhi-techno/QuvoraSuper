@@ -1,7 +1,7 @@
 
 "use client";
 
-import React from 'react';
+import React, { use } from 'react';
 import { Search, Mic, Camera, ChevronRight, TrendingUp, Sparkles, MapPin, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,7 +11,17 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function ExplorePage() {
+export default function ExplorePage({
+  params,
+  searchParams
+}: {
+  params: Promise<any>;
+  searchParams: Promise<any>;
+}) {
+  // Unwrap promises for Next.js 15
+  use(params);
+  use(searchParams);
+
   const recommendations = [
     {
       itemId: 'static-1',
