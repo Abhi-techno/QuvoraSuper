@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Provides personalized home feed recommendations to users.
@@ -60,6 +61,10 @@ const prompt = ai.definePrompt({
   name: 'personalizedHomeFeedRecommendationsPrompt',
   input: {schema: PersonalizedHomeFeedRecommendationsInputSchema},
   output: {schema: PersonalizedHomeFeedRecommendationsOutputSchema},
+  config: {
+    // Explicitly using the string identifier which is most compatible
+    model: 'googleai/gemini-1.5-flash',
+  },
   prompt: `You are an expert marketplace recommendation engine for Quvora, an Indian marketplace platform.
 Your task is to generate 5-10 distinct item recommendations for the user based on their browsing history, expressed interests, and current location.
 Focus on typical marketplace categories found in India such as Mobiles, Cars, Bikes, Electronics, Furniture, Jobs, Fashion, Real Estate, etc.
@@ -133,22 +138,27 @@ export async function personalizedHomeFeedRecommendations(
   input: PersonalizedHomeFeedRecommendationsInput
 ): Promise<PersonalizedHomeFeedRecommendationsOutput> {
   try {
-    // Attempt the AI prompt
+    // Attempt the AI prompt call with safe access
     const result = await prompt(input);
     
-    // Check for output
-    if (!result?.output) {
-      console.warn('AI Recommendations: Prompt returned null or empty output.');
+    // Check for output explicitly
+    if (!result || !result.output) {
+      console.warn('AI Recommendations: Prompt returned no valid output. Using fallback data.');
       return FALLBACK_DATA;
     }
 
     return result.output;
   } catch (e: any) {
-    // Improved logging: specifically extract the message to avoid the "{}" display issue
+    // Log detailed error information for debugging while ensuring the UI doesn't crash
     const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown error during AI generation');
     console.error('AI FLOW ERROR:', errorMessage);
     
-    // Fallback gracefully so the UI doesn't crash
+    // If we hit a 404 or model error, log a specific warning
+    if (errorMessage.includes('404') || errorMessage.includes('not found')) {
+      console.warn('AI Recommendations: Model resolution failed (404). This often indicates an API key or configuration issue.');
+    }
+    
+    // Always return fallback data to maintain a working UI
     return FALLBACK_DATA;
   }
 }
