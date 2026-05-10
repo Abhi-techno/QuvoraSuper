@@ -12,9 +12,9 @@ export function BottomNav() {
   const tabs = [
     { label: 'Home', icon: Home, href: '/' },
     { label: 'Browse', icon: Grid, href: '/browse' },
-    { label: 'Post Ad', icon: Plus, href: '/post', isFab: true },
     { label: 'Chat', icon: MessageCircle, href: '/chat', badge: 3 },
     { label: 'Me', icon: User, href: '/me' },
+    { label: 'Post Ad', icon: Plus, href: '/post', isFab: true },
   ];
 
   return (
