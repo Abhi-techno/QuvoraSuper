@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview Provides personalized home feed recommendations to users.
@@ -61,10 +60,8 @@ const prompt = ai.definePrompt({
   name: 'personalizedHomeFeedRecommendationsPrompt',
   input: {schema: PersonalizedHomeFeedRecommendationsInputSchema},
   output: {schema: PersonalizedHomeFeedRecommendationsOutputSchema},
-  config: {
-    // Explicitly using the string identifier which is most compatible
-    model: 'googleai/gemini-1.5-flash',
-  },
+  // CORRECT: model is a top-level property, NOT inside config/generationConfig
+  model: 'googleai/gemini-1.5-flash',
   prompt: `You are an expert marketplace recommendation engine for Quvora, an Indian marketplace platform.
 Your task is to generate 5-10 distinct item recommendations for the user based on their browsing history, expressed interests, and current location.
 Focus on typical marketplace categories found in India such as Mobiles, Cars, Bikes, Electronics, Furniture, Jobs, Fashion, Real Estate, etc.
@@ -153,9 +150,9 @@ export async function personalizedHomeFeedRecommendations(
     const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown error during AI generation');
     console.error('AI FLOW ERROR:', errorMessage);
     
-    // If we hit a 404 or model error, log a specific warning
-    if (errorMessage.includes('404') || errorMessage.includes('not found')) {
-      console.warn('AI Recommendations: Model resolution failed (404). This often indicates an API key or configuration issue.');
+    // Specific check for the generationConfig/model error we just fixed
+    if (errorMessage.includes('model') && errorMessage.includes('generation_config')) {
+      console.error('CRITICAL: AI call failed because model name was inside generation_config. This should be fixed now.');
     }
     
     // Always return fallback data to maintain a working UI
