@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    --background: 210 20% 98%;
+    --background: 0 0% 100%;
     --foreground: 222 47% 11%;
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
@@ -24,7 +24,7 @@
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 221 100% 55%;
-    --radius: 1.5rem;
+    --radius: 1.25rem;
   }
 
   .dark {
@@ -57,27 +57,26 @@
   }
   body {
     @apply bg-background text-foreground font-body;
-    background-image: radial-gradient(at 0% 0%, hsla(221, 100%, 55%, 0.05) 0, transparent 50%), 
-                      radial-gradient(at 100% 100%, hsla(17, 100%, 57%, 0.05) 0, transparent 50%);
     min-height: 100vh;
     overscroll-behavior-y: none;
     user-select: none;
+    -webkit-user-select: none;
   }
 }
 
 .glass {
-  @apply bg-opacity-60 backdrop-blur-2xl saturate-[160%] border border-white/20 shadow-lg;
-  background-color: hsla(0, 0%, 100%, 0.08);
+  @apply backdrop-blur-xl saturate-[160%] border border-white/20;
+  background-color: hsla(0, 0%, 100%, 0.05);
 }
 
 .dark .glass {
-  background-color: hsla(222, 47%, 10%, 0.4);
+  background-color: hsla(222, 47%, 10%, 0.3);
   @apply border-white/5;
 }
 
 .glass-thick {
-  @apply bg-opacity-80 backdrop-blur-[40px] saturate-[180%] border-t border-white/20;
-  background-color: hsla(0, 0%, 100%, 0.12);
+  @apply backdrop-blur-[32px] saturate-[180%] border-t border-white/20;
+  background-color: hsla(0, 0%, 100%, 0.1);
 }
 
 .dark .glass-thick {
@@ -86,18 +85,13 @@
 }
 
 .ios-tab-bar {
-  @apply fixed bottom-4 left-4 right-4 h-16 rounded-[2.5rem] glass-thick flex items-center justify-around px-6 z-50;
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
-}
-
-.post-ad-fab {
-  @apply w-12 h-12 rounded-full bg-accent text-white shadow-lg flex items-center justify-center transition-all hover:scale-105 active:scale-90;
-  background-image: linear-gradient(135deg, hsl(17 100% 65%), hsl(17 100% 57%));
+  @apply fixed bottom-6 left-6 right-6 h-16 rounded-[2.5rem] glass-thick flex items-center justify-around px-6 z-50;
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.2);
 }
 
 @keyframes float {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-6px); }
   100% { transform: translateY(0px); }
 }
 
@@ -105,10 +99,20 @@
   animation: float 4s ease-in-out infinite;
 }
 
-.ios-top-nav {
-  @apply px-4 h-14 flex items-center sticky top-0 z-50;
-}
-
 ::-webkit-scrollbar {
   display: none;
+}
+
+/* PWA App Shell Fixes */
+html, body {
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+main {
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
