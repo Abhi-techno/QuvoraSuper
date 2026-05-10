@@ -7,7 +7,7 @@
  * - AiPricerForSellersOutput - The return type for the suggestPrice function.
  */
 
-import { ai } from '@/ai/genkit';
+import { ai, googleAIPlugin } from '@/ai/genkit';
 import { z } from 'genkit';
 
 const AiPricerForSellersInputSchema = z.object({
@@ -47,6 +47,7 @@ export async function suggestPrice(
 
 const priceSuggesterPrompt = ai.definePrompt({
   name: 'priceSuggesterPrompt',
+  model: googleAIPlugin.model('gemini-1.5-flash'),
   input: { schema: AiPricerForSellersInputSchema },
   output: { schema: AiPricerForSellersOutputSchema },
   prompt: `You are an expert market analyst for a classifieds platform. Your task is to provide a fair and competitive price range for an item based on its details, simulating current market conditions for similar active listings.

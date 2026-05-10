@@ -1,14 +1,14 @@
-
 import {genkit} from 'genkit';
 import {googleAI} from '@genkit-ai/google-genai';
 
+/**
+ * Global Genkit configuration for the Quvora application.
+ * We export the plugin instance so flows can use its model() helper for robust model resolution.
+ */
+export const googleAIPlugin = googleAI({
+  apiKey: process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY,
+});
+
 export const ai = genkit({
-  plugins: [
-    googleAI({
-      // Try to detect the API key from all common environment variables
-      apiKey: process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY,
-    }),
-  ],
-  // Use a stable, specific model identifier to avoid resolution issues
-  model: 'googleai/gemini-1.5-flash',
+  plugins: [googleAIPlugin],
 });

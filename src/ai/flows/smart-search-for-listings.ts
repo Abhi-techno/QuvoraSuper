@@ -8,7 +8,7 @@
  * - SmartSearchForListingsOutput - The return type for the smartSearchForListings function.
  */
 
-import { ai } from '@/ai/genkit';
+import { ai, googleAIPlugin } from '@/ai/genkit';
 import { z } from 'genkit';
 
 const SmartSearchForListingsInputSchema = z.object({
@@ -29,6 +29,7 @@ export async function smartSearchForListings(input: SmartSearchForListingsInput)
 
 const prompt = ai.definePrompt({
   name: 'smartSearchPrompt',
+  model: googleAIPlugin.model('gemini-1.5-flash'),
   input: { schema: SmartSearchForListingsInputSchema },
   output: { schema: SmartSearchForListingsOutputSchema },
   prompt: `You are an intelligent search assistant for a marketplace application. Your task is to process a user's natural language search query. Understand their intent, correct any typos, and extract relevant keywords and an inferred category if obvious.

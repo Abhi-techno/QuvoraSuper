@@ -1,4 +1,3 @@
-
 'use server';
 /**
  * @fileOverview Provides personalized home feed recommendations to users.
@@ -8,7 +7,7 @@
  * - PersonalizedHomeFeedRecommendationsOutput - The return type for the recommendation function.
  */
 
-import {ai} from '@/ai/genkit';
+import {ai, googleAIPlugin} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const PersonalizedHomeFeedRecommendationsInputSchema = z.object({
@@ -59,6 +58,7 @@ export type PersonalizedHomeFeedRecommendationsOutput = z.infer<
 
 const prompt = ai.definePrompt({
   name: 'personalizedHomeFeedRecommendationsPrompt',
+  model: googleAIPlugin.model('gemini-1.5-flash'),
   input: {schema: PersonalizedHomeFeedRecommendationsInputSchema},
   output: {schema: PersonalizedHomeFeedRecommendationsOutputSchema},
   prompt: `You are an expert marketplace recommendation engine for Quvora, an Indian marketplace platform.
@@ -139,7 +139,6 @@ export async function personalizedHomeFeedRecommendations(
     
     // Safety check: ensure result and output exist
     if (!result || !result.output) {
-      console.warn('AI Flow: Received null or empty output from Genkit prompt.');
       return FALLBACK_DATA;
     }
 
@@ -147,16 +146,10 @@ export async function personalizedHomeFeedRecommendations(
   } catch (e: any) {
     // Extract the descriptive error message to avoid logging empty objects "{}"
     const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown error during AI generation');
-    console.error('GENKIT FLOW ERROR:', errorMessage);
+    const errorStack = e?.stack || 'No stack trace available';
     
-    // Check for common authentication or configuration issues to guide the user
-    if (errorMessage.includes('API key not valid')) {
-      console.error('HINT: Your GOOGLE_GENAI_API_KEY is missing or invalid. Please check your .env file.');
-    } else if (errorMessage.includes('blocked') || errorMessage.includes('403')) {
-      console.error('HINT: Please enable the "Generative Language API" in your Google Cloud Console.');
-    } else if (errorMessage.includes('404')) {
-      console.error('HINT: The model gemini-1.5-flash might be temporarily unavailable in your region on the v1beta endpoint.');
-    }
+    console.error('AI FLOW ERROR:', errorMessage);
+    console.error('AI FLOW STACK:', errorStack);
     
     // Always return fallback data to maintain a working UI
     return FALLBACK_DATA;
