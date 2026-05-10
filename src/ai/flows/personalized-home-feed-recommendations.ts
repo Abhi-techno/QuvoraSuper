@@ -94,6 +94,7 @@ STRICT OUTPUT INSTRUCTIONS:
 - Return response in strict JSON format.
 - Do not use markdown (no \`\`\`json blocks).
 - Ensure all fields match the requested schema exactly.
+- The root object must have exactly one key: "recommendedItems".
 
 User ID: {{{userId}}}
 Browsing History:
@@ -165,8 +166,8 @@ const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
   async (input) => {
     // 1. Check for API key presence
     const apiKey = process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY || '';
-    if (!apiKey || apiKey === 'your_api_key_here') {
-      console.log('AI Recommendations: No valid API Key found. Using fallback.');
+    if (!apiKey || apiKey.startsWith('your_api_key')) {
+      console.warn('AI Recommendations: No valid API Key found. Using fallback.');
       return FALLBACK_DATA;
     }
 
@@ -186,21 +187,25 @@ const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
 
       return result.output;
     } catch (e: any) {
-      // 3. Improved error logging
-      const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown Error');
-      const isConfigError = errorMessage.includes('API key') || errorMessage.includes('404') || errorMessage.includes('403');
+      // 3. Advanced Diagnostic Logging
+      const errorMessage = e?.message || (typeof e === 'string' ? e : 'Unknown Flow Error');
       
-      if (isConfigError) {
+      // Categorize common errors for cleaner logging
+      const isAuthError = errorMessage.includes('API key') || errorMessage.includes('403');
+      const isModelError = errorMessage.includes('404') || errorMessage.includes('model not found');
+      
+      if (isAuthError || isModelError) {
         console.log('AI Recommendations: Service configuration error. Using fallback.');
       } else {
-        console.error('AI Recommendation Flow Error:', {
+        // Deep error logging for unexpected failures
+        console.error('FULL AI FLOW ERROR:', {
           message: errorMessage,
           stack: e?.stack,
           raw: JSON.stringify(e, null, 2)
         });
       }
       
-      // 4. Guaranteed fallback return
+      // 4. Guaranteed fallback return to prevent UI crash
       return FALLBACK_DATA;
     }
   }
