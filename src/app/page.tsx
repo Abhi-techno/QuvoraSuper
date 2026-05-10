@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Search, Mic, Camera, ChevronRight, TrendingUp, Sparkles, MapPin, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,8 +8,18 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import Image from 'next/image';
 import Link from 'next/link';
 import { personalizedHomeFeedRecommendations } from '@/ai/flows/personalized-home-feed-recommendations';
+import { getPlaceholderById } from '@/lib/placeholder-images';
 
 export default async function Home() {
+  // Centralized placeholder images
+  const heroPromo = getPlaceholderById('hero-promo');
+  const fallbackImages = [
+    getPlaceholderById('fallback-iphone'),
+    getPlaceholderById('fallback-sofa'),
+    getPlaceholderById('fallback-bike'),
+    getPlaceholderById('fallback-macbook'),
+  ];
+
   // Gracefully handle AI recommendations failure with fallback data
   let recommendations;
   try {
@@ -20,43 +29,43 @@ export default async function Home() {
       expressedInterests: ['Electronics', 'Cars'],
       currentLocation: 'Mumbai'
     });
-  } catch (error) {
-    console.error("AI recommendations failed:", error);
+  } catch (error: any) {
+    console.error("AI recommendations failed:", error?.message || error);
     recommendations = {
       recommendedItems: [
         {
           itemId: 'fallback-1',
-          title: 'iPhone 15 Pro Max',
+          title: fallbackImages[0].description,
           description: 'Like new condition, 256GB',
           price: '₹1,15,000',
-          imageUrl: 'https://picsum.photos/seed/f1/400/400',
+          imageUrl: fallbackImages[0].imageUrl,
           location: 'Andheri, Mumbai',
           category: 'Mobiles'
         },
         {
           itemId: 'fallback-2',
-          title: 'Modern L-Shaped Sofa',
+          title: fallbackImages[1].description,
           description: 'Premium fabric, 6 months old',
           price: '₹28,500',
-          imageUrl: 'https://picsum.photos/seed/f2/400/400',
+          imageUrl: fallbackImages[1].imageUrl,
           location: 'Powai, Mumbai',
           category: 'Furniture'
         },
         {
           itemId: 'fallback-3',
-          title: 'Royal Enfield Classic 350',
+          title: fallbackImages[2].description,
           description: '2022 model, single owner',
           price: '₹1,85,000',
-          imageUrl: 'https://picsum.photos/seed/f3/400/400',
+          imageUrl: fallbackImages[2].imageUrl,
           location: 'Bandra, Mumbai',
           category: 'Bikes'
         },
         {
           itemId: 'fallback-4',
-          title: 'MacBook Air M2',
+          title: fallbackImages[3].description,
           description: '8GB/256GB, Space Grey',
           price: '₹72,000',
-          imageUrl: 'https://picsum.photos/seed/f4/400/400',
+          imageUrl: fallbackImages[3].imageUrl,
           location: 'Colaba, Mumbai',
           category: 'Electronics'
         }
@@ -118,11 +127,12 @@ export default async function Home() {
       {/* Hero Banner Carousel (Static for MVP) */}
       <section className="relative h-44 rounded-3xl overflow-hidden shadow-lg border border-white/10 group">
         <Image 
-          src="https://picsum.photos/seed/promo/800/400" 
-          alt="Promotion" 
-          fill 
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-          data-ai-hint="luxury products"
+          src={heroPromo.imageUrl} 
+          alt={heroPromo.description} 
+          width={800}
+          height={400}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          data-ai-hint={heroPromo.imageHint}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-5">
           <Badge className="w-fit mb-2 bg-accent hover:bg-accent/90">Featured</Badge>

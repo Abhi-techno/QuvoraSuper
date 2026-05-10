@@ -42,7 +42,7 @@ const PersonalizedHomeFeedRecommendationsOutputSchema = z.object({
         imageUrl: z
           .string()
           .describe(
-            'A placeholder URL for the item image. ALWAYS use the format: https://picsum.photos/seed/<random_string>/400/400'
+            'A placeholder URL for the item image. ALWAYS use the format: https://picsum.photos/seed/<random_slug>/400/400'
           ),
         location: z
           .string()
@@ -66,6 +66,26 @@ const personalizedHomeFeedRecommendationsPrompt = ai.definePrompt({
   name: 'personalizedHomeFeedRecommendationsPrompt',
   input: {schema: PersonalizedHomeFeedRecommendationsInputSchema},
   output: {schema: PersonalizedHomeFeedRecommendationsOutputSchema},
+  config: {
+    safetySettings: [
+      {
+        category: 'HARM_CATEGORY_HATE_SPEECH',
+        threshold: 'BLOCK_NONE',
+      },
+      {
+        category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+        threshold: 'BLOCK_NONE',
+      },
+      {
+        category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+        threshold: 'BLOCK_NONE',
+      },
+      {
+        category: 'HARM_CATEGORY_HARASSMENT',
+        threshold: 'BLOCK_NONE',
+      },
+    ],
+  },
   prompt: `You are an expert marketplace recommendation engine for Quvora, an Indian marketplace platform.
 Your task is to generate 5-10 distinct item recommendations for the user based on their browsing history, expressed interests, and current location.
 Focus on typical marketplace categories found in India such as Mobiles, Cars, Bikes, Electronics, Furniture, Jobs, Fashion, Real Estate, etc.
@@ -73,19 +93,27 @@ Invent plausible item details including title, description, price (using Indian 
 
 CRITICAL INSTRUCTION FOR IMAGES:
 For the "imageUrl" field, you MUST ONLY use URLs from picsum.photos. 
-Use this exact format: https://picsum.photos/seed/{{itemId}}/400/400
-Replace {{itemId}} with a unique, descriptive slug for each item (e.g., iphone15pro, vintagebike, modernsofa).
+Use this exact format: https://picsum.photos/seed/<unique_slug>/400/400
+Replace <unique_slug> with a unique, descriptive slug for each item (e.g., iphone15pro, vintagebike, modernsofa).
 
 User ID: {{{userId}}}
 Browsing History:
+{{#if browsingHistory}}
 {{#each browsingHistory}}
 - {{{this}}}
 {{/each}}
+{{else}}
+- No history
+{{/if}}
 
 Expressed Interests:
+{{#if expressedInterests}}
 {{#each expressedInterests}}
 - {{{this}}}
 {{/each}}
+{{else}}
+- No specific interests
+{{/if}}
 
 Current Location: {{{currentLocation}}}
 
@@ -99,10 +127,15 @@ const personalizedHomeFeedRecommendationsFlow = ai.defineFlow(
     outputSchema: PersonalizedHomeFeedRecommendationsOutputSchema,
   },
   async (input) => {
-    const {output} = await personalizedHomeFeedRecommendationsPrompt(input);
-    if (!output) {
-      throw new Error('No recommendations were generated.');
+    try {
+      const {output} = await personalizedHomeFeedRecommendationsPrompt(input);
+      if (!output) {
+        throw new Error('No recommendations were generated.');
+      }
+      return output;
+    } catch (e: any) {
+      console.error('Genkit personalizedHomeFeedRecommendationsFlow error:', e);
+      throw e;
     }
-    return output;
   }
 );
