@@ -78,6 +78,7 @@ export default function LandingPage({
   params: Promise<any>;
   searchParams: Promise<any>;
 }) {
+  // Unwrap dynamic APIs for Next.js 15
   use(params);
   use(searchParams);
 
