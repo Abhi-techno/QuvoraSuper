@@ -17,7 +17,6 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
     title: 'Quvora',
   },
-  manifest: '/manifest.webmanifest',
 };
 
 export const viewport: Viewport = {

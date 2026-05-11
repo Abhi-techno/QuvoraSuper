@@ -86,6 +86,14 @@ export default function LandingPage({
   use(params);
   use(searchParams);
 
+  // Auto-play infinite carousel logic
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   useEffect(() => {
     if (!loading && user) {
       router.push('/explore');
@@ -93,9 +101,7 @@ export default function LandingPage({
   }, [user, loading, router]);
 
   const handleNext = () => {
-    if (currentIndex < slides.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
+    setCurrentIndex((prev) => (prev + 1) % slides.length);
   };
 
   const handleSkip = () => {
