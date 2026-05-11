@@ -212,14 +212,24 @@ export default function LandingPage({
 
         <div className="w-full max-w-[300px]">
           {currentSlide.isFinal ? (
-            <AuthModal 
-              defaultTab="register"
-              trigger={
-                <Button className="w-full h-14 rounded-full font-black text-sm bg-[#121212] text-white hover:bg-[#121212]/90 shadow-2xl shadow-black/20 transition-transform active:scale-95">
-                  GET STARTED
-                </Button>
-              }
-            />
+            <div className="flex flex-col gap-3 w-full">
+              <AuthModal 
+                defaultTab="register"
+                trigger={
+                  <Button className="w-full h-14 rounded-full font-black text-sm bg-[#121212] text-white hover:bg-[#121212]/90 shadow-2xl shadow-black/20 transition-transform active:scale-95">
+                    GET STARTED
+                  </Button>
+                }
+              />
+              <AuthModal 
+                defaultTab="login"
+                trigger={
+                  <Button variant="ghost" className="w-full h-10 font-bold text-xs text-muted-foreground hover:text-[#121212]">
+                    I ALREADY HAVE AN ACCOUNT
+                  </Button>
+                }
+              />
+            </div>
           ) : (
             <Button 
               onClick={handleNext}
