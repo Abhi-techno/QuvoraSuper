@@ -3,50 +3,37 @@
 
 import React, { useEffect, useState, use } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import useEmblaCarousel from 'embla-carousel-react';
-import Autoplay from 'embla-carousel-autoplay';
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
-import { Globe, Car, Smartphone, Home, Shield, Sparkles, ChevronRight, Sun, Moon, MapPin } from 'lucide-react';
+import { Smartphone, Car, Home, Shield, Sparkles, Globe, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AuthModal } from '@/components/auth/auth-modal';
+import Image from 'next/image';
 
 const slides = [
   { 
     id: '1', 
-    title: 'Your World. One Place.', 
-    subtitle: "India's first AI-powered vernacular marketplace. Faster, safer, smarter.",
+    title: 'Vernacular-First Marketplace', 
+    subtitle: "India's first AI-powered marketplace designed for your language.",
     icon: Globe,
+    imageHint: "indian city landscape 3d",
+    imageUrl: "https://picsum.photos/seed/q1/800/1200"
   },
   { 
     id: '2', 
-    title: 'Premium Cars & Bikes', 
-    subtitle: 'Verified listings with real-time AI inspections and direct seller contact.',
-    icon: Car,
+    title: 'Zero Commission Trading', 
+    subtitle: 'No middlemen. No hidden fees. 100% of the value stays with you.',
+    icon: Shield,
+    imageHint: "gold coins 3d",
+    imageUrl: "https://picsum.photos/seed/q2/800/1200"
   },
   { 
     id: '3', 
-    title: 'Latest Gadgets', 
-    subtitle: 'Find the best deals on mobiles and electronics with AI price insights.',
-    icon: Smartphone,
-  },
-  { 
-    id: '4', 
-    title: 'Modern Living', 
-    subtitle: 'Upgrade your home with handpicked furniture and home appliances.',
-    icon: Home,
-  },
-  { 
-    id: '5', 
-    title: 'Local Community', 
-    subtitle: 'Buy and sell safely in your neighborhood. Verified profiles only.',
+    title: 'AI-Powered Safety', 
+    subtitle: 'Real-time fraud detection and smart price insights in every deal.',
     icon: Sparkles,
-  },
-  { 
-    id: '6', 
-    title: 'Secure Trading', 
-    subtitle: 'Zero middlemen, zero commission. 100% trust with Liquid Glass security.',
-    icon: Shield,
+    imageHint: "security shield 3d",
+    imageUrl: "https://picsum.photos/seed/q3/800/1200"
   }
 ];
 
@@ -62,30 +49,14 @@ export default function LandingPage({
 
   const router = useRouter();
   const { user, loading } = useUser();
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 45 }, [
-    Autoplay({ delay: 5000, stopOnInteraction: false })
-  ]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'dark' : 'light');
-    
-    if (emblaApi) {
-      emblaApi.on('select', () => setSelectedIndex(emblaApi.selectedScrollSnap()));
-    }
-  }, [emblaApi]);
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    if (newTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
+    const timer = setInterval(() => {
+      setSelectedIndex((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (!loading && user) {
@@ -94,150 +65,128 @@ export default function LandingPage({
   }, [user, loading, router]);
 
   if (loading) return (
-    <div className="h-screen w-full bg-background flex items-center justify-center">
+    <div className="h-screen w-full bg-black flex items-center justify-center">
       <motion.div 
         animate={{ scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        className="w-10 h-10 rounded-[1.25rem] bg-primary shadow-2xl shadow-primary/40" 
+        className="w-12 h-12 rounded-2xl bg-primary shadow-2xl shadow-primary/40" 
       />
     </div>
   );
 
   return (
-    <div className="fixed inset-0 h-screen w-full bg-background overflow-hidden flex flex-col select-none touch-none">
+    <div className="fixed inset-0 h-screen w-full bg-black overflow-hidden flex flex-col select-none touch-none font-body">
       
-      {/* TOP NAVIGATION */}
-      <motion.header 
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.2, type: "spring", stiffness: 100 }}
-        className="absolute top-0 left-0 right-0 z-50 pt-[env(safe-area-inset-top)] px-6"
-      >
-        <div className="flex items-center justify-between h-14">
-          <div className="glass px-4 py-2 rounded-full border-none flex items-center gap-2">
-            <div className="w-5 h-5 rounded-lg bg-primary flex items-center justify-center text-white font-black text-[10px]">Q</div>
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Quvora</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="glass h-9 w-9 rounded-full border-none active:scale-90 transition-transform"
-              onClick={toggleTheme}
-            >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={theme}
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {theme === 'dark' ? (
-                    <Sun className="w-4 h-4 text-primary" />
-                  ) : (
-                    <Moon className="w-4 h-4 text-primary" />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </Button>
-            <Button variant="ghost" className="glass h-9 px-4 rounded-full border-none flex items-center gap-2">
-              <MapPin className="w-3.5 h-3.5 text-primary" />
-              <span className="text-[10px] font-black uppercase tracking-widest opacity-60">Mumbai</span>
-            </Button>
-          </div>
-        </div>
-      </motion.header>
-
-      {/* NARRATIVE CAROUSEL */}
-      <div className="flex-1 relative z-0" ref={emblaRef}>
-        <div className="flex h-full">
-          {slides.map((slide, idx) => (
-            <div 
-              key={slide.id} 
-              className="relative flex-[0_0_100%] h-full flex flex-col items-center justify-center"
-            >
-              <AnimatePresence mode="wait">
-                {selectedIndex === idx && (
-                  <motion.div 
-                    initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                    animate={{ scale: 1, opacity: 1, y: 0 }}
-                    exit={{ scale: 1.1, opacity: 0, y: -20 }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    className="max-w-[300px] text-center space-y-8"
-                  >
-                    <motion.div 
-                      animate={{ y: [0, -10, 0] }}
-                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                      className="w-24 h-24 mx-auto glass rounded-[2.5rem] flex items-center justify-center text-primary shadow-2xl border-white/10"
-                    >
-                      <slide.icon className="w-12 h-12" />
-                    </motion.div>
-                    <div className="space-y-4">
-                      <h2 className="text-4xl font-black tracking-tighter leading-[0.9] text-foreground">
-                        {slide.title}
-                      </h2>
-                      <p className="text-sm text-muted-foreground font-medium leading-relaxed px-6 opacity-70">
-                        {slide.subtitle}
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
-        </div>
-
-        {/* Indicators */}
-        <div className="absolute top-[20%] left-16 right-16 flex gap-1 z-20">
-          {slides.map((_, i) => (
-            <div key={i} className="h-0.5 flex-1 bg-foreground/10 rounded-full overflow-hidden">
-              <motion.div 
-                className="h-full bg-primary/60 origin-left"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: selectedIndex === i ? 1 : 0 }}
-                transition={{ duration: selectedIndex === i ? 5 : 0.3, ease: "linear" }}
-              />
-            </div>
-          ))}
-        </div>
+      {/* IMMERSIVE BACKGROUND VISUAL */}
+      <div className="absolute inset-0 z-0">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={slides[selectedIndex].id}
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 0.6, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full h-full"
+          >
+            <Image
+              src={slides[selectedIndex].imageUrl}
+              alt="Narrative"
+              fill
+              className="object-cover"
+              data-ai-hint={slides[selectedIndex].imageHint}
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/60 to-black" />
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* BOTTOM ACTION BAR */}
-      <motion.footer 
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        transition={{ delay: 0.4, type: "spring", damping: 20 }}
-        className="absolute bottom-0 left-0 right-0 z-30 pb-[env(safe-area-inset-bottom)]"
+      {/* TOP BRAND BADGE */}
+      <motion.div 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="absolute top-12 left-0 right-0 z-20 flex justify-center"
       >
-        <div className="glass-thick pt-6 pb-10 px-8 rounded-t-[3rem] border-t border-white/5">
-          <div className="max-w-md mx-auto flex flex-col gap-3">
+        <div className="glass px-4 py-2 rounded-full border-white/5 flex items-center gap-2">
+          <div className="w-5 h-5 rounded-lg bg-primary flex items-center justify-center text-white font-black text-[10px]">Q</div>
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80">Quvora</span>
+        </div>
+      </motion.div>
+
+      {/* FLOATING ACTION CARD */}
+      <motion.div 
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.5, type: "spring", damping: 25 }}
+        className="mt-auto relative z-10 px-6 pb-16 pt-10"
+      >
+        <div className="glass-thick rounded-[3rem] p-8 flex flex-col items-center gap-8 border-white/10 shadow-2xl">
+          
+          {/* CONTENT ANIMATION */}
+          <div className="text-center min-h-[140px] flex flex-col justify-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={slides[selectedIndex].id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="space-y-4"
+              >
+                <h2 className="text-3xl font-black tracking-tighter leading-none text-white">
+                  {slides[selectedIndex].title}
+                </h2>
+                <p className="text-sm text-white/50 font-medium leading-relaxed px-4">
+                  {slides[selectedIndex].subtitle}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* INDICATORS */}
+          <div className="flex gap-2">
+            {slides.map((_, i) => (
+              <motion.div 
+                key={i}
+                animate={{ 
+                  width: selectedIndex === i ? 24 : 6,
+                  backgroundColor: selectedIndex === i ? "rgba(14, 165, 233, 1)" : "rgba(255, 255, 255, 0.2)"
+                }}
+                className="h-1.5 rounded-full transition-all duration-500"
+              />
+            ))}
+          </div>
+
+          {/* ACTIONS */}
+          <div className="w-full space-y-4">
             <AuthModal 
               defaultTab="register"
               trigger={
-                <Button className="h-14 rounded-2xl w-full text-sm font-black shadow-xl shadow-primary/20 bg-primary hover:bg-primary/90 transition-all active:scale-95 group">
+                <Button className="w-full h-16 rounded-2xl bg-white text-black hover:bg-white/90 text-sm font-black uppercase tracking-widest shadow-xl shadow-white/5 active:scale-[0.98] transition-all">
                   Create Account
-                  <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </Button>
-              } 
+              }
             />
             
             <AuthModal 
               defaultTab="login"
               trigger={
-                <Button variant="ghost" className="h-10 rounded-2xl w-full text-[9px] font-black text-muted-foreground uppercase tracking-[0.3em] hover:text-foreground active:scale-95 transition-all">
-                  Login to your account
-                </Button>
+                <button className="w-full text-center py-2">
+                  <span className="text-[11px] font-bold text-white/40 uppercase tracking-widest">
+                    Already have an account? <span className="text-primary ml-1">Login</span>
+                  </span>
+                </button>
               }
             />
+          </div>
 
-            <div className="flex items-center justify-center gap-2 mt-2 opacity-30">
-              <Shield className="w-3 h-3 text-primary" />
-              <span className="text-[7px] font-black uppercase tracking-[0.3em]">Pure Glass PWA Secured</span>
-            </div>
+          {/* SECURITY FOOTER */}
+          <div className="flex items-center gap-2 opacity-20">
+            <Shield className="w-3 h-3 text-white" />
+            <span className="text-[7px] font-black uppercase tracking-[0.4em] text-white">Liquid Glass Encrypted</span>
           </div>
         </div>
-      </motion.footer>
+      </motion.div>
     </div>
   );
 }
