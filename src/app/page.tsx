@@ -117,10 +117,32 @@ export default function LandingPage({
   return (
     <div className="fixed inset-0 h-svh w-full bg-[#FDF8F3] overflow-hidden flex flex-col">
       
-      {/* 1. TOP PART: Adaptive Safe Area Spacer */}
-      <header className="shrink-0 h-10 w-full pt-[env(safe-area-inset-top,1rem)]" />
+      {/* 1. TOP PART: Adaptive Navigation (Indicators & Skip) */}
+      <header className="shrink-0 h-16 w-full flex items-center justify-between px-8 pt-[env(safe-area-inset-top,1rem)]">
+        <div className="flex gap-2 items-center">
+          {slides.map((_, i) => (
+            <motion.div 
+              key={i} 
+              animate={{ 
+                width: i === currentIndex ? 24 : 6,
+                backgroundColor: i === currentIndex ? '#121212' : '#E5E5E5',
+                opacity: i === currentIndex ? 1 : 0.4
+              }}
+              className="h-1.5 rounded-full transition-all duration-300" 
+            />
+          ))}
+        </div>
+        {!currentSlide.isFinal && (
+          <button 
+            onClick={handleSkip} 
+            className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 hover:text-primary active:scale-95 transition-all"
+          >
+            Skip
+          </button>
+        )}
+      </header>
 
-      {/* 2. CENTER PART: Illustration Canvas (65% Height, Compact & Internal Animations) */}
+      {/* 2. CENTER PART: Compact Illustration Canvas (65% Target, Adaptive Flex) */}
       <main className="flex-[1.8] min-h-0 relative w-full px-6 flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.div
@@ -167,8 +189,8 @@ export default function LandingPage({
         </AnimatePresence>
       </main>
 
-      {/* 3. BOTTOM PART: Action Card (35% Height, High-Density Content) */}
-      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-20px_80px_-15px_rgba(0,0,0,0.06)] pt-12 pb-[env(safe-area-inset-bottom,2.5rem)] px-8 text-center flex flex-col items-center z-20 overflow-hidden relative">
+      {/* 3. BOTTOM PART: Action Card (35% Target, High-Density Content) */}
+      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-20px_80px_-15px_rgba(0,0,0,0.06)] pt-12 pb-[env(safe-area-inset-bottom,2.5rem)] px-8 text-center flex flex-col items-center z-20 overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -176,7 +198,7 @@ export default function LandingPage({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ delay: 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col gap-3 mb-8 w-full"
+            className="flex flex-col gap-3 mb-10 w-full"
           >
             <h1 className="text-3xl font-black tracking-tighter text-[#121212] leading-[1.1]">
               {currentSlide.title}
@@ -187,36 +209,8 @@ export default function LandingPage({
           </motion.div>
         </AnimatePresence>
 
-        {/* Action Row: Indicators & Skip */}
-        <div className="w-full flex items-center justify-between px-2 mb-8 h-6 relative">
-          <div className="w-1/4" /> {/* Spacer */}
-          <div className="flex gap-2 justify-center items-center">
-            {slides.map((_, i) => (
-              <motion.div 
-                key={i} 
-                animate={{ 
-                  width: i === currentIndex ? 20 : 6,
-                  backgroundColor: i === currentIndex ? '#121212' : '#E5E5E5',
-                  opacity: i === currentIndex ? 1 : 0.4
-                }}
-                className="h-1.5 rounded-full transition-all duration-300" 
-              />
-            ))}
-          </div>
-          <div className="w-1/4 flex justify-end">
-            {!currentSlide.isFinal && (
-              <button 
-                onClick={handleSkip} 
-                className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50 hover:text-primary active:scale-95 transition-all"
-              >
-                Skip
-              </button>
-            )}
-          </div>
-        </div>
-
         {/* Primary CTA Button */}
-        <div className="w-full max-w-[320px] px-2">
+        <div className="w-full max-w-[320px]">
           {currentSlide.isFinal ? (
             <div className="flex flex-col gap-3 w-full animate-in fade-in slide-in-from-bottom-2 duration-700">
               <AuthModal 
