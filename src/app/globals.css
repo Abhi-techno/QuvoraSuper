@@ -4,13 +4,13 @@
 
 @layer base {
   :root {
-    --background: 30 33% 96%; /* Soft Beige #F7EFE5 */
-    --foreground: 0 0% 7%; /* #121212 */
+    --background: 30 33% 98%; /* Very Soft Beige/White #FDF8F3 */
+    --foreground: 0 0% 7%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 7%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 7%;
-    --primary: 258 90% 66%; /* Accent Purple #8B5CF6 */
+    --primary: 258 90% 66%;
     --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 7%;
@@ -57,7 +57,6 @@
   body {
     @apply bg-background text-foreground font-body antialiased;
     min-height: 100svh;
-    min-height: 100dvh;
     overflow-x: hidden;
     touch-action: pan-y;
     overscroll-behavior-y: none;
@@ -102,14 +101,4 @@
 
 ::-webkit-scrollbar {
   display: none;
-}
-
-/* Adaptive utility for smaller screens */
-@media (max-height: 700px) {
-  .adaptive-heading {
-    @apply text-2xl !important;
-  }
-  .adaptive-spacing {
-    @apply py-6 !important;
-  }
 }
