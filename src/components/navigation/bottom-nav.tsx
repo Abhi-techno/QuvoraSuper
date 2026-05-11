@@ -1,6 +1,6 @@
 'use client';
 
-import { Home, Grid, Plus, MessageCircle, User, Sparkles } from 'lucide-react';
+import { Home, Plus, MessageCircle, User, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -46,9 +46,13 @@ export function BottomNav() {
                 isActive ? "text-primary fill-primary/10" : "text-muted-foreground/40"
               )} />
               {tab.badge && (
-                <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[8px] text-white font-black shadow-lg shadow-primary/20">
+                <motion.span 
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[8px] text-white font-black shadow-lg shadow-primary/20"
+                >
                   {tab.badge}
-                </span>
+                </motion.span>
               )}
             </div>
             <span className={cn(
@@ -63,3 +67,4 @@ export function BottomNav() {
     </nav>
   );
 }
+import { motion } from 'framer-motion';

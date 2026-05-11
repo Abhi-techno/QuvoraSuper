@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, use } from 'react';
@@ -13,8 +12,7 @@ import {
   ShieldCheck, 
   Sparkles, 
   Home, 
-  Layers,
-  ChevronRight
+  Layers
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -117,57 +115,66 @@ export default function LandingPage({
   return (
     <div className="fixed inset-0 h-svh w-full bg-[#F7EFE5] flex flex-col overflow-hidden">
       
-      {/* 65% Height - Artwork Section */}
+      {/* Upper Section - Adaptive Artwork Canvas */}
       <div className={cn(
-        "flex-[1.8] min-h-0 relative w-full transition-colors duration-1000 flex items-center justify-center",
+        "flex-[1.8] min-h-0 relative w-full transition-colors duration-1000 flex items-center justify-center px-6",
         currentSlide.bgColor
       )}>
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            initial={{ opacity: 0, scale: 0.7, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: -20 }}
+            exit={{ opacity: 0, scale: 0.9, y: -30 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
             className="relative flex items-center justify-center"
           >
-            {/* Soft 3D Glow Background */}
+            {/* Soft Glow Background */}
             <motion.div
-              animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.5, 0.3] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute w-64 h-64 rounded-full blur-3xl opacity-30"
+              animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute w-72 h-72 rounded-full blur-[80px] opacity-30"
               style={{ backgroundColor: currentSlide.accentColor }}
             />
             
             {/* Primary Artwork */}
             <motion.div 
-              animate={{ y: [0, -15, 0] }}
+              animate={{ y: [0, -15, 0], rotate: [0, 2, 0] }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="relative p-10 rounded-[2.5rem] glass-thick shadow-2xl shadow-black/5"
+              className="relative p-12 rounded-[3rem] glass-thick shadow-2xl shadow-black/5"
             >
-              <IconComponent size={96} color={currentSlide.accentColor} strokeWidth={1.5} />
+              <IconComponent size={100} color={currentSlide.accentColor} strokeWidth={1.5} />
             </motion.div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* 35% Height - White Content Card */}
-      <div className="shrink-0 w-full bg-white rounded-t-[2.5rem] md:rounded-t-[3.5rem] relative z-20 flex flex-col items-center px-10 pt-10 pb-[env(safe-area-inset-bottom,2rem)] text-center shadow-[0_-20px_80px_-15px_rgba(0,0,0,0.08)]">
+      {/* Bottom Card - High-Density Content Area */}
+      <div className="shrink-0 w-full bg-white rounded-t-[3.5rem] relative z-20 flex flex-col items-center px-8 pt-8 pb-[env(safe-area-inset-bottom,2.5rem)] text-center shadow-[0_-20px_80px_-15px_rgba(0,0,0,0.06)]">
+        
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.4 }}
-            className="flex flex-col gap-3 mb-8"
+            className="w-full flex flex-col gap-3 mb-8"
           >
-            <h1 className="text-3xl font-black tracking-tight text-[#121212] leading-tight">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
+              className="text-3xl font-black tracking-tight text-[#121212] leading-tight adaptive-heading"
+            >
               {currentSlide.title}
-            </h1>
-            <p className="text-sm font-medium text-muted-foreground/80 leading-relaxed max-w-[280px] mx-auto">
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+              className="text-sm font-medium text-muted-foreground/80 leading-relaxed max-w-[300px] mx-auto"
+            >
               {currentSlide.subtitle}
-            </p>
+            </motion.p>
           </motion.div>
         </AnimatePresence>
 
@@ -179,7 +186,7 @@ export default function LandingPage({
                 defaultTab="register"
                 trigger={
                   <Button className="w-full h-14 rounded-full font-bold bg-[#121212] text-white hover:bg-[#121212]/90 shadow-xl shadow-black/10 transition-transform active:scale-95">
-                    Get Started
+                    Get Started Now
                   </Button>
                 }
               />
@@ -202,8 +209,8 @@ export default function LandingPage({
           )}
 
           {/* Navigation Row */}
-          <div className="w-full flex items-center justify-between mt-6">
-            {/* Dots */}
+          <div className="w-full flex items-center justify-between mt-6 px-2">
+            {/* Dot Indicators */}
             <div className="flex gap-2">
               {slides.map((_, i) => (
                 <motion.div 
