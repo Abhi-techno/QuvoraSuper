@@ -1,47 +1,40 @@
-
 {
   "placeholderImages": [
     {
-      "id": "hero-promo",
-      "description": "Featured Promotion",
-      "imageUrl": "https://picsum.photos/seed/promo/800/400",
-      "imageHint": "luxury watch"
-    },
-    {
       "id": "slide-1",
-      "description": "Mobile Marketplace",
-      "imageUrl": "https://picsum.photos/seed/slide1/800/1200",
-      "imageHint": "smartphone marketplace"
+      "description": "AI Ecosystem Orb",
+      "imageUrl": "https://picsum.photos/seed/q1/800/800",
+      "imageHint": "futuristic sphere"
     },
     {
       "id": "slide-2",
-      "description": "Premium Cars",
-      "imageUrl": "https://picsum.photos/seed/slide2/800/1200",
-      "imageHint": "luxury car"
+      "description": "3D Marketplace Products",
+      "imageUrl": "https://picsum.photos/seed/q2/800/800",
+      "imageHint": "floating electronics"
     },
     {
       "id": "slide-3",
-      "description": "Smart Electronics",
-      "imageUrl": "https://picsum.photos/seed/slide3/800/1200",
-      "imageHint": "laptop computer"
+      "description": "AI Assistant Hologram",
+      "imageUrl": "https://picsum.photos/seed/q3/800/800",
+      "imageHint": "hologram assistant"
     },
     {
       "id": "slide-4",
-      "description": "Modern Furniture",
-      "imageUrl": "https://picsum.photos/seed/slide4/800/1200",
-      "imageHint": "modern sofa"
+      "description": "Modern Apartment Map",
+      "imageUrl": "https://picsum.photos/seed/q4/800/800",
+      "imageHint": "modern house"
     },
     {
       "id": "slide-5",
-      "description": "Local Community",
-      "imageUrl": "https://picsum.photos/seed/slide5/800/1200",
-      "imageHint": "people community"
+      "description": "Learning & Mentorship",
+      "imageUrl": "https://picsum.photos/seed/q5/800/800",
+      "imageHint": "online learning"
     },
     {
       "id": "slide-6",
-      "description": "Verified Safety",
-      "imageUrl": "https://picsum.photos/seed/slide6/800/1200",
-      "imageHint": "security shield"
+      "description": "Quvora Globe",
+      "imageUrl": "https://picsum.photos/seed/q6/800/800",
+      "imageHint": "digital globe"
     }
   ]
 }

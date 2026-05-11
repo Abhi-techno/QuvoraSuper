@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, use } from 'react';
@@ -8,32 +7,69 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { AuthModal } from '@/components/auth/auth-modal';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
+import { ChevronRight, Sparkles, ShoppingBag, Briefcase, Home, GraduationCap, Globe } from 'lucide-react';
 
 const slides = [
-  { 
-    id: 'marketplace', 
-    title: 'Buy and sell locally without any hassle', 
-    subtitle: 'Mobiles, cars, homes, and 100+ more categories at your fingertips.',
-    imageUrl: "https://picsum.photos/seed/q1/600/600",
-    imageHint: "marketplace app",
-    buttonLabel: "Continue Now"
+  {
+    id: 'slide-1',
+    title: 'Move Smarter with Quvora',
+    description: 'India’s AI-powered platform for buying, selling, jobs, rentals, learning, and growth.',
+    imageUrl: 'https://picsum.photos/seed/q1/800/800',
+    imageHint: 'futuristic sphere',
+    icon: Globe,
+    buttonText: 'Continue',
+    accentColor: 'text-[#7C4DFF]'
   },
-  { 
-    id: 'safety', 
-    title: 'Safe, secure, and verified profiles', 
-    subtitle: 'Worry-free trading experience with Quvora AI security review.',
-    imageUrl: "https://picsum.photos/seed/q3/600/600",
-    imageHint: "security review",
-    buttonLabel: "Continue Now"
+  {
+    id: 'slide-2',
+    title: 'Buy & Sell Instantly',
+    description: 'Post listings, chat with buyers, discover deals nearby, and trade securely.',
+    imageUrl: 'https://picsum.photos/seed/q2/800/800',
+    imageHint: 'floating electronics',
+    icon: ShoppingBag,
+    buttonText: 'Next',
+    accentColor: 'text-[#0ea5e9]'
   },
-  { 
-    id: 'insights', 
-    title: 'Track your performance with AI insights', 
-    subtitle: 'Get fair market value suggestions to sell faster and buy smarter.',
-    imageUrl: "https://picsum.photos/seed/q4/600/600",
-    imageHint: "performance chart",
-    buttonLabel: "Let's started"
+  {
+    id: 'slide-3',
+    title: 'Your AI Career Co-Pilot',
+    description: 'Get personalized jobs, resume analysis, interview prep, and career guidance.',
+    imageUrl: 'https://picsum.photos/seed/q3/800/800',
+    imageHint: 'hologram assistant',
+    icon: Briefcase,
+    buttonText: 'Continue',
+    accentColor: 'text-[#A855F7]'
+  },
+  {
+    id: 'slide-4',
+    title: 'Find Homes & Rentals',
+    description: 'Search PGs, flats, hostels, rentals, and verified property listings near you.',
+    imageUrl: 'https://picsum.photos/seed/q4/800/800',
+    imageHint: 'modern house',
+    icon: Home,
+    buttonText: 'Next',
+    accentColor: 'text-[#FFB800]'
+  },
+  {
+    id: 'slide-5',
+    title: 'Learn Skills. Earn More.',
+    description: 'Courses, mentorship, freelancing, internships, and certifications — all in one app.',
+    imageUrl: 'https://picsum.photos/seed/q5/800/800',
+    imageHint: 'online learning',
+    icon: GraduationCap,
+    buttonText: 'Continue',
+    accentColor: 'text-[#FF6B6B]'
+  },
+  {
+    id: 'slide-6',
+    title: 'Welcome to Quvora',
+    description: 'The AI-powered superapp built for India’s next generation. Start your journey today.',
+    imageUrl: 'https://picsum.photos/seed/q6/800/800',
+    imageHint: 'digital globe',
+    icon: Sparkles,
+    buttonText: 'Get Started',
+    isFinal: true,
+    accentColor: 'text-primary'
   }
 ];
 
@@ -44,7 +80,6 @@ export default function LandingPage({
   params: Promise<any>;
   searchParams: Promise<any>;
 }) {
-  // Unwrap promises for Next.js 15 compatibility
   use(params);
   use(searchParams);
 
@@ -65,24 +100,39 @@ export default function LandingPage({
   };
 
   const handleSkip = () => {
-    router.push('/explore');
+    setCurrentIndex(slides.length - 1);
   };
 
   if (loading) return (
-    <div className="h-screen w-full bg-black flex items-center justify-center">
+    <div className="h-screen w-full bg-[#0B0B14] flex items-center justify-center">
       <motion.div 
         animate={{ scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        className="w-12 h-12 rounded-2xl bg-primary shadow-2xl shadow-primary/40" 
+        className="w-16 h-16 rounded-[2rem] bg-primary shadow-2xl shadow-primary/40" 
       />
     </div>
   );
 
   const currentSlide = slides[currentIndex];
+  const Icon = currentSlide.icon;
 
   return (
-    <div className="fixed inset-0 h-screen w-full bg-black overflow-hidden flex flex-col select-none touch-none font-body">
+    <div className="fixed inset-0 h-screen w-full bg-[#0B0B14] overflow-hidden flex flex-col select-none touch-none font-body">
       
+      {/* Animated Background Particles */}
+      <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
+        <motion.div 
+          animate={{ scale: [1, 1.1, 1], rotate: [0, 5, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-primary/20 blur-[120px]"
+        />
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1], rotate: [0, -5, 0] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute -bottom-[10%] -right-[10%] w-[60%] h-[60%] rounded-full bg-accent/15 blur-[150px]"
+        />
+      </div>
+
       {/* TOP NAV: iOS Dash Progress & Skip */}
       <div className="absolute top-0 left-0 right-0 z-50 px-8 pt-16 flex justify-between items-center">
         <div className="flex gap-1.5 items-center">
@@ -92,37 +142,40 @@ export default function LandingPage({
               className="h-1 rounded-full bg-white/20"
               initial={false}
               animate={{ 
-                width: i === currentIndex ? 32 : 12,
-                backgroundColor: i === currentIndex ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.2)"
+                width: i === currentIndex ? 40 : 12,
+                backgroundColor: i <= currentIndex ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.2)"
               }}
-              transition={{ duration: 0.4, ease: "circOut" }}
+              transition={{ duration: 0.6, ease: "circOut" }}
             />
           ))}
         </div>
-        <button 
-          onClick={handleSkip}
-          className="text-sm font-bold text-white/60 hover:text-white transition-colors"
-        >
-          Skip
-        </button>
+        {!currentSlide.isFinal && (
+          <button 
+            onClick={handleSkip}
+            className="text-sm font-black text-white/40 hover:text-white transition-colors uppercase tracking-widest"
+          >
+            Skip
+          </button>
+        )}
       </div>
 
-      {/* ILLUSTRATION AREA (Top 55%) */}
-      <div className="h-[55%] relative w-full flex items-center justify-center pt-20 px-12">
+      {/* ILLUSTRATION AREA (Top 50%) */}
+      <div className="h-[50%] relative w-full flex items-center justify-center pt-20 px-12 z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide.id}
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            initial={{ opacity: 0, scale: 0.7, y: 40 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: -20 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full aspect-square max-w-[340px]"
+            exit={{ opacity: 0, scale: 0.9, y: -40 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full aspect-square max-w-[380px]"
           >
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-transparent blur-[60px] rounded-full scale-75" />
             <Image
               src={currentSlide.imageUrl}
-              alt="Illustration"
+              alt={currentSlide.title}
               fill
-              className="object-contain"
+              className="object-contain drop-shadow-2xl"
               data-ai-hint={currentSlide.imageHint}
               priority
             />
@@ -130,48 +183,74 @@ export default function LandingPage({
         </AnimatePresence>
       </div>
 
-      {/* ACTION CARD AREA (Bottom 45%) */}
+      {/* ACTION CARD AREA (Bottom 50%) */}
       <motion.div 
-        initial={{ y: 100, opacity: 0 }}
+        initial={{ y: 200, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-        className="h-[45%] w-full bg-white rounded-t-[3.5rem] relative z-10 flex flex-col items-center px-10 pt-12 pb-16 text-center shadow-[0_-20px_50px_-12px_rgba(0,0,0,0.3)]"
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="h-[50%] w-full bg-white rounded-t-[3.5rem] relative z-20 flex flex-col items-center px-10 pt-14 pb-16 text-center shadow-[0_-20px_80px_-15px_rgba(0,0,0,0.5)]"
       >
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide.id + "-text"}
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            exit={{ opacity: 0, x: -30 }}
+            transition={{ duration: 0.6, ease: "circOut" }}
             className="flex flex-col flex-1"
           >
-            <h1 className="text-3xl font-black tracking-tight text-black leading-[1.15] mb-4">
+            <div className="flex justify-center mb-6">
+              <div className="p-4 rounded-3xl bg-[#0B0B14]/5 border border-black/5">
+                <Icon className={`w-8 h-8 ${currentSlide.accentColor}`} />
+              </div>
+            </div>
+            <h1 className="text-[2.2rem] font-black tracking-tighter text-black leading-[1.05] mb-5">
               {currentSlide.title}
             </h1>
-            <p className="text-sm text-black/50 font-semibold leading-relaxed max-w-[280px] mx-auto">
-              {currentSlide.subtitle}
+            <p className="text-[0.95rem] text-black/50 font-semibold leading-relaxed max-w-[300px] mx-auto">
+              {currentSlide.description}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        {/* PRIMARY ACTION BUTTON */}
-        <div className="w-full mt-auto">
-          {currentIndex === slides.length - 1 ? (
-            <AuthModal 
-              defaultTab="register"
-              trigger={
-                <Button className="w-full h-15 rounded-3xl bg-black text-white hover:bg-black/90 text-sm font-black shadow-2xl active:scale-[0.98] transition-all uppercase tracking-wider">
-                  {currentSlide.buttonLabel}
-                </Button>
-              }
+        {/* SLIDE INDICATOR DOTS */}
+        <div className="flex gap-2 mb-8">
+          {slides.map((_, i) => (
+            <div 
+              key={i} 
+              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary scale-150' : 'bg-black/10'}`} 
             />
+          ))}
+        </div>
+
+        {/* PRIMARY ACTION BUTTON */}
+        <div className="w-full flex flex-col gap-3">
+          {currentSlide.isFinal ? (
+            <div className="flex flex-col gap-3 w-full">
+              <AuthModal 
+                defaultTab="register"
+                trigger={
+                  <Button className="w-full h-16 rounded-3xl bg-[#0B0B14] text-white hover:bg-black/90 text-[0.9rem] font-black shadow-2xl active:scale-[0.98] transition-all uppercase tracking-[0.15em]">
+                    {currentSlide.buttonText}
+                  </Button>
+                }
+              />
+              <AuthModal 
+                defaultTab="login"
+                trigger={
+                  <Button variant="ghost" className="w-full h-12 text-black/40 font-black text-[0.8rem] uppercase tracking-widest hover:text-black">
+                    Already have an account? Login
+                  </Button>
+                }
+              />
+            </div>
           ) : (
             <Button 
               onClick={handleNext}
-              className="w-full h-15 rounded-3xl bg-black text-white hover:bg-black/90 text-sm font-black shadow-2xl active:scale-[0.98] transition-all uppercase tracking-wider"
+              className="w-full h-16 rounded-3xl bg-[#0B0B14] text-white hover:bg-black/90 text-[0.9rem] font-black shadow-2xl active:scale-[0.98] transition-all uppercase tracking-[0.15em] group"
             >
-              {currentSlide.buttonLabel}
+              {currentSlide.buttonText}
+              <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
             </Button>
           )}
         </div>
