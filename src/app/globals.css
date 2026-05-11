@@ -4,48 +4,48 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    --background: 30 33% 93%; /* Soft Beige #F7EFE5 */
+    --foreground: 0 0% 7%; /* #121212 */
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
+    --card-foreground: 0 0% 7%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-    --primary: 199 89% 48%; /* Sky Blue */
+    --popover-foreground: 0 0% 7%;
+    --primary: 258 90% 66%; /* Accent Purple #8B5CF6 */
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 199 89% 48%;
+    --secondary: 30 33% 96%;
+    --secondary-foreground: 0 0% 7%;
+    --muted: 30 33% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 258 90% 66%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 199 89% 48%;
-    --radius: 1.5rem;
+    --ring: 258 90% 66%;
+    --radius: 1.75rem;
   }
 
   .dark {
-    --background: 240 30% 6%; /* Pure Dark */
+    --background: 240 30% 6%;
     --foreground: 0 0% 100%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
+    --card: 240 30% 8%;
+    --card-foreground: 0 0% 100%;
     --popover: 240 30% 8%;
     --popover-foreground: 0 0% 100%;
-    --primary: 199 89% 48%; /* Sky Blue */
+    --primary: 258 90% 66%;
     --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 10%;
     --secondary-foreground: 0 0% 100%;
     --muted: 0 0% 10%;
     --muted-foreground: 0 0% 60%;
-    --accent: 199 89% 48%;
+    --accent: 258 90% 66%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 15%;
     --input: 0 0% 15%;
-    --ring: 199 89% 48%;
+    --ring: 258 90% 66%;
   }
 }
 
@@ -67,16 +67,16 @@
 
 .glass {
   @apply backdrop-blur-[40px] saturate-[180%] border border-white/10;
-  background-color: hsla(0, 0%, 100%, 0.05);
+  background-color: hsla(0, 0%, 100%, 0.6);
 }
 
 .dark .glass {
-  background-color: hsla(0, 0%, 100%, 0.03);
+  background-color: hsla(0, 0%, 100%, 0.05);
 }
 
 .glass-thick {
-  @apply backdrop-blur-[60px] saturate-[200%] border-t border-white/15;
-  background-color: hsla(0, 0%, 0%, 0.85);
+  @apply backdrop-blur-[60px] saturate-[200%] border-t border-white/20;
+  background-color: hsla(0, 0%, 100%, 0.85);
 }
 
 .dark .glass-thick {
@@ -84,16 +84,16 @@
 }
 
 .ios-tab-bar {
-  @apply fixed bottom-6 left-6 right-6 h-14 rounded-[2rem] glass-thick flex items-center justify-around px-4 z-50;
-  box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.4);
+  @apply fixed bottom-6 left-6 right-6 h-16 rounded-[2rem] glass-thick flex items-center justify-around px-4 z-50;
+  box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.1);
 }
 
 .ios-top-nav {
-  @apply sticky top-0 w-full h-12 glass-thick flex items-center px-4 z-40 pt-[env(safe-area-inset-top)];
+  @apply sticky top-0 w-full h-14 glass-thick flex items-center px-4 z-40 pt-[env(safe-area-inset-top)];
 }
 
 .post-ad-fab {
-  @apply w-11 h-11 rounded-2xl bg-primary flex items-center justify-center text-white transition-transform active:scale-90 shadow-lg shadow-primary/20;
+  @apply w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-white transition-transform active:scale-90 shadow-lg shadow-primary/20;
 }
 
 ::-webkit-scrollbar {

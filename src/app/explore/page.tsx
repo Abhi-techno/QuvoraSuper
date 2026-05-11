@@ -1,8 +1,7 @@
-
-"use client";
+'use client';
 
 import React, { use } from 'react';
-import { Search, Mic, Camera, ChevronRight, TrendingUp, Sparkles, MapPin, Heart } from 'lucide-react';
+import { Search, MapPin, Sparkles, ChevronRight, TrendingUp, Heart, ShoppingBag, Briefcase, Home, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -18,143 +17,123 @@ export default function ExplorePage({
   params: Promise<any>;
   searchParams: Promise<any>;
 }) {
-  // Unwrap promises for Next.js 15
   use(params);
   use(searchParams);
 
-  const recommendations = [
+  const mainCategories = [
+    { label: 'Mobiles', icon: '📱', color: 'bg-blue-50 text-blue-500' },
+    { label: 'Cars', icon: '🚗', color: 'bg-orange-50 text-orange-500' },
+    { label: 'Jobs', icon: '💼', color: 'bg-purple-50 text-purple-500' },
+    { label: 'Rentals', icon: '🏠', color: 'bg-green-50 text-green-500' },
+    { label: 'Courses', icon: '🎓', color: 'bg-pink-50 text-pink-500' },
+    { label: 'Electronics', icon: '💻', color: 'bg-cyan-50 text-cyan-500' },
+    { label: 'Furniture', icon: '🛋️', color: 'bg-amber-50 text-amber-500' },
+    { label: 'Bikes', icon: '🏍️', color: 'bg-red-50 text-red-500' },
+  ];
+
+  const featuredListings = [
     {
-      itemId: 'static-1',
+      id: '1',
       title: 'iPhone 15 Pro Max',
-      description: 'Like new condition, 256GB',
       price: '₹1,15,000',
-      imageUrl: 'https://picsum.photos/seed/f1/400/400',
-      location: 'Andheri, Mumbai',
+      location: 'Bandra, Mumbai',
+      image: 'https://picsum.photos/seed/f1/400/400',
       category: 'Mobiles'
     },
     {
-      itemId: 'static-2',
+      id: '2',
       title: 'Modern L-Shaped Sofa',
-      description: 'Premium fabric, 6 months old',
       price: '₹28,500',
-      imageUrl: 'https://picsum.photos/seed/f2/400/400',
       location: 'Powai, Mumbai',
+      image: 'https://picsum.photos/seed/f2/400/400',
       category: 'Furniture'
-    },
-    {
-      itemId: 'static-3',
-      title: 'Royal Enfield Classic 350',
-      description: '2022 model, single owner',
-      price: '₹1,85,000',
-      imageUrl: 'https://picsum.photos/seed/f3/400/400',
-      location: 'Bandra, Mumbai',
-      category: 'Bikes'
-    },
-    {
-      itemId: 'static-4',
-      title: 'MacBook Air M2',
-      description: '8GB/256GB, Space Grey',
-      price: '₹72,000',
-      imageUrl: 'https://picsum.photos/seed/f4/400/400',
-      location: 'Colaba, Mumbai',
-      category: 'Electronics'
     }
   ];
 
-  const mainCategories = [
-    { label: 'Mobiles', icon: '📱' },
-    { label: 'Cars', icon: '🚗' },
-    { label: 'Bikes', icon: '🏍️' },
-    { label: 'Electronics', icon: '💻' },
-    { label: 'Furniture', icon: '🛋️' },
-    { label: 'Jobs', icon: '💼' },
-    { label: 'Properties', icon: '🏠' },
-    { label: 'Fashion', icon: '👕' },
-  ];
-
   return (
-    <div className="flex flex-col gap-6 px-4 pt-4 animate-in fade-in duration-700">
-      <div className="relative flex items-center group">
-        <Search className="absolute left-3 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-        <Input 
-          className="pl-10 pr-20 h-12 glass rounded-2xl border-none ring-offset-background placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary" 
-          placeholder="Search for anything..." 
-        />
-        <div className="absolute right-2 flex gap-1">
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-primary">
-            <Mic className="w-4 h-4" />
-          </Button>
-          <Button variant="ghost" size="icon" className="h-8 w-8 text-primary">
-            <Camera className="w-4 h-4" />
-          </Button>
+    <div className="flex flex-col gap-8 px-5 pt-6 pb-24 animate-in fade-in duration-700">
+      {/* Top Header */}
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Welcome back</p>
+          <h1 className="text-xl font-black">Arjun Varma</h1>
         </div>
+        <Button variant="ghost" className="h-10 px-3 glass rounded-full flex items-center gap-1.5">
+          <MapPin className="w-3.5 h-3.5 text-primary" />
+          <span className="text-xs font-bold">Mumbai</span>
+        </Button>
       </div>
 
-      <section>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-bold tracking-tight">Browse Categories</h2>
-          <Link href="/browse" className="text-xs font-medium text-primary flex items-center">
-            See All <ChevronRight className="w-3 h-3 ml-0.5" />
-          </Link>
-        </div>
-        <ScrollArea className="w-full whitespace-nowrap">
-          <div className="flex space-x-3 pb-2">
-            {mainCategories.map((cat) => (
-              <Button key={cat.label} variant="outline" className="h-20 w-20 flex-col gap-1.5 glass border-none rounded-2xl transition-transform active:scale-95">
-                <span className="text-2xl">{cat.icon}</span>
-                <span className="text-[10px] font-semibold">{cat.label}</span>
-              </Button>
-            ))}
-          </div>
-          <ScrollBar orientation="horizontal" className="invisible" />
-        </ScrollArea>
-      </section>
+      {/* Search Bar */}
+      <div className="relative group">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
+        <Input 
+          className="h-14 pl-11 pr-4 bg-white border-none rounded-2xl shadow-sm placeholder:text-muted-foreground/50 text-sm font-medium" 
+          placeholder="Search jobs, mobiles, rentals..." 
+        />
+      </div>
 
-      <section className="relative h-44 rounded-3xl overflow-hidden shadow-lg border border-white/10 group">
+      {/* Hero Slider */}
+      <section className="relative h-48 rounded-3xl overflow-hidden shadow-xl shadow-primary/5">
         <Image 
-          src="https://picsum.photos/seed/promo/800/400" 
-          alt="Promotion" 
-          width={800}
-          height={400}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          src="https://picsum.photos/seed/hero/800/400" 
+          alt="Quvora Promo" 
+          fill 
+          className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-5">
-          <Badge className="w-fit mb-2 bg-accent hover:bg-accent/90">Featured</Badge>
-          <h3 className="text-white text-xl font-bold leading-tight">Upgrade Your Style with<br/>Premium Watches</h3>
-          <p className="text-white/70 text-xs mt-1">Starting from ₹4,999</p>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+          <Badge className="w-fit mb-2 bg-primary/20 backdrop-blur-md text-white border-none text-[8px] font-bold uppercase tracking-wider">AI Recommendation</Badge>
+          <h2 className="text-white text-xl font-black leading-tight">Trending Jobs in Tech<br/>Near Mumbai</h2>
+          <Link href="/browse" className="text-white/60 text-[10px] font-bold mt-2 flex items-center gap-1">
+            Explore All <ChevronRight className="w-3 h-3" />
+          </Link>
         </div>
       </section>
 
+      {/* Quick Categories */}
       <section>
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-4 px-1">
+          <h3 className="font-black text-sm uppercase tracking-wider">Categories</h3>
+          <Link href="/browse" className="text-[10px] font-bold text-primary">See All</Link>
+        </div>
+        <div className="grid grid-cols-4 gap-3">
+          {mainCategories.map((cat) => (
+            <Link key={cat.label} href={`/browse/${cat.label.toLowerCase()}`}>
+              <div className="flex flex-col items-center gap-2">
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-xl transition-transform active:scale-90 ${cat.color}`}>
+                  {cat.icon}
+                </div>
+                <span className="text-[10px] font-bold text-muted-foreground uppercase">{cat.label}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Feed Section */}
+      <section>
+        <div className="flex items-center justify-between mb-4 px-1">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-accent" />
-            <h2 className="text-lg font-bold tracking-tight">Handpicked for You</h2>
+            <Sparkles className="w-4 h-4 text-primary" />
+            <h3 className="font-black text-sm uppercase tracking-wider">Nearby Listings</h3>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
-          {recommendations.map((item, idx) => (
-            <Link key={item.itemId} href={`/listing/${item.itemId}`}>
-              <Card className="glass border-none overflow-hidden transition-transform active:scale-95">
-                <div className="relative aspect-square w-full">
-                  <Image 
-                    src={item.imageUrl} 
-                    alt={item.title} 
-                    fill 
-                    sizes="(max-width: 768px) 50vw, 33vw"
-                    className="object-cover"
-                    priority={idx < 2}
-                  />
+          {featuredListings.map((item) => (
+            <Link key={item.id} href={`/listing/${item.id}`}>
+              <Card className="border-none bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div className="relative aspect-square">
+                  <Image src={item.image} alt={item.title} fill className="object-cover" />
                   <div className="absolute top-2 right-2 glass p-1.5 rounded-full">
-                    <Heart className="w-4 h-4 text-white" />
+                    <Heart className="w-3 h-3 text-muted-foreground" />
                   </div>
                 </div>
-                <CardContent className="p-3">
-                  <p className="text-[10px] font-bold text-accent uppercase tracking-wider">{item.category}</p>
-                  <h3 className="text-sm font-semibold truncate mt-0.5">{item.title}</h3>
-                  <p className="text-lg font-bold text-primary mt-1">{item.price}</p>
-                  <div className="flex items-center gap-1 mt-2 text-[10px] text-muted-foreground">
+                <CardContent className="p-3.5 flex flex-col gap-1">
+                  <p className="text-[8px] font-bold text-primary uppercase tracking-widest">{item.category}</p>
+                  <h4 className="text-xs font-bold truncate">{item.title}</h4>
+                  <p className="text-sm font-black text-foreground mt-0.5">{item.price}</p>
+                  <div className="flex items-center gap-1 mt-1 text-[9px] text-muted-foreground">
                     <MapPin className="w-2.5 h-2.5" />
                     <span className="truncate">{item.location}</span>
                   </div>

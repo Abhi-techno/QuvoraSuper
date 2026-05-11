@@ -1,7 +1,6 @@
+'use client';
 
-"use client"
-
-import { Home, Grid, Plus, MessageCircle, User } from 'lucide-react';
+import { Home, Grid, Plus, MessageCircle, User, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -10,8 +9,8 @@ export function BottomNav() {
   const pathname = usePathname();
 
   const tabs = [
-    { label: 'Home', icon: Home, href: '/explore' },
-    { label: 'Browse', icon: Grid, href: '/browse' },
+    { label: 'Feed', icon: Home, href: '/explore' },
+    { label: 'Explore', icon: Sparkles, href: '/browse' },
     { label: 'Post', icon: Plus, href: '/post', isFab: true },
     { label: 'Chat', icon: MessageCircle, href: '/chat', badge: 3 },
     { label: 'Me', icon: User, href: '/me' },
@@ -25,13 +24,13 @@ export function BottomNav() {
 
         if (tab.isFab) {
           return (
-            <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-6 group">
-              <div className="post-ad-fab shadow-[0_10px_30px_-5px_rgba(255,107,43,0.3)] border-2 border-white/20">
-                <Icon className="w-6 h-6" />
+            <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-8 group">
+              <div className="post-ad-fab shadow-xl shadow-primary/30 border-2 border-white/20 hover:scale-105 transition-transform active:scale-95">
+                <Plus className="w-7 h-7" />
               </div>
               <span className={cn(
-                "text-[8px] font-bold mt-1 transition-colors uppercase tracking-widest",
-                isActive ? "text-primary" : "text-muted-foreground/60"
+                "text-[8px] font-black mt-1.5 uppercase tracking-widest",
+                isActive ? "text-primary" : "text-muted-foreground/50"
               )}>
                 Post
               </span>
@@ -40,21 +39,21 @@ export function BottomNav() {
         }
 
         return (
-          <Link key={tab.href} href={tab.href} className="flex flex-col items-center gap-0.5 group">
+          <Link key={tab.href} href={tab.href} className="flex flex-col items-center gap-1 group">
             <div className="relative">
               <Icon className={cn(
                 "w-5 h-5 transition-all group-active:scale-90",
-                isActive ? "text-primary fill-primary/10" : "text-muted-foreground/60"
+                isActive ? "text-primary fill-primary/10" : "text-muted-foreground/40"
               )} />
               {tab.badge && (
-                <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-destructive text-[8px] text-white font-bold">
+                <span className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[8px] text-white font-black shadow-lg shadow-primary/20">
                   {tab.badge}
                 </span>
               )}
             </div>
             <span className={cn(
-              "text-[8px] font-bold transition-colors uppercase tracking-widest",
-              isActive ? "text-primary" : "text-muted-foreground/60"
+              "text-[8px] font-black transition-colors uppercase tracking-widest",
+              isActive ? "text-primary" : "text-muted-foreground/50"
             )}>
               {tab.label}
             </span>
