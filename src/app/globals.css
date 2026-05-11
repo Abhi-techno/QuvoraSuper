@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,15 +23,15 @@
     --border: 0 0% 90%;
     --input: 0 0% 90%;
     --ring: 199 89% 48%;
-    --radius: 1.25rem;
+    --radius: 1.5rem;
   }
 
   .dark {
     --background: 0 0% 0%; /* Pure Black */
     --foreground: 0 0% 100%;
-    --card: 0 0% 3%;
+    --card: 0 0% 2%;
     --card-foreground: 0 0% 100%;
-    --popover: 0 0% 3%;
+    --popover: 0 0% 2%;
     --popover-foreground: 0 0% 100%;
     --primary: 199 89% 48%; /* Sky Blue */
     --primary-foreground: 0 0% 100%;
@@ -44,8 +43,8 @@
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
     --ring: 199 89% 48%;
   }
 }
@@ -70,7 +69,7 @@
 
 .glass {
   @apply backdrop-blur-[24px] saturate-[180%] border border-white/10;
-  background-color: hsla(0, 0%, 100%, 0.05);
+  background-color: hsla(0, 0%, 100%, 0.03);
 }
 
 .dark .glass {
@@ -89,7 +88,7 @@
 }
 
 .ios-tab-bar {
-  @apply fixed bottom-4 left-4 right-4 h-14 rounded-[2rem] glass-thick flex items-center justify-around px-4 z-50;
+  @apply fixed bottom-6 left-6 right-6 h-14 rounded-[2rem] glass-thick flex items-center justify-around px-4 z-50;
   box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.3);
 }
 
@@ -98,17 +97,17 @@
 }
 
 .post-ad-fab {
-  @apply w-11 h-11 rounded-2xl bg-primary flex items-center justify-center text-white transition-transform active:scale-90;
+  @apply w-11 h-11 rounded-2xl bg-primary flex items-center justify-center text-white transition-transform active:scale-90 shadow-lg shadow-primary/20;
 }
 
 @keyframes float {
   0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(1deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
   100% { transform: translateY(0px) rotate(0deg); }
 }
 
 .animate-float {
-  animation: float 4s ease-in-out infinite;
+  animation: float 5s ease-in-out infinite;
 }
 
 ::-webkit-scrollbar {
