@@ -14,9 +14,6 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
     title: 'Quvora',
   },
-  formatDetection: {
-    telephone: false,
-  },
 };
 
 export const viewport: Viewport = {
@@ -47,7 +44,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body className="antialiased selection:bg-primary selection:text-white overflow-hidden">
+      <body className="antialiased selection:bg-primary selection:text-white overflow-hidden bg-[#FDF8F3]">
         <FirebaseClientProvider>
           <AppNav>
             <main className="relative h-svh w-full overflow-hidden">
