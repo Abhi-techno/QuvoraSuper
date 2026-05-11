@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, use } from 'react';
@@ -106,7 +105,7 @@ export default function LandingPage({
   };
 
   if (loading) return (
-    <div className="h-screen w-full bg-[#0B0B14] flex items-center justify-center">
+    <div className="h-svh w-full bg-[#0B0B14] flex items-center justify-center">
       <motion.div 
         animate={{ scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -119,7 +118,7 @@ export default function LandingPage({
   const Icon = currentSlide.icon;
 
   return (
-    <div className="fixed inset-0 h-screen w-full bg-[#0B0B14] overflow-hidden flex flex-col select-none touch-none font-body">
+    <div className="fixed inset-0 h-svh w-full bg-[#0B0B14] overflow-hidden flex flex-col select-none touch-none">
       
       {/* Animated Background Particles */}
       <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
@@ -136,7 +135,7 @@ export default function LandingPage({
       </div>
 
       {/* TOP NAV: iOS Dash Progress & Skip */}
-      <div className="absolute top-0 left-0 right-0 z-50 px-8 pt-12 flex justify-between items-center">
+      <div className="absolute top-0 left-0 right-0 z-50 px-8 pt-[env(safe-area-inset-top,3rem)] flex justify-between items-center">
         <div className="flex gap-1.5 items-center">
           {slides.map((_, i) => (
             <motion.div 
@@ -154,7 +153,7 @@ export default function LandingPage({
         {!currentSlide.isFinal && (
           <button 
             onClick={handleSkip}
-            className="text-xs font-black text-white/40 hover:text-white transition-colors uppercase tracking-widest"
+            className="text-[10px] font-black text-white/40 hover:text-white transition-colors uppercase tracking-[0.2em]"
           >
             Skip
           </button>
@@ -162,15 +161,15 @@ export default function LandingPage({
       </div>
 
       {/* ILLUSTRATION AREA (Flexible) */}
-      <div className="flex-1 relative w-full flex items-center justify-center pt-24 pb-8 px-12 z-10">
+      <div className="flex-[1.5] min-h-0 relative w-full flex items-center justify-center pt-20 pb-4 px-10 z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide.id}
-            initial={{ opacity: 0, scale: 0.7, y: 40 }}
+            initial={{ opacity: 0, scale: 0.8, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: -40 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full aspect-square max-w-[320px]"
+            exit={{ opacity: 0, scale: 0.9, y: -30 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full h-full max-w-[280px] max-h-[280px]"
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-transparent blur-[60px] rounded-full scale-75" />
             <Image
@@ -186,54 +185,54 @@ export default function LandingPage({
         </AnimatePresence>
       </div>
 
-      {/* ACTION CARD AREA (Adaptive Height) */}
+      {/* ACTION CARD AREA (Compact & Visible) */}
       <motion.div 
-        initial={{ y: 200, opacity: 0 }}
+        initial={{ y: 300, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="shrink-0 w-full bg-white rounded-t-[3.5rem] relative z-20 flex flex-col items-center px-10 pt-10 pb-[env(safe-area-inset-bottom,2rem)] text-center shadow-[0_-20px_80px_-15px_rgba(0,0,0,0.5)]"
+        className="shrink-0 w-full bg-white rounded-t-[3rem] relative z-20 flex flex-col items-center px-8 pt-8 pb-[env(safe-area-inset-bottom,2.5rem)] text-center shadow-[0_-20px_60px_-15px_rgba(0,0,0,0.5)]"
       >
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide.id + "-text"}
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -30 }}
-            transition={{ duration: 0.6, ease: "circOut" }}
-            className="flex flex-col mb-8"
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.5, ease: "circOut" }}
+            className="flex flex-col mb-6"
           >
-            <div className="flex justify-center mb-4">
-              <div className="p-3 rounded-2xl bg-[#0B0B14]/5 border border-black/5">
-                <Icon className={`w-6 h-6 ${currentSlide.accentColor}`} />
+            <div className="flex justify-center mb-3">
+              <div className="p-2.5 rounded-xl bg-black/5 border border-black/5">
+                <Icon className={`w-5 h-5 ${currentSlide.accentColor}`} />
               </div>
             </div>
-            <h1 className="text-3xl font-black tracking-tighter text-black leading-[1.1] mb-3">
+            <h1 className="text-2xl font-black tracking-tight text-black leading-none mb-2.5">
               {currentSlide.title}
             </h1>
-            <p className="text-[0.9rem] text-black/50 font-semibold leading-relaxed max-w-[280px] mx-auto">
+            <p className="text-[0.85rem] text-black/50 font-semibold leading-relaxed max-w-[260px] mx-auto">
               {currentSlide.description}
             </p>
           </motion.div>
         </AnimatePresence>
 
         {/* SLIDE INDICATOR DOTS */}
-        <div className="flex gap-2 mb-6">
+        <div className="flex gap-1.5 mb-5">
           {slides.map((_, i) => (
             <div 
               key={i} 
-              className={`w-1 h-1 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary scale-150' : 'bg-black/10'}`} 
+              className={`w-1 h-1 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-primary scale-125' : 'bg-black/10'}`} 
             />
           ))}
         </div>
 
         {/* PRIMARY ACTION BUTTON */}
-        <div className="w-full flex flex-col gap-3 mb-4">
+        <div className="w-full flex flex-col gap-2">
           {currentSlide.isFinal ? (
-            <div className="flex flex-col gap-3 w-full">
+            <div className="flex flex-col gap-2 w-full">
               <AuthModal 
                 defaultTab="register"
                 trigger={
-                  <Button className="w-full h-14 rounded-2xl bg-[#0B0B14] text-white hover:bg-black/90 text-sm font-black shadow-xl active:scale-[0.98] transition-all uppercase tracking-[0.1em]">
+                  <Button className="w-full h-12 rounded-2xl bg-black text-white hover:bg-black/90 text-[0.8rem] font-black shadow-lg active:scale-[0.98] transition-all uppercase tracking-[0.1em]">
                     {currentSlide.buttonText}
                   </Button>
                 }
@@ -241,7 +240,7 @@ export default function LandingPage({
               <AuthModal 
                 defaultTab="login"
                 trigger={
-                  <Button variant="ghost" className="w-full h-10 text-black/40 font-black text-[0.7rem] uppercase tracking-widest hover:text-black">
+                  <Button variant="ghost" className="w-full h-8 text-black/40 font-black text-[0.65rem] uppercase tracking-widest hover:text-black">
                     Already have an account? Login
                   </Button>
                 }
@@ -250,7 +249,7 @@ export default function LandingPage({
           ) : (
             <Button 
               onClick={handleNext}
-              className="w-full h-14 rounded-2xl bg-[#0B0B14] text-white hover:bg-black/90 text-sm font-black shadow-xl active:scale-[0.98] transition-all uppercase tracking-[0.1em] group"
+              className="w-full h-12 rounded-2xl bg-black text-white hover:bg-black/90 text-[0.8rem] font-black shadow-lg active:scale-[0.98] transition-all uppercase tracking-[0.1em] group"
             >
               {currentSlide.buttonText}
               <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />

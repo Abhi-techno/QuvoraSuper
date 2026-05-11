@@ -1,4 +1,3 @@
-
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { AppNav } from '@/components/navigation/app-nav';
@@ -8,7 +7,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: 'Quvora',
-  description: "India's first vernacular-first, AI-powered marketplace.",
+  description: "India's first AI-powered superapp.",
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
@@ -20,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#000000',
+  themeColor: '#0B0B14',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -47,10 +46,10 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body className="font-body antialiased selection:bg-primary selection:text-white overflow-x-hidden touch-none">
+      <body className="antialiased selection:bg-primary selection:text-white">
         <FirebaseClientProvider>
           <AppNav>
-            <main className="h-screen overflow-y-auto pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+            <main className="relative h-svh w-full overflow-hidden">
               {children}
             </main>
           </AppNav>
