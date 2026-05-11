@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    --background: 30 33% 93%; /* Soft Beige #F7EFE5 */
+    --background: 30 33% 96%; /* Soft Beige #F7EFE5 */
     --foreground: 0 0% 7%; /* #121212 */
     --card: 0 0% 100%;
     --card-foreground: 0 0% 7%;
@@ -13,39 +13,39 @@
     --popover-foreground: 0 0% 7%;
     --primary: 258 90% 66%; /* Accent Purple #8B5CF6 */
     --primary-foreground: 0 0% 100%;
-    --secondary: 30 33% 96%;
+    --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 7%;
-    --muted: 30 33% 96%;
+    --muted: 0 0% 96%;
     --muted-foreground: 0 0% 45%;
     --accent: 258 90% 66%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 0 0% 92%;
+    --input: 0 0% 92%;
     --ring: 258 90% 66%;
-    --radius: 1.75rem;
+    --radius: 2rem;
   }
 
   .dark {
-    --background: 240 30% 4%;
-    --foreground: 0 0% 100%;
-    --card: 240 30% 6%;
-    --card-foreground: 0 0% 100%;
-    --popover: 240 30% 6%;
-    --popover-foreground: 0 0% 100%;
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 6%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 6%;
+    --popover-foreground: 0 0% 98%;
     --primary: 258 90% 66%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 60%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 65%;
     --accent: 258 90% 66%;
-    --accent-foreground: 0 0% 100%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 12%;
-    --input: 0 0% 12%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
     --ring: 258 90% 66%;
   }
 }
@@ -67,21 +67,23 @@
 }
 
 .glass {
-  @apply backdrop-blur-[40px] saturate-[180%] border border-white/10;
-  background-color: hsla(0, 0%, 100%, 0.6);
+  @apply backdrop-blur-[30px] saturate-[180%] border border-white/20;
+  background-color: hsla(0, 0%, 100%, 0.7);
 }
 
 .dark .glass {
-  background-color: hsla(0, 0%, 100%, 0.05);
+  background-color: hsla(0, 0%, 0%, 0.4);
+  @apply border-white/10;
 }
 
 .glass-thick {
-  @apply backdrop-blur-[60px] saturate-[200%] border-t border-white/20;
-  background-color: hsla(0, 0%, 100%, 0.85);
+  @apply backdrop-blur-[40px] saturate-[160%] border border-white/30;
+  background-color: hsla(0, 0%, 100%, 0.8);
 }
 
 .dark .glass-thick {
-  background-color: hsla(0, 0%, 0%, 0.95);
+  background-color: hsla(0, 0%, 0%, 0.6);
+  @apply border-white/10;
 }
 
 .ios-tab-bar {
@@ -90,7 +92,7 @@
 }
 
 .ios-top-nav {
-  @apply sticky top-0 w-full h-14 glass-thick flex items-center px-4 z-40 pt-[env(safe-area-inset-top)];
+  @apply sticky top-0 w-full h-14 glass flex items-center px-4 z-40 pt-[env(safe-area-inset-top)];
 }
 
 .post-ad-fab {
