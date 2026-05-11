@@ -116,7 +116,7 @@ export default function LandingPage({
   return (
     <div className="fixed inset-0 h-svh w-full bg-[#FDF8F3] overflow-hidden flex flex-col">
       
-      {/* 1. TOP SECTION: Navigation Controls */}
+      {/* 1. TOP PART: Navigation Controls */}
       <header className="shrink-0 w-full px-8 pt-[env(safe-area-inset-top,2rem)] h-20 flex items-center justify-between z-50">
         <div className="flex gap-2">
           {slides.map((_, i) => (
@@ -141,7 +141,7 @@ export default function LandingPage({
         )}
       </header>
 
-      {/* 2. CENTER SECTION: Illustration Canvas */}
+      {/* 2. CENTER PART: Illustration Canvas (Adaptive) */}
       <main className="flex-1 min-h-0 relative w-full px-6 flex flex-col items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.div
@@ -165,23 +165,23 @@ export default function LandingPage({
               <IconComponent size={72} color={currentSlide.iconColor} strokeWidth={1.5} />
             </motion.div>
             
-            {/* Ambient Blobs */}
+            {/* Ambient Internal Animations (Blobs) */}
             <motion.div 
-              animate={{ y: [-15, 15, -15] }}
-              transition={{ duration: 6, repeat: Infinity }}
-              className="absolute top-10 left-10 w-16 h-16 rounded-full bg-white/10 blur-xl"
+              animate={{ y: [-15, 15, -15], x: [-10, 10, -10] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+              className="absolute top-10 left-10 w-20 h-20 rounded-full bg-white/10 blur-2xl"
             />
             <motion.div 
-              animate={{ y: [15, -15, 15] }}
-              transition={{ duration: 5, repeat: Infinity, delay: 0.5 }}
-              className="absolute bottom-10 right-10 w-24 h-24 rounded-full bg-black/5 blur-xl"
+              animate={{ y: [15, -15, 15], x: [10, -10, 10] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "linear", delay: 0.5 }}
+              className="absolute bottom-10 right-10 w-28 h-28 rounded-full bg-black/5 blur-2xl"
             />
           </motion.div>
         </AnimatePresence>
       </main>
 
-      {/* 3. BOTTOM SECTION: Action Card */}
-      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-20px_80px_-15px_rgba(0,0,0,0.1)] pt-10 pb-[env(safe-area-inset-bottom,2.5rem)] px-10 text-center flex flex-col items-center">
+      {/* 3. BOTTOM PART: Action Card (Anchored) */}
+      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-20px_80px_-15px_rgba(0,0,0,0.1)] pt-10 pb-[env(safe-area-inset-bottom,2.5rem)] px-10 text-center flex flex-col items-center z-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
