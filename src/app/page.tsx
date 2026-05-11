@@ -5,7 +5,7 @@ import React, { useEffect, useState, use } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
-import { Smartphone, Car, Home, Shield, Sparkles, Globe, ChevronRight } from 'lucide-react';
+import { Shield, Sparkles, Globe, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AuthModal } from '@/components/auth/auth-modal';
 import Image from 'next/image';
@@ -50,6 +50,7 @@ export default function LandingPage({
   const router = useRouter();
   const { user, loading } = useUser();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -64,8 +65,24 @@ export default function LandingPage({
     }
   }, [user, loading, router]);
 
+  useEffect(() => {
+    const root = window.document.documentElement;
+    setIsDark(root.classList.contains('dark'));
+  }, []);
+
+  const toggleTheme = () => {
+    const root = window.document.documentElement;
+    if (isDark) {
+      root.classList.remove('dark');
+      setIsDark(false);
+    } else {
+      root.classList.add('dark');
+      setIsDark(true);
+    }
+  };
+
   if (loading) return (
-    <div className="h-screen w-full bg-black flex items-center justify-center">
+    <div className="h-screen w-full bg-background flex items-center justify-center">
       <motion.div 
         animate={{ scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -75,7 +92,7 @@ export default function LandingPage({
   );
 
   return (
-    <div className="fixed inset-0 h-screen w-full bg-black overflow-hidden flex flex-col select-none touch-none font-body">
+    <div className="fixed inset-0 h-screen w-full bg-background overflow-hidden flex flex-col select-none touch-none font-body transition-colors duration-500">
       
       {/* IMMERSIVE BACKGROUND VISUAL */}
       <div className="absolute inset-0 z-0">
@@ -83,7 +100,7 @@ export default function LandingPage({
           <motion.div
             key={slides[selectedIndex].id}
             initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 0.6, scale: 1 }}
+            animate={{ opacity: isDark ? 0.6 : 0.2, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
             className="relative w-full h-full"
@@ -96,21 +113,30 @@ export default function LandingPage({
               data-ai-hint={slides[selectedIndex].imageHint}
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/60 to-black" />
+            <div className={`absolute inset-0 bg-gradient-to-b ${isDark ? 'from-black/20 via-black/60 to-black' : 'from-white/20 via-white/60 to-white'}`} />
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* TOP BRAND BADGE */}
+      {/* TOP NAVIGATION BAR */}
       <motion.div 
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="absolute top-12 left-0 right-0 z-20 flex justify-center"
+        className="absolute top-12 left-6 right-6 z-20 flex justify-between items-center"
       >
         <div className="glass px-4 py-2 rounded-full border-white/5 flex items-center gap-2">
           <div className="w-5 h-5 rounded-lg bg-primary flex items-center justify-center text-white font-black text-[10px]">Q</div>
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/80">Quvora</span>
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/80">Quvora</span>
         </div>
+
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={toggleTheme}
+          className="glass rounded-full h-10 w-10 border-none text-foreground shadow-lg active:scale-90 transition-transform"
+        >
+          {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+        </Button>
       </motion.div>
 
       {/* FLOATING ACTION CARD */}
@@ -133,10 +159,10 @@ export default function LandingPage({
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="space-y-4"
               >
-                <h2 className="text-3xl font-black tracking-tighter leading-none text-white">
+                <h2 className="text-3xl font-black tracking-tighter leading-none text-foreground">
                   {slides[selectedIndex].title}
                 </h2>
-                <p className="text-sm text-white/50 font-medium leading-relaxed px-4">
+                <p className="text-sm text-muted-foreground font-medium leading-relaxed px-4">
                   {slides[selectedIndex].subtitle}
                 </p>
               </motion.div>
@@ -150,7 +176,7 @@ export default function LandingPage({
                 key={i}
                 animate={{ 
                   width: selectedIndex === i ? 24 : 6,
-                  backgroundColor: selectedIndex === i ? "rgba(14, 165, 233, 1)" : "rgba(255, 255, 255, 0.2)"
+                  backgroundColor: selectedIndex === i ? "hsl(var(--primary))" : "hsl(var(--muted-foreground) / 0.2)"
                 }}
                 className="h-1.5 rounded-full transition-all duration-500"
               />
@@ -162,7 +188,7 @@ export default function LandingPage({
             <AuthModal 
               defaultTab="register"
               trigger={
-                <Button className="w-full h-16 rounded-2xl bg-white text-black hover:bg-white/90 text-sm font-black uppercase tracking-widest shadow-xl shadow-white/5 active:scale-[0.98] transition-all">
+                <Button className="w-full h-16 rounded-2xl bg-foreground text-background hover:bg-foreground/90 text-sm font-black uppercase tracking-widest shadow-xl active:scale-[0.98] transition-all">
                   Create Account
                 </Button>
               }
@@ -172,7 +198,7 @@ export default function LandingPage({
               defaultTab="login"
               trigger={
                 <button className="w-full text-center py-2">
-                  <span className="text-[11px] font-bold text-white/40 uppercase tracking-widest">
+                  <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
                     Already have an account? <span className="text-primary ml-1">Login</span>
                   </span>
                 </button>
@@ -182,8 +208,8 @@ export default function LandingPage({
 
           {/* SECURITY FOOTER */}
           <div className="flex items-center gap-2 opacity-20">
-            <Shield className="w-3 h-3 text-white" />
-            <span className="text-[7px] font-black uppercase tracking-[0.4em] text-white">Liquid Glass Encrypted</span>
+            <Shield className="w-3 h-3 text-foreground" />
+            <span className="text-[7px] font-black uppercase tracking-[0.4em] text-foreground">Liquid Glass Encrypted</span>
           </div>
         </div>
       </motion.div>

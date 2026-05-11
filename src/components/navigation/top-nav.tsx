@@ -1,8 +1,9 @@
 
 "use client"
 
+import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { ChevronLeft, MapPin, Bell, Search, Share2, Heart, HelpCircle, X, Settings } from 'lucide-react';
+import { ChevronLeft, MapPin, Bell, Search, Share2, Heart, HelpCircle, X, Settings, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
@@ -11,6 +12,23 @@ import Link from 'next/link';
 export function TopNav({ isScrolled }: { isScrolled: boolean }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    setIsDark(root.classList.contains('dark'));
+  }, []);
+
+  const toggleTheme = () => {
+    const root = window.document.documentElement;
+    if (isDark) {
+      root.classList.remove('dark');
+      setIsDark(false);
+    } else {
+      root.classList.add('dark');
+      setIsDark(true);
+    }
+  };
 
   const getContext = () => {
     if (pathname === '/') return 'home';
@@ -37,14 +55,26 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
           <Link href="/explore" className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-primary/20">Q</div>
           </Link>
-          <Button variant="ghost" className="glass h-8 rounded-full px-3 flex items-center gap-1 border-none">
-            <MapPin className="w-3 h-3 text-primary" />
-            <span className="text-[10px] font-bold">Mumbai</span>
-          </Button>
+          
+          <div className="flex items-center gap-2">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={toggleTheme}
+              className="glass rounded-full h-8 w-8 border-none text-foreground active:scale-90 transition-transform"
+            >
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </Button>
+            <Button variant="ghost" className="glass h-8 rounded-full px-3 flex items-center gap-1 border-none">
+              <MapPin className="w-3 h-3 text-primary" />
+              <span className="text-[10px] font-bold">Mumbai</span>
+            </Button>
+          </div>
+          
           <div className="flex items-center gap-2">
             <Link href="/notifications">
               <Button size="icon" variant="ghost" className="relative glass rounded-full h-8 w-8 border-none">
-                <Bell className="w-4 h-4" />
+                <Bell className="w-4 h-4 text-foreground" />
                 <span className="absolute top-2 right-2 w-1.5 h-1.5 bg-accent rounded-full border border-background" />
               </Button>
             </Link>
@@ -76,10 +106,10 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
 
       {(context === 'browse' || context === 'notifications' || context === 'saved') && (
         <div className="flex items-center justify-between w-full px-2">
-          <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full h-8 w-8 border-none">
+          <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full h-8 w-8 border-none text-foreground">
             <ChevronLeft className="w-5 h-5" />
           </Button>
-          <h1 className="text-sm font-bold uppercase tracking-widest">
+          <h1 className="text-sm font-bold uppercase tracking-widest text-foreground">
             {context === 'browse' ? 'Browse' : 
              context === 'notifications' ? 'Alerts' : 'Saved'}
           </h1>
@@ -89,13 +119,13 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
 
       {context === 'post' && (
         <div className="flex items-center justify-between w-full px-2">
-          <Button variant="ghost" size="icon" onClick={() => router.push('/explore')} className="glass rounded-full h-8 w-8 border-none">
+          <Button variant="ghost" size="icon" onClick={() => router.push('/explore')} className="glass rounded-full h-8 w-8 border-none text-foreground">
             <X className="w-5 h-5" />
           </Button>
           <div className="text-center">
-            <h1 className="text-[10px] font-bold uppercase tracking-widest">Post Ad</h1>
+            <h1 className="text-[10px] font-bold uppercase tracking-widest text-foreground">Post Ad</h1>
           </div>
-          <Button variant="ghost" size="icon" className="glass rounded-full h-8 w-8 border-none">
+          <Button variant="ghost" size="icon" className="glass rounded-full h-8 w-8 border-none text-foreground">
             <HelpCircle className="w-4 h-4" />
           </Button>
         </div>
@@ -104,11 +134,11 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
       {(context === 'profile' || context === 'chat-list') && (
         <div className="flex items-center justify-between w-full px-2">
           <div className="w-8" />
-          <h1 className="text-sm font-bold uppercase tracking-widest">
+          <h1 className="text-sm font-bold uppercase tracking-widest text-foreground">
             {context === 'profile' ? 'My Quvora' : 'Messages'}
           </h1>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="glass rounded-full h-8 w-8 border-none">
+            <Button variant="ghost" size="icon" className="glass rounded-full h-8 w-8 border-none text-foreground">
               {context === 'profile' ? <Settings className="w-4 h-4" /> : <Search className="w-4 h-4" />}
             </Button>
           </div>
