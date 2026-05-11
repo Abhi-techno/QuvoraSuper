@@ -17,6 +17,8 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
     title: 'Quvora',
   },
+  // PWA manifest disabled temporarily to resolve cloud workstation CORS errors
+  // manifest: '/manifest.webmanifest',
 };
 
 export const viewport: Viewport = {

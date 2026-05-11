@@ -86,7 +86,7 @@ export default function LandingPage({
   use(params);
   use(searchParams);
 
-  // Auto-play infinite carousel logic
+  // Infinite auto-play logic
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % slides.length);
@@ -115,7 +115,7 @@ export default function LandingPage({
         transition={{ duration: 1, repeat: Infinity }}
         className="w-16 h-16 rounded-3xl bg-white shadow-xl shadow-primary/20 overflow-hidden flex items-center justify-center"
       >
-        <Image src="/icons/icon-192.png" alt="Quvora" width={64} height={64} />
+        <Image src="/icons/icon-192.png" alt="Quvora" width={64} height={64} priority />
       </motion.div>
     </div>
   );
@@ -126,7 +126,7 @@ export default function LandingPage({
   return (
     <div className="fixed inset-0 h-svh w-full bg-[#FDF8F3] overflow-hidden flex flex-col">
       
-      {/* 1. TOP PART: Adaptive Navigation (Indicators & Skip) */}
+      {/* 1. TOP PART: Navigation & Progress */}
       <header className="shrink-0 h-16 w-full flex items-center justify-between px-8 pt-[env(safe-area-inset-top,1rem)]">
         <div className="flex gap-2 items-center">
           {slides.map((_, i) => (
@@ -151,7 +151,7 @@ export default function LandingPage({
         )}
       </header>
 
-      {/* 2. CENTER PART: Compact Illustration Canvas (65% Target, Adaptive Flex) */}
+      {/* 2. CENTER PART: Illustration Canvas (65% Adaptive) */}
       <main className="flex-[1.8] min-h-0 relative w-full px-6 flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.div
@@ -165,7 +165,7 @@ export default function LandingPage({
               currentSlide.bgColor
             )}
           >
-            {/* Internal iOS Liquid Animations (Ambient Blobs) */}
+            {/* Internal iOS Liquid Animations */}
             <motion.div 
               animate={{ 
                 y: [-25, 25, -25], 
@@ -185,7 +185,7 @@ export default function LandingPage({
               className="absolute bottom-0 right-0 w-72 h-72 rounded-full bg-black/5 blur-3xl"
             />
             
-            {/* Primary iOS-Level Animated Artwork */}
+            {/* Pulsing Icon Artwork */}
             <motion.div
               initial={{ scale: 0, rotate: -15, y: 30 }}
               animate={{ scale: 1, rotate: 0, y: 0 }}
@@ -198,30 +198,36 @@ export default function LandingPage({
         </AnimatePresence>
       </main>
 
-      {/* 3. BOTTOM PART: Action Card (35% Target, High-Density Content) */}
-      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-20px_80px_-15px_rgba(0,0,0,0.06)] pt-12 pb-[env(safe-area-inset-bottom,2.5rem)] px-8 text-center flex flex-col items-center z-20 overflow-hidden">
+      {/* 3. BOTTOM PART: Action Card (35% Adaptive) */}
+      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-20px_80px_-15px_rgba(0,0,0,0.06)] pt-12 pb-[env(safe-area-inset-bottom,2.5rem)] px-8 text-center flex flex-col items-center z-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ delay: 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col gap-3 mb-10 w-full"
           >
-            <h1 className="text-3xl font-black tracking-tighter text-[#121212] leading-[1.1]">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              className="text-3xl font-black tracking-tighter text-[#121212] leading-[1.1]"
+            >
               {currentSlide.title}
-            </h1>
-            <p className="text-sm font-medium text-muted-foreground/80 leading-relaxed max-w-[280px] mx-auto">
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="text-sm font-medium text-muted-foreground/80 leading-relaxed max-w-[280px] mx-auto"
+            >
               {currentSlide.subtitle}
-            </p>
+            </motion.p>
           </motion.div>
         </AnimatePresence>
 
         {/* Primary CTA Button */}
         <div className="w-full max-w-[320px]">
           {currentSlide.isFinal ? (
-            <div className="flex flex-col gap-3 w-full animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <div className="flex flex-col gap-3 w-full">
               <AuthModal 
                 defaultTab="register"
                 trigger={
