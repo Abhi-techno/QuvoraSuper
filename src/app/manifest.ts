@@ -8,14 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'India\'s first AI-powered vernacular marketplace.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#0D1B2A',
-    theme_color: '#3B82F6',
-    icons: [
-      {
-        src: '/favicon.ico',
-        sizes: 'any',
-        type: 'image/x-icon',
-      },
-    ],
+    background_color: '#000000',
+    theme_color: '#000000',
+    icons: [],
   }
 }
