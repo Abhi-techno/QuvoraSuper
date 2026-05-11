@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { AuthModal } from '@/components/auth/auth-modal';
 import Image from 'next/image';
-import { ChevronRight, Sparkles, ShoppingBag, Briefcase, Home, GraduationCap, Globe } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 const slides = [
   {
@@ -16,9 +16,8 @@ const slides = [
     subtitle: 'India’s AI-powered marketplace and career ecosystem.',
     imageUrl: 'https://picsum.photos/seed/q1/800/800',
     imageHint: 'floating smartphone',
-    icon: Globe,
-    bgColor: 'bg-[#FF8A65]/10',
-    accentColor: 'text-[#FF8A65]'
+    bgColor: 'bg-[#FF8A65]/10', // Soft Orange
+    artworkBg: 'bg-[#FF8A65]'
   },
   {
     id: 'slide-2',
@@ -26,9 +25,8 @@ const slides = [
     subtitle: 'Mobiles, cars, electronics, rentals, and more nearby.',
     imageUrl: 'https://picsum.photos/seed/q2/800/800',
     imageHint: 'handshake marketplace',
-    icon: ShoppingBag,
-    bgColor: 'bg-[#FFB84C]/10',
-    accentColor: 'text-[#FFB84C]'
+    bgColor: 'bg-[#FFB84C]/10', // Warm Yellow
+    artworkBg: 'bg-[#FFB84C]'
   },
   {
     id: 'slide-3',
@@ -36,9 +34,8 @@ const slides = [
     subtitle: 'Smart jobs, resume help, interview prep, and growth tools.',
     imageUrl: 'https://picsum.photos/seed/q3/800/800',
     imageHint: 'hologram assistant',
-    icon: Briefcase,
-    bgColor: 'bg-[#8B5CF6]/10',
-    accentColor: 'text-[#8B5CF6]'
+    bgColor: 'bg-[#8B5CF6]/10', // Soft Purple
+    artworkBg: 'bg-[#8B5CF6]'
   },
   {
     id: 'slide-4',
@@ -46,9 +43,8 @@ const slides = [
     subtitle: 'Discover flats, PGs, hostels, and verified properties.',
     imageUrl: 'https://picsum.photos/seed/q4/800/800',
     imageHint: '3d home',
-    icon: Home,
-    bgColor: 'bg-[#7AB6F9]/10',
-    accentColor: 'text-[#7AB6F9]'
+    bgColor: 'bg-[#7AB6F9]/10', // Soft Blue
+    artworkBg: 'bg-[#7AB6F9]'
   },
   {
     id: 'slide-5',
@@ -56,9 +52,8 @@ const slides = [
     subtitle: 'Courses, freelancing, mentorship, and internships together.',
     imageUrl: 'https://picsum.photos/seed/q5/800/800',
     imageHint: 'online learning',
-    icon: GraduationCap,
-    bgColor: 'bg-[#FF6B6B]/10',
-    accentColor: 'text-[#FF6B6B]'
+    bgColor: 'bg-[#FF6B6B]/10', // Light Peach
+    artworkBg: 'bg-[#FF6B6B]'
   },
   {
     id: 'slide-6',
@@ -66,9 +61,8 @@ const slides = [
     subtitle: 'The all-in-one AI superapp for India’s next generation.',
     imageUrl: 'https://picsum.photos/seed/q6/800/800',
     imageHint: 'digital globe',
-    icon: Sparkles,
-    bgColor: 'bg-[#8B5CF6]/10',
-    accentColor: 'text-primary',
+    bgColor: 'bg-background',
+    artworkBg: 'bg-primary',
     isFinal: true
   }
 ];
@@ -80,6 +74,7 @@ export default function LandingPage({
   params: Promise<any>;
   searchParams: Promise<any>;
 }) {
+  // Unwrap params for Next.js 15
   use(params);
   use(searchParams);
 
@@ -116,30 +111,18 @@ export default function LandingPage({
   const currentSlide = slides[currentIndex];
 
   return (
-    <div className={`fixed inset-0 h-svh w-full ${currentSlide.bgColor} transition-colors duration-1000 overflow-hidden flex flex-col`}>
+    <div className="fixed inset-0 h-svh w-full bg-[#F7EFE5] flex flex-col overflow-hidden">
       
-      {/* Top Nav */}
-      <div className="absolute top-0 left-0 right-0 z-50 px-8 pt-12 flex justify-between items-center">
-        <div className="flex gap-1.5">
-          {slides.map((_, i) => (
-            <div 
-              key={i} 
-              className={`h-1 rounded-full transition-all duration-500 ${i === currentIndex ? 'w-8 bg-primary' : 'w-2 bg-black/10'}`} 
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Artwork Section (65%) */}
-      <div className="flex-[1.5] relative w-full flex items-center justify-center p-12">
+      {/* Upper Artwork Section (65%) */}
+      <div className={`flex-[1.8] relative w-full ${currentSlide.artworkBg} transition-colors duration-1000 flex items-center justify-center`}>
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: -20 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full aspect-square max-w-sm"
+            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            exit={{ opacity: 0, scale: 0.9, rotate: 5 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full aspect-square max-w-[280px]"
           >
             <motion.div 
               animate={{ y: [0, -15, 0] }}
@@ -160,42 +143,44 @@ export default function LandingPage({
         </AnimatePresence>
       </div>
 
-      {/* Bottom Card (35%) */}
-      <motion.div 
-        initial={{ y: 200 }}
-        animate={{ y: 0 }}
-        className="shrink-0 w-full bg-white rounded-t-[3rem] px-10 pt-12 pb-[env(safe-area-inset-bottom,3rem)] shadow-[0_-15px_50px_-10px_rgba(0,0,0,0.05)]"
-      >
+      {/* Bottom Content Section (35%) */}
+      <div className="shrink-0 w-full bg-white flex flex-col items-center px-10 pt-12 pb-[env(safe-area-inset-bottom,3rem)] text-center relative z-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="flex flex-col gap-3 mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col gap-3 mb-12"
           >
-            <h1 className="text-3xl font-black tracking-tight text-foreground leading-tight">
+            <h1 className="text-[2.2rem] font-black tracking-tight text-[#121212] leading-tight">
               {currentSlide.title}
             </h1>
-            <p className="text-muted-foreground font-medium leading-relaxed max-w-[280px]">
+            <p className="text-muted-foreground font-medium leading-relaxed max-w-[300px] mx-auto">
               {currentSlide.subtitle}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex gap-1">
+        {/* Navigation & Controls */}
+        <div className="w-full flex items-center justify-between mt-auto">
+          {/* Dot Indicators */}
+          <div className="flex gap-1.5">
             {slides.map((_, i) => (
               <div 
                 key={i} 
-                className={`w-1.5 h-1.5 rounded-full transition-all ${i === currentIndex ? 'bg-primary scale-125' : 'bg-black/10'}`} 
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === currentIndex ? 'bg-[#121212] w-4' : 'bg-black/10'}`} 
               />
             ))}
           </div>
           
           <div className="flex items-center gap-4">
             {!currentSlide.isFinal && (
-              <button onClick={handleSkip} className="text-xs font-bold text-muted-foreground hover:text-foreground">
+              <button 
+                onClick={handleSkip} 
+                className="text-xs font-bold text-muted-foreground hover:text-[#121212] transition-colors"
+              >
                 Skip
               </button>
             )}
@@ -208,21 +193,20 @@ export default function LandingPage({
                 />
                 <AuthModal 
                   defaultTab="register"
-                  trigger={<Button className="h-12 px-8 rounded-2xl font-bold bg-primary shadow-lg shadow-primary/20">Get Started</Button>}
+                  trigger={<Button className="h-12 px-8 rounded-2xl font-bold bg-[#121212] text-white hover:bg-[#121212]/90 shadow-xl">Get Started</Button>}
                 />
               </div>
             ) : (
               <Button 
                 onClick={handleNext}
-                className="h-12 px-8 rounded-2xl font-bold bg-primary shadow-lg shadow-primary/20 flex items-center gap-2"
+                className="h-12 px-10 rounded-2xl font-bold bg-[#121212] text-white hover:bg-[#121212]/90 flex items-center gap-2 transition-all active:scale-95"
               >
-                Next
-                <ChevronRight className="w-4 h-4" />
+                Continue
               </Button>
             )}
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
