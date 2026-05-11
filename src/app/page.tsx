@@ -1,69 +1,60 @@
 
 'use client';
 
-import React, { useEffect, useState, use } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
-import { ChevronLeft, Shield, Sparkles, Globe, MessageCircle, ShoppingBag, Zap } from 'lucide-react';
+import { ChevronRight, Shield, Sparkles, Globe, MessageCircle, ShoppingBag, Zap, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AuthModal } from '@/components/auth/auth-modal';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 const slides = [
   { 
-    id: '1', 
-    title: 'BUY AND SELL ANYTHING FAST', 
-    highlight: 'ANYTHING FAST',
-    subtitle: "Mobiles, cars, homes, and 100+ more categories available at your fingertips.",
-    icon: ShoppingBag,
-    imageHint: "smartphone illustration",
-    imageUrl: "https://picsum.photos/seed/q1/600/600"
+    id: 'intro', 
+    title: '', 
+    subtitle: '',
+    isLogo: true,
+    imageUrl: "https://picsum.photos/seed/qlogo/600/600",
+    imageHint: "abstract logo"
   },
   { 
-    id: '2', 
-    title: 'SECURE LOCAL DEALS ONLY', 
-    highlight: 'LOCAL DEALS',
-    subtitle: "Smart AI fraud detection and verified profiles for a 100% worry-free trading experience.",
-    icon: Shield,
-    imageHint: "security shield illustration",
-    imageUrl: "https://picsum.photos/seed/q2/600/600"
+    id: 'marketplace', 
+    title: 'Buy and sell locally without any hassle', 
+    subtitle: 'Mobiles, cars, homes, and 100+ more categories at your fingertips.',
+    imageUrl: "https://picsum.photos/seed/q1/600/600",
+    imageHint: "marketplace app"
   },
   { 
-    id: '3', 
-    title: 'NEGOTIATE DIRECTLY NOW', 
-    highlight: 'DIRECTLY NOW',
-    subtitle: "Real-time in-app chat allows you to discuss, bargain, and close deals instantly.",
-    icon: MessageCircle,
-    imageHint: "chat bubble illustration",
-    imageUrl: "https://picsum.photos/seed/q3/600/600"
+    id: 'categories', 
+    title: 'Everything you need: 100+ categories', 
+    subtitle: 'Browse through a vast collection of items verified by Quvora AI.',
+    imageUrl: "https://picsum.photos/seed/q2/600/600",
+    imageHint: "app integrations"
   },
   { 
-    id: '4', 
-    title: 'SMART AI PRICE INSIGHTS', 
-    highlight: 'PRICE INSIGHTS',
-    subtitle: "Get fair market value suggestions powered by Quvora AI to sell faster and buy smarter.",
-    icon: Sparkles,
-    imageHint: "ai artificial intelligence",
-    imageUrl: "https://picsum.photos/seed/q4/600/600"
+    id: 'safety', 
+    title: 'Post your ad in just a few clicks', 
+    subtitle: 'Safe, secure, and verified profiles for a worry-free trading experience.',
+    imageUrl: "https://picsum.photos/seed/q3/600/600",
+    imageHint: "security review"
   },
   { 
-    id: '5', 
-    title: 'ZERO COMMISSION TRADING', 
-    highlight: 'ZERO COMMISSION',
-    subtitle: "No middlemen. No hidden fees. 100% of the value stays in your pocket.",
-    icon: Zap,
-    imageHint: "lightning bolt illustration",
-    imageUrl: "https://picsum.photos/seed/q5/600/600"
+    id: 'insights', 
+    title: 'Track your performance with AI insights', 
+    subtitle: 'Get fair market value suggestions to sell faster and buy smarter.',
+    imageUrl: "https://picsum.photos/seed/q4/600/600",
+    imageHint: "performance chart"
   },
   { 
-    id: '6', 
-    title: 'VERNACULAR FIRST REACH', 
-    highlight: 'VERNACULAR FIRST',
-    subtitle: "The first marketplace designed for your local language and community.",
-    icon: Globe,
-    imageHint: "world globe illustration",
-    imageUrl: "https://picsum.photos/seed/q6/600/600"
+    id: 'plus', 
+    title: 'Quvora Plus', 
+    subtitle: 'Build with more visibility and our most powerful AI tools.',
+    isPricing: true,
+    imageUrl: "https://picsum.photos/seed/q5/600/600",
+    imageHint: "premium sky"
   }
 ];
 
@@ -79,14 +70,7 @@ export default function LandingPage({
 
   const router = useRouter();
   const { user, loading } = useUser();
-  const [selectedIndex, setSelectedIndex] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setSelectedIndex((prev) => (prev + 1) % slides.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, []);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     if (!loading && user) {
@@ -94,8 +78,10 @@ export default function LandingPage({
     }
   }, [user, loading, router]);
 
-  const handleBack = () => {
-    setSelectedIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  const handleNext = () => {
+    if (currentIndex < slides.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
   };
 
   const handleSkip = () => {
@@ -103,7 +89,7 @@ export default function LandingPage({
   };
 
   if (loading) return (
-    <div className="h-screen w-full bg-background flex items-center justify-center">
+    <div className="h-screen w-full bg-black flex items-center justify-center">
       <motion.div 
         animate={{ scale: [1, 1.2, 1], opacity: [1, 0.5, 1] }}
         transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -112,129 +98,138 @@ export default function LandingPage({
     </div>
   );
 
+  const currentSlide = slides[currentIndex];
+
   return (
-    <div className="fixed inset-0 h-screen w-full bg-background overflow-hidden flex flex-col select-none touch-none font-body transition-colors duration-500">
+    <div className="fixed inset-0 h-screen w-full bg-black overflow-hidden flex flex-col select-none touch-none font-body">
       
-      {/* BACKGROUND GRADIENT */}
-      <div className="absolute inset-0 z-0 opacity-40">
-        <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-primary/20 via-primary/5 to-transparent" />
+      {/* TOP NAV */}
+      <div className="relative z-30 px-6 pt-14 flex justify-between items-center">
+        <div className="w-10 h-10" /> {/* Spacer */}
+        <button 
+          onClick={handleSkip}
+          className="text-sm font-bold text-white/60 hover:text-white transition-colors flex items-center gap-1"
+        >
+          Skip <ChevronRight className="w-4 h-4" />
+        </button>
       </div>
 
-      {/* TOP NAVIGATION */}
-      <div className="relative z-20 px-6 pt-12 pb-4 flex flex-col gap-6">
-        <div className="flex justify-between items-center">
-          <Button 
-            variant="outline" 
-            size="icon" 
-            onClick={handleBack}
-            className="h-12 w-12 rounded-full border-border bg-background shadow-sm active:scale-90 transition-transform"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </Button>
-          <button 
-            onClick={handleSkip}
-            className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Skip
-          </button>
-        </div>
-
-        {/* SEGMENTED PROGRESS BAR */}
-        <div className="flex gap-1.5 px-1">
-          {slides.map((_, i) => (
-            <div key={i} className="flex-1 h-1 bg-muted rounded-full overflow-hidden">
-              <motion.div 
-                animate={{ 
-                  width: i <= selectedIndex ? "100%" : "0%",
-                  opacity: i === selectedIndex ? 1 : 0.4
-                }}
-                transition={{ duration: 0.5 }}
-                className="h-full bg-foreground"
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* CENTER CONTENT */}
-      <div className="flex-1 flex flex-col px-8 pt-6 relative z-10">
+      {/* CONTENT AREA */}
+      <div className="flex-1 relative z-10 flex flex-col px-8 pt-10">
         <AnimatePresence mode="wait">
           <motion.div
-            key={slides[selectedIndex].id}
+            key={currentSlide.id}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
             className="flex flex-col h-full"
           >
-            {/* TYPOGRAPHY */}
-            <div className="space-y-4 mb-12">
-              <h1 className="text-4xl font-black tracking-tighter leading-tight text-foreground uppercase">
-                {slides[selectedIndex].title.split(slides[selectedIndex].highlight)[0]}
-                <span className="relative inline-block">
-                  <span className="relative z-10">{slides[selectedIndex].highlight}</span>
-                  <motion.span 
-                    initial={{ width: 0 }}
-                    animate={{ width: "105%" }}
-                    transition={{ delay: 0.4, duration: 0.8 }}
-                    className="absolute -bottom-1 -left-1 h-4 bg-primary/30 z-0"
-                  />
-                </span>
-                {slides[selectedIndex].title.split(slides[selectedIndex].highlight)[1]}
-              </h1>
-              <p className="text-sm text-muted-foreground font-medium leading-relaxed max-w-[280px]">
-                {slides[selectedIndex].subtitle}
-              </p>
+            {/* ILLUSTRATION/IMAGE */}
+            <div className="flex-1 relative flex items-center justify-center py-6">
+              {currentSlide.isLogo ? (
+                <motion.div 
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  className="w-24 h-24 rounded-[2rem] bg-primary flex items-center justify-center text-white font-black text-6xl shadow-2xl shadow-primary/30"
+                >
+                  Q
+                </motion.div>
+              ) : (
+                <div className={cn(
+                  "relative w-full aspect-square max-w-[320px] rounded-3xl overflow-hidden glass border-white/10",
+                  currentSlide.isPricing && "bg-gradient-to-b from-primary/20 to-transparent p-6"
+                )}>
+                  {currentSlide.isPricing ? (
+                    <div className="flex flex-col h-full">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-xl">Q</div>
+                        <div>
+                          <h4 className="text-white font-bold text-sm">Quvora PLUS</h4>
+                          <p className="text-[10px] text-white/60">More reach, more power</p>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-3 mt-4">
+                        {[
+                          '10x More Ad Visibility',
+                          'AI-Powered Negotiation Bot',
+                          'Verified Business Badge',
+                          'Priority Support',
+                          'Detailed Analytics Dashboard'
+                        ].map((feature, i) => (
+                          <div key={i} className="flex items-center gap-2">
+                            <div className="w-4 h-4 rounded-full bg-primary/20 flex items-center justify-center">
+                              <Check className="w-2.5 h-2.5 text-primary" />
+                            </div>
+                            <span className="text-[11px] text-white/80">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="mt-auto">
+                        <p className="text-2xl font-black text-white">₹499<span className="text-sm font-medium text-white/60">/mo</span></p>
+                      </div>
+                    </div>
+                  ) : (
+                    <Image
+                      src={currentSlide.imageUrl}
+                      alt="Illustration"
+                      fill
+                      className="object-cover opacity-80"
+                      data-ai-hint={currentSlide.imageHint}
+                      priority
+                    />
+                  )}
+                </div>
+              )}
             </div>
 
-            {/* ILLUSTRATION */}
-            <div className="flex-1 relative flex items-center justify-center py-8">
-              <motion.div
-                animate={{ 
-                  y: [0, -10, 0],
-                }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity, 
-                  ease: "easeInOut" 
-                }}
-                className="relative w-full aspect-square max-w-[320px]"
-              >
-                <Image
-                  src={slides[selectedIndex].imageUrl}
-                  alt="Illustration"
-                  fill
-                  className="object-contain"
-                  data-ai-hint={slides[selectedIndex].imageHint}
-                  priority
-                />
-              </motion.div>
+            {/* TYPOGRAPHY */}
+            <div className="pb-24 space-y-4">
+              <h1 className="text-3xl font-bold tracking-tight text-white leading-tight">
+                {currentSlide.title}
+              </h1>
+              <p className="text-sm text-white/50 font-medium leading-relaxed max-w-[280px]">
+                {currentSlide.subtitle}
+              </p>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* BOTTOM ACTION */}
-      <div className="px-6 pb-16 pt-6 relative z-10">
-        <AuthModal 
-          defaultTab="register"
-          trigger={
-            <Button className="w-full h-16 rounded-[2rem] bg-foreground text-background hover:bg-foreground/90 text-sm font-bold shadow-xl active:scale-[0.98] transition-all">
-              Let's start now
-            </Button>
-          }
-        />
-        
-        <div className="mt-6 flex justify-center">
+      {/* BOTTOM CONTROLS */}
+      <div className="px-6 pb-16 pt-4 relative z-20 flex flex-col gap-8">
+        {/* DOTS */}
+        <div className="flex justify-center gap-2">
+          {slides.map((_, i) => (
+            <div 
+              key={i} 
+              className={cn(
+                "h-1.5 rounded-full transition-all duration-300",
+                i === currentIndex ? "w-6 bg-white" : "w-1.5 bg-white/20"
+              )} 
+            />
+          ))}
+        </div>
+
+        {currentIndex === slides.length - 1 ? (
           <AuthModal 
-            defaultTab="login"
+            defaultTab="register"
             trigger={
-              <button className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest hover:text-primary transition-colors">
-                Already have an account? <span className="text-primary ml-1">Login</span>
-              </button>
+              <Button className="w-full h-14 rounded-2xl bg-white text-black hover:bg-white/90 text-sm font-bold shadow-xl active:scale-[0.98] transition-all">
+                Start 7-day free trial
+              </Button>
             }
           />
-        </div>
+        ) : (
+          <Button 
+            onClick={handleNext}
+            className="w-full h-14 rounded-2xl bg-white text-black hover:bg-white/90 text-sm font-bold shadow-xl active:scale-[0.98] transition-all"
+          >
+            Continue
+          </Button>
+        )}
       </div>
 
     </div>

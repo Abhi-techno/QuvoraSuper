@@ -69,23 +69,23 @@
 }
 
 .glass {
-  @apply backdrop-blur-[24px] saturate-[180%] border border-white/5;
+  @apply backdrop-blur-[40px] saturate-[180%] border border-white/10;
   background-color: hsla(0, 0%, 100%, 0.03);
 }
 
 .dark .glass {
   background-color: hsla(0, 0%, 100%, 0.02);
-  @apply border-white/5;
+  @apply border-white/10;
 }
 
 .glass-thick {
-  @apply backdrop-blur-[40px] saturate-[200%] border-t border-white/10;
-  background-color: hsla(0, 0%, 0%, 0.4);
+  @apply backdrop-blur-[60px] saturate-[200%] border-t border-white/15;
+  background-color: hsla(0, 0%, 0%, 0.6);
 }
 
 .dark .glass-thick {
-  background-color: hsla(0, 0%, 0%, 0.6);
-  @apply border-white/5;
+  background-color: hsla(0, 0%, 0%, 0.8);
+  @apply border-white/10;
 }
 
 .ios-tab-bar {
