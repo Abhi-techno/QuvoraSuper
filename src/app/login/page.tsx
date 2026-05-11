@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useState } from 'react';
@@ -8,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { useRouter } from 'next/navigation';
 import { Smartphone, Mail, Chrome, Apple } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,7 +21,9 @@ export default function LoginPage() {
   return (
     <div className="fixed inset-0 z-[100] flex flex-col bg-background text-foreground px-6 pt-12 animate-in slide-in-from-bottom-8 duration-500">
       <div className="flex flex-col items-center mb-12">
-        <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center text-white font-bold text-3xl mb-4">Q</div>
+        <div className="w-20 h-20 rounded-3xl bg-white flex items-center justify-center shadow-2xl shadow-black/5 overflow-hidden mb-4">
+          <Image src="/icons/icon-192.png" alt="Quvora" width={64} height={64} />
+        </div>
         <h1 className="text-3xl font-bold">Welcome back</h1>
         <p className="text-muted-foreground mt-1">Sign in to continue</p>
       </div>

@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Sheet,
   SheetContent,
@@ -14,11 +13,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Lock, Mail, User, ShieldCheck, Eye, EyeOff } from 'lucide-react';
+import { Lock, Mail, User, Eye, EyeOff } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useToast } from '@/hooks/use-toast';
+import Image from 'next/image';
 
 interface AuthModalProps {
   trigger: React.ReactNode;
@@ -72,7 +72,9 @@ export function AuthModal({ trigger, defaultTab = 'login' }: AuthModalProps) {
         
         <div className="max-w-md mx-auto h-full flex flex-col p-8 pt-14">
           <SheetHeader className="mb-10 text-center">
-            <div className="w-16 h-16 rounded-3xl bg-primary flex items-center justify-center text-white font-black text-4xl mb-6 mx-auto shadow-2xl shadow-primary/20">Q</div>
+            <div className="w-20 h-20 rounded-3xl bg-white flex items-center justify-center mb-6 mx-auto shadow-2xl shadow-black/5 overflow-hidden">
+              <Image src="/icons/icon-192.png" alt="Quvora" width={64} height={64} />
+            </div>
             <SheetTitle className="text-3xl font-black tracking-tight">Access Quvora</SheetTitle>
             <p className="text-muted-foreground text-sm font-medium mt-1">India's AI superapp ecosystem</p>
           </SheetHeader>

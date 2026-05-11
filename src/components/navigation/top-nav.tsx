@@ -2,11 +2,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { ChevronLeft, Bell, Search, Settings, Sun, Moon, MapPin, X, HelpCircle } from 'lucide-react';
+import { ChevronLeft, Bell, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function TopNav({ isScrolled }: { isScrolled: boolean }) {
   const pathname = usePathname();
@@ -50,7 +50,9 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
         {context === 'home' ? (
           <>
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center text-white font-black text-lg shadow-lg shadow-primary/20">Q</div>
+              <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-black/5 overflow-hidden">
+                <Image src="/icons/icon-192.png" alt="Quvora" width={32} height={32} />
+              </div>
               <h1 className="text-sm font-black tracking-tighter uppercase">Quvora</h1>
             </div>
             <div className="flex items-center gap-1.5">

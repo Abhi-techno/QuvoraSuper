@@ -8,13 +8,16 @@ import React from 'react';
 export const metadata: Metadata = {
   title: 'Quvora',
   description: "India's first AI-powered superapp.",
+  icons: {
+    icon: '/icons/favicon.ico',
+    apple: '/icons/apple-touch-icon.png',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
     title: 'Quvora',
   },
-  // Temporarily disabled manifest to resolve Workstation CORS/Redirect errors
-  // manifest: '/manifest.webmanifest',
+  manifest: '/manifest.webmanifest',
 };
 
 export const viewport: Viewport = {

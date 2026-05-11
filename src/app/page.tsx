@@ -6,6 +6,7 @@ import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { AuthModal } from '@/components/auth/auth-modal';
+import Image from 'next/image';
 import { 
   ShoppingBag, 
   Handshake, 
@@ -106,8 +107,10 @@ export default function LandingPage({
       <motion.div 
         animate={{ scale: [1, 1.1, 1], opacity: [1, 0.7, 1] }}
         transition={{ duration: 1, repeat: Infinity }}
-        className="w-12 h-12 rounded-2xl bg-primary shadow-xl shadow-primary/20" 
-      />
+        className="w-16 h-16 rounded-3xl bg-white shadow-xl shadow-primary/20 overflow-hidden flex items-center justify-center"
+      >
+        <Image src="/icons/icon-192.png" alt="Quvora" width={64} height={64} />
+      </motion.div>
     </div>
   );
 
