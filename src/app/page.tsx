@@ -17,42 +17,42 @@ const slides = [
     title: 'Your World. One Place.', 
     subtitle: "India's first AI-powered vernacular marketplace.",
     icon: Globe,
-    gradient: 'from-primary/5 to-transparent'
+    gradient: 'from-foreground/5 to-transparent'
   },
   { 
     id: '2', 
     title: 'Premium Cars & Bikes', 
     subtitle: 'Verified listings with real-time AI inspections.',
     icon: Car,
-    gradient: 'from-primary/10 to-transparent'
+    gradient: 'from-foreground/10 to-transparent'
   },
   { 
     id: '3', 
     title: 'Latest Gadgets', 
     subtitle: 'Find the best deals with AI price insights.',
     icon: Smartphone,
-    gradient: 'from-primary/5 to-transparent'
+    gradient: 'from-foreground/5 to-transparent'
   },
   { 
     id: '4', 
     title: 'Modern Living', 
     subtitle: 'Upgrade your home with handpicked furniture.',
     icon: Home,
-    gradient: 'from-primary/10 to-transparent'
+    gradient: 'from-foreground/10 to-transparent'
   },
   { 
     id: '5', 
     title: 'Local Community', 
     subtitle: 'Buy and sell safely in your neighborhood.',
     icon: Sparkles,
-    gradient: 'from-primary/5 to-transparent'
+    gradient: 'from-foreground/5 to-transparent'
   },
   { 
     id: '6', 
     title: 'Secure Trading', 
     subtitle: 'Zero middlemen. 100% trust with Liquid Glass.',
     icon: Shield,
-    gradient: 'from-primary/10 to-transparent'
+    gradient: 'from-foreground/10 to-transparent'
   }
 ];
 
