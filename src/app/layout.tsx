@@ -1,3 +1,4 @@
+
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { AppNav } from '@/components/navigation/app-nav';
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0B0B14',
+  themeColor: '#121212',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -38,7 +39,7 @@ export default function RootLayout({
   React.use(params);
 
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="light">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -46,7 +47,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body className="antialiased selection:bg-primary selection:text-white">
+      <body className="antialiased selection:bg-primary selection:text-white overflow-hidden">
         <FirebaseClientProvider>
           <AppNav>
             <main className="relative h-svh w-full overflow-hidden">
