@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, use } from 'react';
@@ -78,13 +77,13 @@ export default function LandingPage({
   params: Promise<any>;
   searchParams: Promise<any>;
 }) {
-  // Unwrap dynamic APIs for Next.js 15
-  use(params);
-  use(searchParams);
-
   const router = useRouter();
   const { user, loading } = useUser();
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Unwrap dynamic APIs for Next.js 15
+  use(params);
+  use(searchParams);
 
   useEffect(() => {
     if (!loading && user) {
@@ -118,33 +117,11 @@ export default function LandingPage({
   return (
     <div className="fixed inset-0 h-svh w-full bg-[#FDF8F3] overflow-hidden flex flex-col">
       
-      {/* 1. TOP PART: Navigation Controls (Adaptive) */}
-      <header className="shrink-0 w-full px-8 pt-[env(safe-area-inset-top,2rem)] h-20 flex items-center justify-between z-50">
-        <div className="flex gap-2">
-          {slides.map((_, i) => (
-            <motion.div 
-              key={i} 
-              animate={{ 
-                width: i === currentIndex ? 24 : 6,
-                backgroundColor: i === currentIndex ? '#121212' : '#E5E5E5',
-                opacity: i <= currentIndex ? 1 : 0.3
-              }}
-              className="h-1.5 rounded-full transition-all duration-300" 
-            />
-          ))}
-        </div>
-        {!currentSlide.isFinal && (
-          <button 
-            onClick={handleSkip} 
-            className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60 hover:text-[#121212] transition-colors"
-          >
-            Skip
-          </button>
-        )}
-      </header>
+      {/* 1. TOP PART: Adaptive Safe Area Spacer */}
+      <header className="shrink-0 h-10 w-full pt-[env(safe-area-inset-top,1rem)]" />
 
-      {/* 2. CENTER PART: Illustration Canvas (Ultra-Adaptive & Animated) */}
-      <main className="flex-1 min-h-0 relative w-full px-6 flex flex-col items-center justify-center">
+      {/* 2. CENTER PART: Illustration Canvas (65% Height, Compact & Internal Animations) */}
+      <main className="flex-[1.8] min-h-0 relative w-full px-6 flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -153,53 +130,53 @@ export default function LandingPage({
             exit={{ opacity: 0, scale: 0.8, x: -50 }}
             transition={springConfig}
             className={cn(
-              "w-full aspect-square max-h-[400px] rounded-[3.5rem] shadow-2xl flex items-center justify-center relative overflow-hidden transition-colors duration-700",
+              "w-full aspect-square max-h-[380px] rounded-[3.5rem] shadow-2xl flex items-center justify-center relative overflow-hidden transition-colors duration-700",
               currentSlide.bgColor
             )}
           >
-            {/* Ambient Internal Animations (Blobs) */}
+            {/* Internal iOS Liquid Animations (Ambient Blobs) */}
             <motion.div 
               animate={{ 
-                y: [-20, 20, -20], 
-                x: [-15, 15, -15],
-                rotate: [0, 90, 0]
+                y: [-25, 25, -25], 
+                x: [-20, 20, -20],
+                rotate: [0, 180, 0]
               }}
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              className="absolute top-0 left-0 w-48 h-48 rounded-full bg-white/10 blur-3xl"
+              transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+              className="absolute top-0 left-0 w-56 h-56 rounded-full bg-white/15 blur-3xl"
             />
             <motion.div 
               animate={{ 
-                y: [20, -20, 20], 
-                x: [15, -15, 15],
-                rotate: [0, -90, 0]
+                y: [25, -25, 25], 
+                x: [20, -20, 20],
+                rotate: [0, -180, 0]
               }}
-              transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: 1 }}
-              className="absolute bottom-0 right-0 w-64 h-64 rounded-full bg-black/5 blur-3xl"
+              transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 1 }}
+              className="absolute bottom-0 right-0 w-72 h-72 rounded-full bg-black/5 blur-3xl"
             />
             
-            {/* Primary Artwork */}
+            {/* Primary iOS-Level Animated Artwork */}
             <motion.div
-              initial={{ scale: 0, rotate: -15, y: 20 }}
+              initial={{ scale: 0, rotate: -15, y: 30 }}
               animate={{ scale: 1, rotate: 0, y: 0 }}
-              transition={{ delay: 0.2, ...springConfig }}
-              className="relative z-10 p-10 bg-white/30 backdrop-blur-2xl rounded-[3rem] shadow-2xl border border-white/40"
+              transition={{ delay: 0.25, ...springConfig }}
+              className="relative z-10 p-9 bg-white/35 backdrop-blur-2xl rounded-[3rem] shadow-2xl border border-white/45 flex items-center justify-center"
             >
-              <IconComponent size={80} color={currentSlide.iconColor} strokeWidth={1.5} />
+              <IconComponent size={72} color={currentSlide.iconColor} strokeWidth={1.5} />
             </motion.div>
           </motion.div>
         </AnimatePresence>
       </main>
 
-      {/* 3. BOTTOM PART: Action Card (Anchored to Thumb-Zone) */}
-      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-20px_80px_-15px_rgba(0,0,0,0.08)] pt-10 pb-[env(safe-area-inset-bottom,2.5rem)] px-10 text-center flex flex-col items-center z-20">
+      {/* 3. BOTTOM PART: Action Card (35% Height, High-Density Content) */}
+      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-20px_80px_-15px_rgba(0,0,0,0.06)] pt-12 pb-[env(safe-area-inset-bottom,2.5rem)] px-8 text-center flex flex-col items-center z-20 overflow-hidden relative">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ delay: 0.1, duration: 0.4 }}
-            className="flex flex-col gap-3 mb-10 w-full"
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ delay: 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col gap-3 mb-8 w-full"
           >
             <h1 className="text-3xl font-black tracking-tighter text-[#121212] leading-[1.1]">
               {currentSlide.title}
@@ -210,13 +187,42 @@ export default function LandingPage({
           </motion.div>
         </AnimatePresence>
 
-        <div className="w-full max-w-[300px]">
+        {/* Action Row: Indicators & Skip */}
+        <div className="w-full flex items-center justify-between px-2 mb-8 h-6 relative">
+          <div className="w-1/4" /> {/* Spacer */}
+          <div className="flex gap-2 justify-center items-center">
+            {slides.map((_, i) => (
+              <motion.div 
+                key={i} 
+                animate={{ 
+                  width: i === currentIndex ? 20 : 6,
+                  backgroundColor: i === currentIndex ? '#121212' : '#E5E5E5',
+                  opacity: i === currentIndex ? 1 : 0.4
+                }}
+                className="h-1.5 rounded-full transition-all duration-300" 
+              />
+            ))}
+          </div>
+          <div className="w-1/4 flex justify-end">
+            {!currentSlide.isFinal && (
+              <button 
+                onClick={handleSkip} 
+                className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50 hover:text-primary active:scale-95 transition-all"
+              >
+                Skip
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Primary CTA Button */}
+        <div className="w-full max-w-[320px] px-2">
           {currentSlide.isFinal ? (
-            <div className="flex flex-col gap-3 w-full">
+            <div className="flex flex-col gap-3 w-full animate-in fade-in slide-in-from-bottom-2 duration-700">
               <AuthModal 
                 defaultTab="register"
                 trigger={
-                  <Button className="w-full h-14 rounded-full font-black text-sm bg-[#121212] text-white hover:bg-[#121212]/90 shadow-2xl shadow-black/20 transition-transform active:scale-95">
+                  <Button className="w-full h-15 rounded-full font-black text-sm bg-[#121212] text-white hover:bg-[#121212]/90 shadow-2xl shadow-black/20 transition-transform active:scale-95">
                     GET STARTED
                   </Button>
                 }
@@ -233,7 +239,7 @@ export default function LandingPage({
           ) : (
             <Button 
               onClick={handleNext}
-              className="w-full h-14 rounded-full font-black text-sm bg-[#121212] text-white hover:bg-[#121212]/90 transition-all active:scale-95 shadow-2xl shadow-black/10"
+              className="w-full h-15 rounded-full font-black text-sm bg-[#121212] text-white hover:bg-[#121212]/90 transition-all active:scale-95 shadow-2xl shadow-black/10"
             >
               CONTINUE
             </Button>

@@ -1,4 +1,3 @@
-
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { AppNav } from '@/components/navigation/app-nav';
@@ -14,10 +13,12 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
     title: 'Quvora',
   },
+  // Temporarily disabled manifest to resolve Workstation CORS/Redirect errors
+  // manifest: '/manifest.webmanifest',
 };
 
 export const viewport: Viewport = {
-  themeColor: '#121212',
+  themeColor: '#FDF8F3',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
