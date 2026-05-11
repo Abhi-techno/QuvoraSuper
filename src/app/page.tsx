@@ -179,6 +179,7 @@ export default function LandingPage({
               fill
               className="object-contain drop-shadow-2xl"
               data-ai-hint={currentSlide.imageHint}
+              sizes="(max-width: 768px) 80vw, 400px"
               priority
             />
           </motion.div>
