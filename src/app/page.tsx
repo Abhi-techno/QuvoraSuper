@@ -5,7 +5,7 @@ import React, { useEffect, useState, use } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
-import { Shield, Sparkles, Globe, Sun, Moon } from 'lucide-react';
+import { ChevronLeft, Shield, Sparkles, Globe, MessageCircle, ShoppingBag, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AuthModal } from '@/components/auth/auth-modal';
 import Image from 'next/image';
@@ -13,27 +13,57 @@ import Image from 'next/image';
 const slides = [
   { 
     id: '1', 
-    title: 'Vernacular-First Marketplace', 
-    subtitle: "India's first AI-powered marketplace designed for your language.",
-    icon: Globe,
-    imageHint: "indian city landscape 3d",
-    imageUrl: "https://picsum.photos/seed/q1/800/1200"
+    title: 'BUY AND SELL ANYTHING FAST', 
+    highlight: 'ANYTHING FAST',
+    subtitle: "Mobiles, cars, homes, and 100+ more categories available at your fingertips.",
+    icon: ShoppingBag,
+    imageHint: "smartphone illustration",
+    imageUrl: "https://picsum.photos/seed/q1/600/600"
   },
   { 
     id: '2', 
-    title: 'Zero Commission Trading', 
-    subtitle: 'No middlemen. No hidden fees. 100% of the value stays with you.',
+    title: 'SECURE LOCAL DEALS ONLY', 
+    highlight: 'LOCAL DEALS',
+    subtitle: "Smart AI fraud detection and verified profiles for a 100% worry-free trading experience.",
     icon: Shield,
-    imageHint: "gold coins 3d",
-    imageUrl: "https://picsum.photos/seed/q2/800/1200"
+    imageHint: "security shield illustration",
+    imageUrl: "https://picsum.photos/seed/q2/600/600"
   },
   { 
     id: '3', 
-    title: 'AI-Powered Safety', 
-    subtitle: 'Real-time fraud detection and smart price insights in every deal.',
+    title: 'NEGOTIATE DIRECTLY NOW', 
+    highlight: 'DIRECTLY NOW',
+    subtitle: "Real-time in-app chat allows you to discuss, bargain, and close deals instantly.",
+    icon: MessageCircle,
+    imageHint: "chat bubble illustration",
+    imageUrl: "https://picsum.photos/seed/q3/600/600"
+  },
+  { 
+    id: '4', 
+    title: 'SMART AI PRICE INSIGHTS', 
+    highlight: 'PRICE INSIGHTS',
+    subtitle: "Get fair market value suggestions powered by Quvora AI to sell faster and buy smarter.",
     icon: Sparkles,
-    imageHint: "security shield 3d",
-    imageUrl: "https://picsum.photos/seed/q3/800/1200"
+    imageHint: "ai artificial intelligence",
+    imageUrl: "https://picsum.photos/seed/q4/600/600"
+  },
+  { 
+    id: '5', 
+    title: 'ZERO COMMISSION TRADING', 
+    highlight: 'ZERO COMMISSION',
+    subtitle: "No middlemen. No hidden fees. 100% of the value stays in your pocket.",
+    icon: Zap,
+    imageHint: "lightning bolt illustration",
+    imageUrl: "https://picsum.photos/seed/q5/600/600"
+  },
+  { 
+    id: '6', 
+    title: 'VERNACULAR FIRST REACH', 
+    highlight: 'VERNACULAR FIRST',
+    subtitle: "The first marketplace designed for your local language and community.",
+    icon: Globe,
+    imageHint: "world globe illustration",
+    imageUrl: "https://picsum.photos/seed/q6/600/600"
   }
 ];
 
@@ -50,12 +80,11 @@ export default function LandingPage({
   const router = useRouter();
   const { user, loading } = useUser();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setSelectedIndex((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 6000);
     return () => clearInterval(timer);
   }, []);
 
@@ -65,20 +94,12 @@ export default function LandingPage({
     }
   }, [user, loading, router]);
 
-  useEffect(() => {
-    const root = window.document.documentElement;
-    setIsDark(root.classList.contains('dark'));
-  }, []);
+  const handleBack = () => {
+    setSelectedIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
 
-  const toggleTheme = () => {
-    const root = window.document.documentElement;
-    if (isDark) {
-      root.classList.remove('dark');
-      setIsDark(false);
-    } else {
-      root.classList.add('dark');
-      setIsDark(true);
-    }
+  const handleSkip = () => {
+    router.push('/explore');
   };
 
   if (loading) return (
@@ -94,125 +115,128 @@ export default function LandingPage({
   return (
     <div className="fixed inset-0 h-screen w-full bg-background overflow-hidden flex flex-col select-none touch-none font-body transition-colors duration-500">
       
-      {/* IMMERSIVE BACKGROUND VISUAL */}
-      <div className="absolute inset-0 z-0">
+      {/* BACKGROUND GRADIENT */}
+      <div className="absolute inset-0 z-0 opacity-40">
+        <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-primary/20 via-primary/5 to-transparent" />
+      </div>
+
+      {/* TOP NAVIGATION */}
+      <div className="relative z-20 px-6 pt-12 pb-4 flex flex-col gap-6">
+        <div className="flex justify-between items-center">
+          <Button 
+            variant="outline" 
+            size="icon" 
+            onClick={handleBack}
+            className="h-12 w-12 rounded-full border-border bg-background shadow-sm active:scale-90 transition-transform"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </Button>
+          <button 
+            onClick={handleSkip}
+            className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Skip
+          </button>
+        </div>
+
+        {/* SEGMENTED PROGRESS BAR */}
+        <div className="flex gap-1.5 px-1">
+          {slides.map((_, i) => (
+            <div key={i} className="flex-1 h-1 bg-muted rounded-full overflow-hidden">
+              <motion.div 
+                animate={{ 
+                  width: i <= selectedIndex ? "100%" : "0%",
+                  opacity: i === selectedIndex ? 1 : 0.4
+                }}
+                transition={{ duration: 0.5 }}
+                className="h-full bg-foreground"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CENTER CONTENT */}
+      <div className="flex-1 flex flex-col px-8 pt-6 relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={slides[selectedIndex].id}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: isDark ? 0.6 : 0.2, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full h-full"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="flex flex-col h-full"
           >
-            <Image
-              src={slides[selectedIndex].imageUrl}
-              alt="Narrative"
-              fill
-              className="object-cover"
-              data-ai-hint={slides[selectedIndex].imageHint}
-              priority
-            />
-            <div className={`absolute inset-0 bg-gradient-to-b ${isDark ? 'from-black/20 via-black/60 to-black' : 'from-white/20 via-white/60 to-white'}`} />
+            {/* TYPOGRAPHY */}
+            <div className="space-y-4 mb-12">
+              <h1 className="text-4xl font-black tracking-tighter leading-tight text-foreground uppercase">
+                {slides[selectedIndex].title.split(slides[selectedIndex].highlight)[0]}
+                <span className="relative inline-block">
+                  <span className="relative z-10">{slides[selectedIndex].highlight}</span>
+                  <motion.span 
+                    initial={{ width: 0 }}
+                    animate={{ width: "105%" }}
+                    transition={{ delay: 0.4, duration: 0.8 }}
+                    className="absolute -bottom-1 -left-1 h-4 bg-primary/30 z-0"
+                  />
+                </span>
+                {slides[selectedIndex].title.split(slides[selectedIndex].highlight)[1]}
+              </h1>
+              <p className="text-sm text-muted-foreground font-medium leading-relaxed max-w-[280px]">
+                {slides[selectedIndex].subtitle}
+              </p>
+            </div>
+
+            {/* ILLUSTRATION */}
+            <div className="flex-1 relative flex items-center justify-center py-8">
+              <motion.div
+                animate={{ 
+                  y: [0, -10, 0],
+                }}
+                transition={{ 
+                  duration: 4, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+                className="relative w-full aspect-square max-w-[320px]"
+              >
+                <Image
+                  src={slides[selectedIndex].imageUrl}
+                  alt="Illustration"
+                  fill
+                  className="object-contain"
+                  data-ai-hint={slides[selectedIndex].imageHint}
+                  priority
+                />
+              </motion.div>
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* TOP NAVIGATION BAR */}
-      <motion.div 
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="absolute top-12 left-6 right-6 z-20 flex justify-between items-center"
-      >
-        <div className="glass px-4 py-2 rounded-full border-white/5 flex items-center gap-2">
-          <div className="w-5 h-5 rounded-lg bg-primary flex items-center justify-center text-white font-black text-[10px]">Q</div>
-          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/80">Quvora</span>
+      {/* BOTTOM ACTION */}
+      <div className="px-6 pb-16 pt-6 relative z-10">
+        <AuthModal 
+          defaultTab="register"
+          trigger={
+            <Button className="w-full h-16 rounded-[2rem] bg-foreground text-background hover:bg-foreground/90 text-sm font-bold shadow-xl active:scale-[0.98] transition-all">
+              Let's start now
+            </Button>
+          }
+        />
+        
+        <div className="mt-6 flex justify-center">
+          <AuthModal 
+            defaultTab="login"
+            trigger={
+              <button className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest hover:text-primary transition-colors">
+                Already have an account? <span className="text-primary ml-1">Login</span>
+              </button>
+            }
+          />
         </div>
+      </div>
 
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          onClick={toggleTheme}
-          className="glass rounded-full h-10 w-10 border-none text-foreground shadow-lg active:scale-90 transition-transform"
-        >
-          {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-        </Button>
-      </motion.div>
-
-      {/* FLOATING ACTION CARD */}
-      <motion.div 
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5, type: "spring", damping: 25 }}
-        className="mt-auto relative z-10 px-6 pb-16 pt-10"
-      >
-        <div className="glass-thick rounded-[3rem] p-8 flex flex-col items-center gap-8 border-white/10 shadow-2xl">
-          
-          {/* CONTENT ANIMATION */}
-          <div className="text-center min-h-[140px] flex flex-col justify-center">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={slides[selectedIndex].id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                className="space-y-4"
-              >
-                <h2 className="text-3xl font-black tracking-tighter leading-none text-foreground">
-                  {slides[selectedIndex].title}
-                </h2>
-                <p className="text-sm text-muted-foreground font-medium leading-relaxed px-4">
-                  {slides[selectedIndex].subtitle}
-                </p>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* INDICATORS */}
-          <div className="flex gap-2">
-            {slides.map((_, i) => (
-              <motion.div 
-                key={i}
-                animate={{ 
-                  width: selectedIndex === i ? 24 : 6,
-                  backgroundColor: selectedIndex === i ? "hsl(var(--primary))" : "hsl(var(--muted-foreground) / 0.2)"
-                }}
-                className="h-1.5 rounded-full transition-all duration-500"
-              />
-            ))}
-          </div>
-
-          {/* ACTIONS */}
-          <div className="w-full space-y-4">
-            <AuthModal 
-              defaultTab="register"
-              trigger={
-                <Button className="w-full h-16 rounded-2xl bg-foreground text-background hover:bg-foreground/90 text-sm font-black uppercase tracking-widest shadow-xl active:scale-[0.98] transition-all">
-                  Create Account
-                </Button>
-              }
-            />
-            
-            <AuthModal 
-              defaultTab="login"
-              trigger={
-                <button className="w-full text-center py-2">
-                  <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest">
-                    Already have an account? <span className="text-primary ml-1">Login</span>
-                  </span>
-                </button>
-              }
-            />
-          </div>
-
-          {/* SECURITY FOOTER */}
-          <div className="flex items-center gap-2 opacity-20">
-            <Shield className="w-3 h-3 text-foreground" />
-            <span className="text-[7px] font-black uppercase tracking-[0.4em] text-foreground">Liquid Glass Encrypted</span>
-          </div>
-        </div>
-      </motion.div>
     </div>
   );
 }
