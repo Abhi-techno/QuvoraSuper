@@ -128,7 +128,7 @@ export default function LandingPage({
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: -20 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
             className="relative flex items-center justify-center"
           >
             {/* Soft 3D Glow Background */}
