@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
+  other: {
+    'apple-mobile-web-app-capable': 'yes',
+    'mobile-web-app-capable': 'yes',
+  }
 };
 
 export const viewport: Viewport = {
@@ -43,11 +47,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192.png" />
-        <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512.png" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <link rel="icon" href="/icons/favicon.ico" />
       </head>
       <body className="antialiased selection:bg-primary selection:text-white overflow-hidden bg-background touch-none">
         <FirebaseClientProvider>

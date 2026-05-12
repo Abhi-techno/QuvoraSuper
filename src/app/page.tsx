@@ -82,8 +82,8 @@ const SLIDES = [
   }
 ];
 
-const AUTO_PLAY_INTERVAL = 5000;
-const SWIPE_THRESHOLD = 40;
+const AUTO_PLAY_INTERVAL = 6000;
+const SWIPE_THRESHOLD = 50;
 
 const springConfig = {
   type: "spring",
@@ -113,7 +113,7 @@ export default function LandingPage() {
       top: `${Math.floor(Math.random() * 80 + 10)}%`,
       left: `${Math.floor(Math.random() * 80 + 10)}%`,
       delay: Math.random() * 5,
-      duration: 8 + Math.random() * 6
+      duration: 10 + Math.random() * 8
     })));
   }, []);
 
@@ -166,7 +166,7 @@ export default function LandingPage() {
     enter: (direction: number) => ({
       x: direction > 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.95
+      scale: 0.9
     }),
     center: {
       zIndex: 1,
@@ -182,7 +182,7 @@ export default function LandingPage() {
       zIndex: 0,
       x: direction < 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.95,
+      scale: 0.9,
       transition: {
         x: { type: 'spring', stiffness: 350, damping: 30 },
         opacity: { duration: 0.4 }
@@ -198,15 +198,15 @@ export default function LandingPage() {
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none transition-colors duration-700 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
       {/* Dynamic Background Icon Field */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.15]">
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.12]">
         {bgIcons.map((item) => (
           <motion.div
             key={item.id}
             initial={{ opacity: 0 }}
             animate={{ 
-              opacity: [0.03, 0.1, 0.03],
-              y: [0, -40, 0],
-              x: [0, 15, 0]
+              opacity: [0.03, 0.12, 0.03],
+              y: [0, -60, 0],
+              x: [0, 20, 0]
             }}
             transition={{
               duration: item.duration,
@@ -217,44 +217,44 @@ export default function LandingPage() {
             className="absolute text-primary"
             style={{ top: item.top, left: item.left }}
           >
-            <item.Icon size={44} strokeWidth={1} />
+            <item.Icon size={48} strokeWidth={1} />
           </motion.div>
         ))}
       </div>
 
       {/* Premium iOS Brand Header */}
-      <header className="shrink-0 pt-4 px-8 z-50">
+      <header className="shrink-0 pt-6 px-8 z-50">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white dark:bg-zinc-900 flex items-center justify-center shadow-2xl border border-white/20 overflow-hidden">
-              <Image src="/icons/icon-192.png" alt="Quvora" width={28} height={28} priority />
+            <div className="w-11 h-11 rounded-2xl bg-white dark:bg-zinc-900 flex items-center justify-center shadow-2xl border border-white/20 overflow-hidden">
+              <Image src="/icons/icon-192.png" alt="Quvora" width={32} height={32} priority />
             </div>
             <div className="flex flex-col">
-              <span className="text-[9px] font-black tracking-widest uppercase text-primary/60">Super App</span>
-              <span className="text-sm font-black tracking-tight text-foreground -mt-1">Quvora</span>
+              <span className="text-[10px] font-black tracking-widest uppercase text-primary/60">Super App</span>
+              <span className="text-base font-black tracking-tight text-foreground -mt-1">Quvora</span>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex gap-1.5 items-center">
+            <div className="flex gap-2 items-center">
               {SLIDES.map((_, i) => (
                 <motion.div
                   key={i}
                   animate={{ 
-                    width: i === index ? 22 : 6,
+                    width: i === index ? 24 : 8,
                     backgroundColor: i === index ? currentSlide.color : (isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)')
                   }}
-                  className="h-1.5 rounded-full transition-all duration-300"
+                  className="h-2 rounded-full transition-all duration-300"
                 />
               ))}
             </div>
             <Button 
               size="icon" 
               variant="ghost" 
-              className="h-10 w-10 glass rounded-full border-none shadow-sm active:scale-90 transition-transform" 
+              className="h-11 w-11 glass rounded-full border-none shadow-sm active:scale-90 transition-transform" 
               onClick={toggleTheme}
             >
-              {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
+              {isDark ? <Sun className="w-5 h-5 text-primary" /> : <Moon className="w-5 h-5 text-primary" />}
             </Button>
           </div>
         </div>
@@ -277,7 +277,7 @@ export default function LandingPage() {
             className="w-full h-full flex items-center justify-center px-8"
           >
             <div className={cn(
-              "w-full max-w-[210px] aspect-square rounded-[4rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center transition-all duration-700",
+              "w-full max-w-[220px] aspect-square rounded-[4.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center transition-all duration-700",
               currentSlide.bg
             )}>
               <div className="relative z-10">
@@ -285,29 +285,29 @@ export default function LandingPage() {
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={springConfig}
-                  className="p-9 glass rounded-[3rem] border-none shadow-2xl flex items-center justify-center relative"
+                  className="p-10 glass rounded-[3.5rem] border-none shadow-2xl flex items-center justify-center relative"
                 >
-                  <MainIcon size={60} style={{ color: currentSlide.color }} className="drop-shadow-lg" />
+                  <MainIcon size={72} style={{ color: currentSlide.color }} className="drop-shadow-lg" />
                   
                   {currentSlide.badges.map((BadgeIcon, i) => (
                     <motion.div
                       key={i}
                       animate={{ 
-                        y: i === 0 ? [0, -14, 0] : [0, 14, 0],
-                        x: i === 0 ? [0, 7, 0] : [0, -7, 0]
+                        y: i === 0 ? [0, -18, 0] : [0, 18, 0],
+                        x: i === 0 ? [0, 10, 0] : [0, -10, 0]
                       }}
                       transition={{ 
-                        duration: i === 0 ? 4.5 : 4, 
+                        duration: i === 0 ? 5 : 4.5, 
                         repeat: Infinity, 
                         ease: "easeInOut",
-                        delay: i * 0.6
+                        delay: i * 0.8
                       }}
                       className={cn(
-                        "absolute w-12 h-12 glass rounded-2xl border-none shadow-lg flex items-center justify-center",
-                        i === 0 ? "-top-6 -left-6" : "-bottom-6 -right-6"
+                        "absolute w-14 h-14 glass rounded-3xl border-none shadow-lg flex items-center justify-center",
+                        i === 0 ? "-top-8 -left-8" : "-bottom-8 -right-8"
                       )}
                     >
-                      <BadgeIcon size={22} style={{ color: currentSlide.color }} />
+                      <BadgeIcon size={28} style={{ color: currentSlide.color }} />
                     </motion.div>
                   ))}
                 </motion.div>
@@ -318,7 +318,7 @@ export default function LandingPage() {
       </main>
 
       {/* Refined Compact Footer Conversion Card */}
-      <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-10 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
+      <footer className="shrink-0 w-full glass-thick rounded-t-[4rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-10 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -331,13 +331,13 @@ export default function LandingPage() {
             <h1 className="text-3xl font-black tracking-tighter text-foreground leading-tight">
               {currentSlide.title}
             </h1>
-            <p className="text-[10px] font-black text-muted-foreground/50 leading-relaxed uppercase tracking-[0.2em] max-w-[260px] mx-auto">
+            <p className="text-[10px] font-black text-muted-foreground/50 leading-relaxed uppercase tracking-[0.2em] max-w-[280px] mx-auto">
               {currentSlide.subtitle}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        <div className="w-full max-w-[310px] flex flex-col gap-5">
+        <div className="w-full max-w-[320px] flex flex-col gap-5">
           <AuthModal 
             defaultTab="register"
             trigger={

@@ -38,7 +38,7 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
     // Boot duration optimized for premium perceived performance
     const timer = setTimeout(() => {
       setIsBooting(false);
-    }, 2600);
+    }, 2800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -63,7 +63,7 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
                 <motion.div
                   key={p.id}
                   animate={{
-                    y: [0, -30, 0],
+                    y: [0, -40, 0],
                     x: [0, 15, 0],
                     opacity: [0.1, 0.2, 0.1],
                     scale: [1, 1.15, 1]
@@ -96,12 +96,12 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
               }}
               className="relative z-10 flex flex-col items-center gap-7"
             >
-              <div className="w-26 h-26 rounded-[2.5rem] bg-white flex items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.1)] overflow-hidden">
+              <div className="w-28 h-28 rounded-[2.5rem] bg-white flex items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.1)] overflow-hidden">
                 <Image 
                   src="/icons/icon-192.png" 
                   alt="Quvora" 
-                  width={80} 
-                  height={80} 
+                  width={84} 
+                  height={84} 
                   priority 
                   className="animate-in fade-in zoom-in-50 duration-700" 
                 />
@@ -115,7 +115,7 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.8 }}
+              transition={{ delay: 2.0 }}
               className="absolute bottom-16 text-[8px] font-black text-white/20 uppercase tracking-[0.45em]"
             >
               Initializing Secure AI Node

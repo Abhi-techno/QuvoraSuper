@@ -38,7 +38,7 @@ export default function SplashScreen() {
 
     const timer = setTimeout(() => {
       router.push('/onboarding');
-    }, 2800);
+    }, 3000);
     return () => clearTimeout(timer);
   }, [router]);
 
@@ -68,16 +68,16 @@ export default function SplashScreen() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative z-10 flex flex-col items-center gap-6"
       >
-        <div className="w-28 h-28 rounded-[2.5rem] bg-white flex items-center justify-center shadow-2xl shadow-primary/10 overflow-hidden">
-          <Image src="/icons/icon-192.png" alt="Quvora" width={84} height={84} priority />
+        <div className="w-32 h-32 rounded-[2.5rem] bg-white flex items-center justify-center shadow-2xl shadow-primary/10 overflow-hidden">
+          <Image src="/icons/icon-192.png" alt="Quvora" width={96} height={96} priority />
         </div>
         <div className="flex flex-col items-center gap-1.5 animate-in slide-in-from-bottom-4 duration-1000 delay-500 fill-mode-both">
-          <h1 className="text-4xl font-black tracking-tighter text-white">Quvora</h1>
-          <p className="text-white/60 text-[10px] font-black tracking-[0.35em] uppercase">One Place. Endless Possibility.</p>
+          <h1 className="text-5xl font-black tracking-tighter text-white">Quvora</h1>
+          <p className="text-white/60 text-[11px] font-black tracking-[0.35em] uppercase">One Place. Endless Possibility.</p>
         </div>
       </motion.div>
 
-      <div className="absolute bottom-12 text-[8px] text-white/20 font-black tracking-[0.45em] uppercase animate-in fade-in duration-1000 delay-1200">
+      <div className="absolute bottom-12 text-[8px] text-white/20 font-black tracking-[0.45em] uppercase animate-in fade-in duration-1000 delay-1400">
         AI Powering Your Experience
       </div>
     </div>
