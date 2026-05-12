@@ -18,12 +18,17 @@ export function AppNav({ children }: { children: React.ReactNode }) {
   const shouldHideNav = hideNavOnRoutes.includes(pathname) || isLandingPage;
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+    const handleScroll = (e: any) => {
+      setIsScrolled(e.target.scrollTop > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    
+    // In a fixed full-screen app, we listen to the scrollable container
+    const scrollContainer = document.getElementById('main-scroll-container');
+    if (scrollContainer) {
+      scrollContainer.addEventListener('scroll', handleScroll);
+      return () => scrollContainer.removeEventListener('scroll', handleScroll);
+    }
+  }, [shouldHideNav]);
 
   // Dashboard Protection Logic
   useEffect(() => {
@@ -40,9 +45,12 @@ export function AppNav({ children }: { children: React.ReactNode }) {
   if (shouldHideNav) return <>{children}</>;
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-svh w-full overflow-hidden fixed inset-0">
       <TopNav isScrolled={isScrolled} />
-      <div className="flex-1 overflow-y-auto overscroll-behavior-none">
+      <div 
+        id="main-scroll-container"
+        className="flex-1 overflow-y-auto overscroll-behavior-none gpu-accelerated"
+      >
         {children}
       </div>
       <BottomNav />

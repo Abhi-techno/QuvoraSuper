@@ -71,7 +71,7 @@
 }
 
 .glass {
-  @apply backdrop-blur-[24px] saturate-[180%] border border-white/20;
+  @apply backdrop-blur-[24px] saturate-[180%] border border-white/20 transform-gpu;
   background-color: hsla(0, 0%, 100%, 0.5);
 }
 
@@ -81,7 +81,7 @@
 }
 
 .glass-thick {
-  @apply backdrop-blur-[40px] saturate-[170%] border border-white/30;
+  @apply backdrop-blur-[40px] saturate-[170%] border border-white/30 transform-gpu;
   background-color: hsla(0, 0%, 100%, 0.7);
 }
 
