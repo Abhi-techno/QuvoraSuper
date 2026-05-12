@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { AuthModal } from '@/components/auth/auth-modal';
 import { useUser } from '@/firebase';
-import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { 
   ChevronRight, 
@@ -16,12 +15,7 @@ import {
   MessageCircle, 
   Languages, 
   Home, 
-  Rocket, 
-  Sparkles, 
-  ShieldCheck, 
-  Briefcase, 
-  Users,
-  Chrome
+  Rocket
 } from 'lucide-react';
 
 const SLIDES = [
@@ -105,7 +99,7 @@ export default function LandingPage() {
     const timer = setInterval(() => {
       setDirection(1);
       setIndex((prev) => (prev + 1) % SLIDES.length);
-    }, 4800); // Slower, calmer cycle
+    }, 4800);
     return () => clearInterval(timer);
   }, []);
 
@@ -173,7 +167,6 @@ export default function LandingPage() {
 
       {/* 2. CENTER PART: Illustration Canvas */}
       <main className="flex-1 relative flex items-center justify-center px-6 overflow-hidden">
-        {/* Side Previews */}
         <div className="absolute inset-0 pointer-events-none flex items-center justify-between px-1 z-0">
           <div className="w-12 h-32 rounded-r-3xl glass opacity-20 -ml-4" />
           <div className="w-12 h-32 rounded-l-3xl glass opacity-20 -mr-4" />
@@ -193,12 +186,10 @@ export default function LandingPage() {
             }}
             className="w-full flex flex-col items-center"
           >
-            {/* The Refined Compact Artwork Box */}
             <div className={cn(
               "w-full max-w-[280px] aspect-square rounded-[3.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center",
               currentSlide.bgGradient
             )}>
-              {/* Internal Fluid Background Blobs */}
               <motion.div 
                 animate={{ rotate: 360 }}
                 transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
@@ -208,7 +199,6 @@ export default function LandingPage() {
                 <div className="absolute bottom-0 right-0 w-40 h-40 bg-black/10 blur-3xl rounded-full" />
               </motion.div>
 
-              {/* Pulsing Ring */}
               <motion.div 
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1.3, opacity: 0 }}
@@ -217,7 +207,6 @@ export default function LandingPage() {
                 className="absolute inset-8 border-2 rounded-[3rem]"
               />
 
-              {/* Main Vector Asset */}
               <motion.div
                 initial={{ scale: 0, rotate: -15 }}
                 animate={{ scale: 1, rotate: 0 }}
@@ -226,7 +215,6 @@ export default function LandingPage() {
               >
                 <Icon size={72} strokeWidth={1.5} style={{ color: currentSlide.accentColor }} className="drop-shadow-xl" />
                 
-                {/* Floating Badges */}
                 <motion.div
                   animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -283,10 +271,6 @@ export default function LandingPage() {
                     </Button>
                   }
                 />
-                <Button variant="outline" className="h-14 rounded-2xl font-bold border-border bg-white text-sm">
-                  <Chrome className="w-4 h-4 mr-2" />
-                  Continue with Google
-                </Button>
                 <p className="text-[10px] font-bold text-muted-foreground/60 mt-1 uppercase tracking-widest">
                   Trusted by 10M+ Indians
                 </p>
