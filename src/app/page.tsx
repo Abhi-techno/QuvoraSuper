@@ -206,8 +206,8 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] gpu-accelerated">
-      {/* Background Constellation - Living Atmosphere */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.2]">
+      {/* Background Constellation - Deep Living Atmosphere */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.25]">
         {bgIcons.map((item) => (
           <motion.div
             key={item.id}
@@ -215,7 +215,7 @@ export default function LandingPage() {
               y: [0, -40, 0],
               x: [0, 20, 0],
               rotate: [0, 10, 0],
-              opacity: [0.3, 0.6, 0.3]
+              opacity: [0.2, 0.4, 0.2]
             }}
             transition={{
               duration: item.duration,
@@ -223,7 +223,7 @@ export default function LandingPage() {
               delay: item.delay,
               ease: "easeInOut"
             }}
-            className="absolute text-primary/40"
+            className="absolute text-primary/30"
             style={{ top: item.top, left: item.left }}
           >
             <item.Icon size={52} strokeWidth={1} />
@@ -231,26 +231,31 @@ export default function LandingPage() {
         ))}
       </div>
 
-      <header className="shrink-0 pt-10 px-8 z-50">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <div className="w-11 h-11 rounded-[1.25rem] bg-white dark:bg-zinc-900 flex items-center justify-center shadow-2xl border border-white/20 overflow-hidden">
+      <header className="shrink-0 pt-12 px-8 z-50 transition-all duration-700">
+        <div className="flex justify-between items-center w-full">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={iosSpring}
+            className="flex items-center gap-3.5 group"
+          >
+            <div className="w-11 h-11 rounded-[1.25rem] bg-white dark:bg-zinc-900 flex items-center justify-center shadow-2xl border border-white/20 overflow-hidden group-active:scale-95 transition-transform duration-300">
               <Image src="/icons/icon-192.png" alt="Quvora" width={32} height={32} priority />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] font-black tracking-[0.25em] uppercase text-primary/70">Quvora</span>
-              <span className="text-[15px] font-black tracking-tight text-foreground -mt-1">Super App</span>
+              <span className="text-[10px] font-black tracking-[0.25em] uppercase text-primary/80">Quvora</span>
+              <span className="text-[14px] font-black tracking-tighter text-foreground -mt-1 opacity-80">Super App</span>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="flex items-center gap-5">
-            <div className="flex gap-1.5 items-center">
+          <div className="flex items-center gap-6">
+            <div className="flex gap-1.5 items-center bg-black/5 dark:bg-white/5 px-2.5 py-1.5 rounded-full backdrop-blur-md">
               {SLIDES.map((_, i) => (
                 <motion.div
                   key={i}
                   animate={{ 
                     width: i === index ? 24 : 6,
-                    backgroundColor: i === index ? currentSlide.color : (isDark ? '#27272a' : '#e2e8f0')
+                    backgroundColor: i === index ? currentSlide.color : (isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)')
                   }}
                   transition={iosSpring}
                   className="h-1.5 rounded-full"
@@ -261,7 +266,7 @@ export default function LandingPage() {
             <Button 
               size="icon" 
               variant="ghost" 
-              className="h-11 w-11 glass-thick rounded-full border-none shadow-md relative overflow-hidden group" 
+              className="h-11 w-11 glass-thick rounded-full border-none shadow-md relative overflow-hidden group active:scale-90 transition-transform" 
               onClick={toggleTheme}
             >
               <AnimatePresence mode="wait" initial={false}>
