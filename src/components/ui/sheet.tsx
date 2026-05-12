@@ -4,7 +4,7 @@ import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -19,7 +19,7 @@ const SheetOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
-      "fixed inset-0 z-50 bg-black/60 backdrop-blur-[2px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-black/60 backdrop-blur-[4px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 transform-gpu",
       className
     )}
     {...props}
@@ -29,7 +29,7 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = "SheetOverlay"
 
 const sheetVariants = cva(
-  "fixed z-50 gap-4 bg-background shadow-lg transition-all ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  "fixed z-50 gap-4 bg-background shadow-2xl transition-all ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
   {
     variants: {
       side: {
@@ -60,6 +60,7 @@ const SheetContent = React.forwardRef<
   const opacity = useTransform(y, [0, 200], [1, 0])
 
   const handleDragEnd = (_: any, info: any) => {
+    // Intelligently check displacement or velocity to dismiss
     if (side === "bottom" && (info.offset.y > 100 || info.velocity.y > 500)) {
       const closeButton = document.querySelector('[data-sheet-close]') as HTMLButtonElement
       closeButton?.click()
@@ -74,7 +75,7 @@ const SheetContent = React.forwardRef<
       <SheetPrimitive.Content
         ref={ref}
         onOpenAutoFocus={(e) => e.preventDefault()}
-        className={cn(sheetVariants({ side }), "overflow-hidden transform-gpu will-change-transform", className)}
+        className={cn(sheetVariants({ side }), "overflow-hidden transform-gpu will-change-transform h-fit max-h-[92vh]", className)}
         {...props}
       >
         {side === "bottom" ? (
@@ -86,10 +87,10 @@ const SheetContent = React.forwardRef<
             style={{ y: springY, opacity }}
             className="h-full w-full flex flex-col relative touch-pan-y"
           >
-            <div className="flex flex-col items-center pt-3 pb-4 shrink-0 cursor-grab active:cursor-grabbing">
+            <div className="flex flex-col items-center pt-3 pb-2 shrink-0 cursor-grab active:cursor-grabbing">
               <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-30" />
             </div>
-            <div className="flex-1 overflow-y-auto overscroll-contain px-1 pb-[env(safe-area-inset-bottom)]">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-1 pb-[calc(2rem+env(safe-area-inset-bottom))]">
               {children}
             </div>
             <SheetPrimitive.Close className="hidden" data-sheet-close />

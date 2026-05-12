@@ -104,7 +104,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
       </SheetTrigger>
       <SheetContent 
         side="bottom" 
-        className="h-fit max-h-[85vh] glass-thick p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
+        className="h-fit max-h-[85vh] glass-thick p-0 border-none shadow-2xl gpu-accelerated"
       >
         <div className="max-w-md mx-auto flex flex-col px-6 pb-8">
           {!showVerifyPrompt ? (
