@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Lock, Mail, User, Eye, EyeOff, MailWarning, Loader2, ArrowRight, LogIn } from 'lucide-react';
+import { Lock, Mail, User, Eye, EyeOff, MailWarning, Loader2, ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth, useFirestore } from '@/firebase';
 import { 
@@ -125,94 +125,100 @@ export function AuthModal({ trigger, defaultTab = 'login' }: AuthModalProps) {
       <SheetTrigger asChild>
         {trigger}
       </SheetTrigger>
-      <SheetContent side="bottom" className="h-auto max-h-[96vh] glass-thick rounded-t-[2.5rem] p-0 border-none outline-none overflow-hidden pb-safe">
-        <div className="flex flex-col items-center pt-2 pb-1">
-          <div className="w-10 h-1.5 bg-foreground/10 rounded-full mb-1 opacity-40" />
+      <SheetContent 
+        side="bottom" 
+        className="h-fit max-h-[92vh] glass-thick rounded-t-[3rem] p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
+      >
+        {/* iOS Drag Handle Area */}
+        <div className="flex flex-col items-center pt-3 pb-2 shrink-0">
+          <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-30" />
         </div>
         
-        <div className="max-w-md mx-auto flex flex-col px-6 pb-12 pt-4">
+        <div className="max-w-md mx-auto flex flex-col px-6 pb-12 pt-2">
           {!showVerifyPrompt ? (
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="flex flex-col items-center mb-8">
-                <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center mb-3 shadow-lg shadow-black/5 border border-black/5">
-                  <Image src="/icons/icon-192.png" alt="Quvora" width={36} height={36} priority />
+            <div>
+              <div className="flex flex-col items-center mb-6 text-center">
+                <div className="w-16 h-16 rounded-[1.8rem] bg-white flex items-center justify-center mb-4 shadow-xl shadow-black/5 border border-black/5 overflow-hidden">
+                  <Image src="/icons/icon-192.png" alt="Quvora" width={40} height={40} priority />
                 </div>
-                <SheetTitle className="text-xl font-black tracking-tighter">Welcome to Quvora</SheetTitle>
-                <SheetDescription className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60 mt-0.5">
-                  Secure AI Marketplace
-                </SheetDescription>
+                <SheetHeader className="space-y-1">
+                  <SheetTitle className="text-2xl font-black tracking-tighter">Welcome to Quvora</SheetTitle>
+                  <SheetDescription className="text-[10px] font-black uppercase tracking-[0.25em] text-primary/60">
+                    Secure AI Marketplace
+                  </SheetDescription>
+                </SheetHeader>
               </div>
 
               <Tabs defaultValue={defaultTab} className="w-full">
-                <TabsList className="grid w-full grid-cols-2 mb-6 bg-foreground/[0.03] rounded-2xl p-1 h-11">
-                  <TabsTrigger value="login" className="rounded-xl font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Login</TabsTrigger>
-                  <TabsTrigger value="register" className="rounded-xl font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-white data-[state=active]:shadow-sm transition-all">Join</TabsTrigger>
+                <TabsList className="grid w-full grid-cols-2 mb-6 bg-foreground/[0.04] rounded-[1.2rem] p-1 h-12">
+                  <TabsTrigger value="login" className="rounded-xl font-black text-[10px] uppercase tracking-widest transition-all">Login</TabsTrigger>
+                  <TabsTrigger value="register" className="rounded-xl font-black text-[10px] uppercase tracking-widest transition-all">Join</TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="login" className="mt-0 space-y-4">
+                <TabsContent value="login" className="mt-0 focus:outline-none">
                   <form id="login-form" onSubmit={handleAuth} className="space-y-4">
                     <div className="space-y-3">
-                      <div className="space-y-1.5">
+                      <div className="space-y-1.5 px-1">
                         <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Email</Label>
                         <div className="relative">
-                          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/50" />
-                          <Input className="h-12 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="name@email.com" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
+                          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
+                          <Input className="h-14 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="name@email.com" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
                         </div>
                       </div>
-                      <div className="space-y-1.5">
+                      <div className="space-y-1.5 px-1">
                         <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Password</Label>
                         <div className="relative">
-                          <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/50" />
-                          <Input className="h-12 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="••••••••" type={showPassword ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} required />
+                          <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
+                          <Input className="h-14 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="••••••••" type={showPassword ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} required />
                           <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 active:scale-90 transition-transform">
-                            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                            {showPassword ? <EyeOff className="w-4.5 h-4.5" /> : <Eye className="w-4.5 h-4.5" />}
                           </button>
                         </div>
                       </div>
                     </div>
-                    <Button className="w-full h-14 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all mt-2" disabled={loading}>
-                      {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <ArrowRight className="w-4 h-4 mr-2" />}
+                    <Button className="w-full h-16 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-2" disabled={loading}>
+                      {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <ArrowRight className="w-5 h-5 mr-2" />}
                       {loading ? "Authenticating..." : "Access Dashboard"}
                     </Button>
                   </form>
                 </TabsContent>
 
-                <TabsContent value="register" className="mt-0 space-y-4">
+                <TabsContent value="register" className="mt-0 focus:outline-none">
                   <form id="register-form" onSubmit={handleAuth} className="space-y-4">
                     <div className="space-y-3">
-                      <div className="space-y-1.5">
+                      <div className="space-y-1.5 px-1">
                         <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Full Name</Label>
                         <div className="relative">
-                          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/50" />
-                          <Input className="h-12 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="Arjun Varma" value={name} onChange={e => setName(e.target.value)} required />
+                          <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
+                          <Input className="h-14 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="Arjun Varma" value={name} onChange={e => setName(e.target.value)} required />
                         </div>
                       </div>
-                      <div className="space-y-1.5">
+                      <div className="space-y-1.5 px-1">
                         <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Email</Label>
                         <div className="relative">
-                          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/50" />
-                          <Input className="h-12 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="name@email.com" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
+                          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
+                          <Input className="h-14 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="name@email.com" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
                         </div>
                       </div>
-                      <div className="space-y-1.5">
+                      <div className="space-y-1.5 px-1">
                         <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Password</Label>
                         <div className="relative">
-                          <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/50" />
-                          <Input className="h-12 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="Min. 6 chars" type={showPassword ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} required />
+                          <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
+                          <Input className="h-14 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="Min. 6 characters" type={showPassword ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} required />
                           <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 active:scale-90 transition-transform">
-                            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                            {showPassword ? <EyeOff className="w-4.5 h-4.5" /> : <Eye className="w-4.5 h-4.5" />}
                           </button>
                         </div>
                       </div>
-                      <div className="flex items-start gap-3 p-3 bg-primary/[0.03] rounded-2xl border border-primary/10">
-                        <Checkbox id="terms" checked={termsAccepted} onCheckedChange={c => setTermsAccepted(c as boolean)} className="mt-0.5" />
-                        <label htmlFor="terms" className="text-[10px] font-bold leading-snug text-foreground/60">
-                          I agree to the <span className="text-primary font-black">Terms & Conditions</span> of Quvora.
+                      <div className="mx-1 mt-2 flex items-start gap-4 p-4 bg-primary/[0.03] rounded-3xl border border-primary/10">
+                        <Checkbox id="terms" checked={termsAccepted} onCheckedChange={c => setTermsAccepted(c as boolean)} className="mt-0.5 rounded-md" />
+                        <label htmlFor="terms" className="text-[10px] font-bold leading-relaxed text-foreground/60">
+                          I agree to the <span className="text-primary font-black">Terms & Conditions</span> of the Quvora ecosystem.
                         </label>
                       </div>
                     </div>
-                    <Button className="w-full h-14 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all mt-1 disabled:opacity-50" disabled={loading || !termsAccepted}>
-                      {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                    <Button className="w-full h-16 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-2" disabled={loading || !termsAccepted}>
+                      {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : null}
                       {loading ? "Joining..." : "Create Account"}
                     </Button>
                   </form>
@@ -220,19 +226,21 @@ export function AuthModal({ trigger, defaultTab = 'login' }: AuthModalProps) {
               </Tabs>
             </div>
           ) : (
-            <div className="flex flex-col items-center text-center animate-in fade-in zoom-in-95 duration-500 py-4">
-              <div className="w-20 h-20 rounded-3xl bg-primary/10 flex items-center justify-center mb-6 shadow-inner">
+            <div className="flex flex-col items-center text-center py-6">
+              <div className="w-20 h-20 rounded-[2rem] bg-primary/10 flex items-center justify-center mb-6 shadow-inner">
                 <MailWarning className="w-10 h-10 text-primary animate-pulse" />
               </div>
-              <h2 className="text-2xl font-black tracking-tighter mb-2">Check your inbox</h2>
-              <SheetDescription className="text-muted-foreground text-[11px] font-bold leading-relaxed mb-10 px-6 uppercase tracking-tight">
-                We've sent a secure verification link to <span className="text-foreground font-black lowercase">{email}</span>. Click it to activate your dashboard.
-              </SheetDescription>
+              <SheetHeader className="mb-8">
+                <SheetTitle className="text-3xl font-black tracking-tighter">Check your inbox</SheetTitle>
+                <SheetDescription className="text-muted-foreground text-[11px] font-bold leading-relaxed px-4 uppercase tracking-tight">
+                  We've sent a secure verification link to <span className="text-foreground font-black lowercase">{email}</span>. Click it to activate your dashboard.
+                </SheetDescription>
+              </SheetHeader>
               
               <div className="w-full space-y-3">
                 <Button 
                   variant="outline" 
-                  className="w-full h-14 rounded-2xl border-none glass font-black text-[10px] uppercase tracking-widest shadow-sm active:scale-95 transition-all"
+                  className="w-full h-16 rounded-2xl border-none glass font-black text-[10px] uppercase tracking-widest shadow-sm active:scale-[0.97] transition-all"
                   disabled={resendTimer > 0}
                   onClick={handleResendEmail}
                 >
@@ -240,7 +248,7 @@ export function AuthModal({ trigger, defaultTab = 'login' }: AuthModalProps) {
                 </Button>
                 
                 <Button 
-                  className="w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-widest bg-foreground text-background hover:opacity-90 active:scale-95 transition-all"
+                  className="w-full h-16 rounded-2xl font-black text-[10px] uppercase tracking-widest bg-foreground text-background hover:opacity-90 active:scale-[0.97] transition-all"
                   onClick={() => setShowVerifyPrompt(false)}
                 >
                   Back to Login
