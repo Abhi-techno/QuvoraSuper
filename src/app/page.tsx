@@ -206,6 +206,7 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
+      {/* Background Constellation */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.08]">
         {bgIcons.map((item) => (
           <motion.div
