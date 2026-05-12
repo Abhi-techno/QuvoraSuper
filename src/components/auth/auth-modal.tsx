@@ -228,9 +228,9 @@ export function AuthModal({ trigger, defaultTab = 'login' }: AuthModalProps) {
                 <MailWarning className="w-10 h-10 text-primary" />
               </div>
               <h2 className="text-2xl font-black tracking-tight mb-2">Verify your email</h2>
-              <p className="text-muted-foreground text-sm font-medium mb-10 px-4">
+              <SheetDescription className="text-muted-foreground text-sm font-medium mb-10 px-4">
                 We've sent a link to <span className="font-bold text-foreground">{email}</span>. Please click it to activate your account.
-              </p>
+              </SheetDescription>
               
               <div className="w-full space-y-4">
                 <Button 
