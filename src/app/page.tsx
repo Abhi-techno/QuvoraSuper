@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -334,27 +335,28 @@ export default function LandingPage() {
                 />
               </motion.div>
 
-              {/* Floating Badges - Outside overflow-hidden container for full visibility */}
+              {/* Floating Badges - High-Fidelity "Alive" Motion */}
               {currentSlide.badges.map((BadgeIcon, i) => (
                 <motion.div
                   key={i}
                   animate={{ 
-                    y: [0, -15, 0],
-                    x: [0, i % 2 === 0 ? -8 : 8, 0],
-                    rotate: [0, i % 2 === 0 ? -12 : 12, 0]
+                    y: [0, -22, 8, -14, 0],
+                    x: [0, i % 2 === 0 ? -14 : 14, i % 2 === 0 ? 10 : -10, 0],
+                    rotate: [0, i % 2 === 0 ? -18 : 18, i % 2 === 0 ? 12 : -12, 0],
+                    scale: [1, 1.1, 0.94, 1.06, 1],
                   }}
                   transition={{ 
-                    duration: 4 + i, 
+                    duration: 6 + i, 
                     repeat: Infinity, 
                     ease: "easeInOut",
-                    delay: i * 0.5
+                    delay: i * 0.8
                   }}
                   className={cn(
-                    "absolute w-14 h-14 glass rounded-2xl border-none shadow-2xl flex items-center justify-center z-30",
-                    i === 0 ? "-top-6 -left-6" : "-bottom-6 -right-6"
+                    "absolute w-14 h-14 glass-thick rounded-2xl border-none shadow-2xl flex items-center justify-center z-30",
+                    i === 0 ? "-top-8 -left-8" : "-bottom-8 -right-8"
                   )}
                 >
-                  <BadgeIcon size={28} style={{ color: currentSlide.color }} className="brightness-125 drop-shadow-md" />
+                  <BadgeIcon size={28} style={{ color: currentSlide.color }} className="brightness-125 drop-shadow-2xl" />
                 </motion.div>
               ))}
             </div>
