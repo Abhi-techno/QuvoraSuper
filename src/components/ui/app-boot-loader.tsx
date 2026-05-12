@@ -30,7 +30,6 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
     }));
     setParticles(newParticles);
 
-    // Intelligent boot simulation
     const timer = setTimeout(() => {
       setIsBooting(false);
     }, 2400);

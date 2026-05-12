@@ -16,7 +16,6 @@ import {
   Briefcase, 
   Rocket,
   ArrowRight,
-  ChevronRight,
   Sparkles,
   ShieldCheck,
   Zap,
@@ -106,7 +105,6 @@ export default function LandingPage() {
     const root = window.document.documentElement;
     setIsDark(root.classList.contains('dark'));
 
-    // Generate background icons on client only to avoid hydration mismatch
     const icons = [Store, Bot, MessageCircle, Briefcase, Zap, Sparkles, ShieldCheck, Star, Rocket, Languages];
     setBgIcons(icons.map((Icon, i) => ({
       Icon,
