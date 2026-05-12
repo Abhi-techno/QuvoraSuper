@@ -63,32 +63,35 @@
     background-color: hsl(var(--background));
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
   }
 }
 
 .glass {
-  @apply backdrop-blur-[12px] saturate-[160%] border border-white/20 transform-gpu;
-  background-color: hsla(0, 0%, 100%, 0.6);
+  @apply backdrop-blur-[8px] saturate-[140%] border border-white/20 transform-gpu;
+  background-color: hsla(0, 0%, 100%, 0.7);
   will-change: transform, opacity;
   backface-visibility: hidden;
   perspective: 1000px;
+  transform: translate3d(0,0,0);
 }
 
 .dark .glass {
-  background-color: hsla(240, 10%, 10%, 0.4);
+  background-color: hsla(240, 10%, 10%, 0.5);
   @apply border-white/10;
 }
 
 .glass-thick {
-  @apply backdrop-blur-[24px] saturate-[170%] border border-white/30 transform-gpu;
-  background-color: hsla(0, 0%, 100%, 0.8);
+  @apply backdrop-blur-[16px] saturate-[160%] border border-white/30 transform-gpu;
+  background-color: hsla(0, 0%, 100%, 0.85);
   will-change: transform, opacity;
   backface-visibility: hidden;
   perspective: 1000px;
+  transform: translate3d(0,0,0);
 }
 
 .dark .glass-thick {
-  background-color: hsla(240, 10%, 5%, 0.7);
+  background-color: hsla(240, 10%, 5%, 0.75);
   @apply border-white/10;
 }
 
@@ -103,14 +106,14 @@
   @apply fixed bottom-0 left-0 right-0 h-[calc(64px+env(safe-area-inset-bottom))] glass-thick flex items-center justify-around px-8 z-50;
   padding-bottom: env(safe-area-inset-bottom);
   box-shadow: 0 -10px 40px rgba(0,0,0,0.05);
-  transform: translateZ(0);
+  transform: translate3d(0,0,0);
 }
 
 .ios-top-nav {
   @apply fixed top-0 w-full flex items-center z-50;
   padding-top: env(safe-area-inset-top, 1rem);
   height: calc(64px + env(safe-area-inset-top, 1rem));
-  transform: translateZ(0);
+  transform: translate3d(0,0,0);
 }
 
 ::-webkit-scrollbar {
@@ -119,5 +122,5 @@
 
 .post-ad-fab {
   @apply w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white shadow-lg active:scale-90 transition-transform duration-200;
-  transform: translateZ(0);
+  transform: translate3d(0,0,0);
 }

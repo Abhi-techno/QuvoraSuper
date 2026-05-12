@@ -193,7 +193,7 @@ export default function LandingPage() {
   return (
     <div className="h-svh w-full bg-background flex flex-col overflow-hidden select-none touch-none gpu-accelerated relative">
       
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-30 dark:opacity-60 transform-gpu">
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-20 dark:opacity-40 transform-gpu">
         <motion.div 
           animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
