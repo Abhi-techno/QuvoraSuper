@@ -1,11 +1,10 @@
-
 'use client';
 
 export const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "mock-api-key",
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "mock-project.firebaseapp.com",
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "mock-project",
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || "mock-project.firebasestorage.app",
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "1234567890",
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "1:1234567890:web:mock123"
+  apiKey: "AIzaSyBfkUNN7PzlAukmra4DNKOllUJ9TwItc40",
+  authDomain: "studio-2285485451-def29.firebaseapp.com",
+  projectId: "studio-2285485451-def29",
+  storageBucket: "studio-2285485451-def29.firebasestorage.app",
+  messagingSenderId: "197150817754",
+  appId: "1:197150817754:web:e4ca69a7ce16300da694e3"
 };
