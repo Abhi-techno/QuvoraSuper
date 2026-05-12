@@ -22,7 +22,8 @@ import {
   Star,
   Shield,
   Sun,
-  Moon
+  Moon,
+  ShieldAlert
 } from 'lucide-react';
 
 const SLIDES = [
@@ -106,7 +107,7 @@ export default function LandingPage() {
     const root = window.document.documentElement;
     setIsDark(root.classList.contains('dark'));
 
-    // Optimized light particle field
+    // Optimized client-only random particle generation to avoid hydration mismatch
     const icons = [Store, Bot, MessageCircle, Briefcase, Zap, Sparkles];
     setBgIcons(icons.map((Icon, i) => ({
       id: i,
@@ -251,14 +252,28 @@ export default function LandingPage() {
                 />
               ))}
             </div>
-            <Button 
-              size="icon" 
-              variant="ghost" 
-              className="h-10 w-10 glass rounded-full border-none active:scale-90 transition-transform" 
-              onClick={toggleTheme}
-            >
-              {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
-            </Button>
+            {/* Refined iOS Theme Button */}
+            <motion.div whileTap={{ scale: 0.85 }} transition={{ type: "spring", stiffness: 400, damping: 15 }}>
+              <Button 
+                size="icon" 
+                variant="ghost" 
+                className="h-10 w-10 glass rounded-full border-none shadow-sm relative overflow-hidden" 
+                onClick={toggleTheme}
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={isDark ? 'dark' : 'light'}
+                    initial={{ y: 20, opacity: 0, rotate: -45 }}
+                    animate={{ y: 0, opacity: 1, rotate: 0 }}
+                    exit={{ y: -20, opacity: 0, rotate: 45 }}
+                    transition={{ duration: 0.25, ease: [0.32, 0, 0.67, 0] }}
+                    className="flex items-center justify-center"
+                  >
+                    {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
+                  </motion.div>
+                </AnimatePresence>
+              </Button>
+            </motion.div>
           </div>
         </div>
       </header>
@@ -306,7 +321,7 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pt-8 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-500">
+      <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pt-10 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-500">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -314,7 +329,7 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="flex flex-col gap-2 mb-6 w-full"
+            className="flex flex-col gap-1.5 mb-8 w-full"
           >
             <h1 className="text-3xl font-black tracking-tighter text-foreground leading-tight">
               {currentSlide.title}
@@ -325,7 +340,7 @@ export default function LandingPage() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="w-full max-w-[300px] flex flex-col gap-4">
+        <div className="w-full max-w-[300px] flex flex-col gap-5">
           <AuthModal 
             defaultTab="register"
             trigger={
@@ -340,11 +355,11 @@ export default function LandingPage() {
           <AuthModal 
             defaultTab="login"
             trigger={
-              <button className="flex flex-col items-center gap-0.5 py-1">
-                <p className="text-[9px] font-black text-muted-foreground/40 uppercase tracking-widest">
+              <button className="flex flex-col items-center gap-0.5 py-1 group">
+                <p className="text-[9px] font-black text-muted-foreground/40 uppercase tracking-widest group-hover:text-muted-foreground/60 transition-colors">
                   Already a member?
                 </p>
-                <span className="text-[11px] font-black text-primary uppercase tracking-widest">
+                <span className="text-[11px] font-black text-primary uppercase tracking-widest group-active:opacity-70">
                   Sign in to Quvora
                 </span>
               </button>
@@ -352,7 +367,7 @@ export default function LandingPage() {
           />
         </div>
 
-        <div className="mt-8 flex items-center gap-2 opacity-30 grayscale contrast-200">
+        <div className="mt-8 flex items-center gap-2 opacity-30">
           <ShieldCheck size={12} className="text-primary" />
           <span className="text-[9px] font-black uppercase tracking-[0.2em] text-foreground">
             Trusted by 10M+ Indians
