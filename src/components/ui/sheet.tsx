@@ -4,7 +4,7 @@ import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion"
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -29,7 +29,7 @@ const SheetOverlay = React.forwardRef<
     ref={ref}
   />
 ))
-AlertDialogOverlay.displayName = SheetPrimitive.Overlay.displayName
+SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 const sheetVariants = cva(
   "fixed z-50 gap-4 bg-background shadow-lg transition-all ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
@@ -59,11 +59,11 @@ const SheetContent = React.forwardRef<
   SheetContentProps
 >(({ side = "right", className, children, ...props }, ref) => {
   const y = useMotionValue(0)
-  const springY = useSpring(y, { stiffness: 400, damping: 30 })
+  const springY = useSpring(y, { stiffness: 400, damping: 40 })
 
   const handleDragEnd = (_: any, info: any) => {
     // If dragged down significantly or with high velocity, close the sheet
-    if (side === "bottom" && (info.offset.y > 120 || info.velocity.y > 600)) {
+    if (side === "bottom" && (info.offset.y > 100 || info.velocity.y > 500)) {
       const closeButton = document.querySelector('[data-sheet-close]') as HTMLButtonElement
       closeButton?.click()
     } else {
@@ -83,12 +83,12 @@ const SheetContent = React.forwardRef<
           <motion.div
             drag="y"
             dragConstraints={{ top: 0, bottom: 0 }}
-            dragElastic={{ top: 0, bottom: 0.6 }}
+            dragElastic={{ top: 0, bottom: 0.7 }}
             onDragEnd={handleDragEnd}
             style={{ y: springY }}
-            className="h-full w-full flex flex-col relative touch-none"
+            className="h-full w-full flex flex-col relative touch-pan-y"
           >
-            {/* iOS Drag Handle Zone - Visual + Interactive Anchor */}
+            {/* iOS Drag Handle Zone */}
             <div className="flex flex-col items-center pt-3 pb-4 shrink-0 cursor-grab active:cursor-grabbing">
               <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-30" />
             </div>

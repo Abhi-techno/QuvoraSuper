@@ -194,5 +194,3 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
         </div>
       </SheetContent>
     </Sheet>
-  );
-}
