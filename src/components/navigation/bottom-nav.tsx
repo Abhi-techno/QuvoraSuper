@@ -19,7 +19,7 @@ export function BottomNav() {
 
   const iosSpring = {
     type: "spring",
-    stiffness: 400,
+    stiffness: 420,
     damping: 30,
     mass: 1
   };
@@ -34,7 +34,7 @@ export function BottomNav() {
           return (
             <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-8 group">
               <motion.div 
-                whileTap={{ scale: 0.9, y: 2 }}
+                whileTap={{ scale: 0.85 }}
                 transition={iosSpring}
                 className="post-ad-fab shadow-xl shadow-primary/40 border-2 border-white/20"
               >
@@ -53,7 +53,7 @@ export function BottomNav() {
         return (
           <Link key={tab.href} href={tab.href} className="flex flex-col items-center gap-1 group">
             <motion.div 
-              whileTap={{ scale: 0.8, y: 1 }}
+              whileTap={{ scale: 0.8 }}
               transition={iosSpring}
               className="relative"
             >
@@ -62,13 +62,9 @@ export function BottomNav() {
                 isActive ? "text-primary fill-primary/10" : "text-muted-foreground/40"
               )} />
               {tab.badge && (
-                <motion.span 
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[8px] text-white font-black shadow-lg shadow-primary/20"
-                >
+                <span className="absolute -top-1.5 -right-1.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary text-[7px] text-white font-black shadow-lg">
                   {tab.badge}
-                </motion.span>
+                </span>
               )}
             </motion.div>
             <span className={cn(

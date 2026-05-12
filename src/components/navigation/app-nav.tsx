@@ -12,17 +12,16 @@ export function AppNav({ children }: { children: React.ReactNode }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const { user, loading } = useUser();
 
-  // Hide nav on entry flow routes and Landing Page
+  // Navigation logic
   const isLandingPage = pathname === '/';
   const hideNavOnRoutes = ['/splash', '/onboarding', '/login', '/verify', '/register'];
   const shouldHideNav = hideNavOnRoutes.includes(pathname) || isLandingPage;
 
   useEffect(() => {
     const handleScroll = (e: any) => {
-      setIsScrolled(e.target.scrollTop > 20);
+      setIsScrolled(e.target.scrollTop > 10);
     };
     
-    // In a fixed full-screen app, we listen to the scrollable container
     const scrollContainer = document.getElementById('main-scroll-container');
     if (scrollContainer) {
       scrollContainer.addEventListener('scroll', handleScroll);
@@ -30,22 +29,17 @@ export function AppNav({ children }: { children: React.ReactNode }) {
     }
   }, [shouldHideNav]);
 
-  // Dashboard Protection Logic
   useEffect(() => {
     if (loading) return;
-
     const protectedRoutes = ['/me', '/chat', '/post', '/my-ads', '/notifications', '/saved', '/explore', '/browse'];
     const isProtected = protectedRoutes.some(route => pathname.startsWith(route));
-
-    if (isProtected && !user) {
-      router.push('/');
-    }
+    if (isProtected && !user) router.push('/');
   }, [pathname, user, loading, router]);
 
   if (shouldHideNav) return <>{children}</>;
 
   return (
-    <div className="flex flex-col h-svh w-full overflow-hidden fixed inset-0">
+    <div className="flex flex-col h-svh w-full overflow-hidden fixed inset-0 bg-background">
       <TopNav isScrolled={isScrolled} />
       <div 
         id="main-scroll-container"
