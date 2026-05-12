@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect } from 'react';
@@ -31,9 +32,19 @@ export function AppNav({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (loading) return;
+    
+    // Protected Routes strictly require login AND email verification
     const protectedRoutes = ['/me', '/chat', '/post', '/my-ads', '/notifications', '/saved', '/explore', '/browse'];
     const isProtected = protectedRoutes.some(route => pathname.startsWith(route));
-    if (isProtected && !user) router.push('/');
+    
+    if (isProtected) {
+      if (!user) {
+        router.push('/');
+      } else if (!user.emailVerified) {
+        // Redirect if not verified
+        router.push('/');
+      }
+    }
   }, [pathname, user, loading, router]);
 
   if (shouldHideNav) return <>{children}</>;
