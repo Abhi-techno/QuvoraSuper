@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
     title: 'Quvora',
   },
+  // Manifest is disconnected to avoid workstation proxy CORS errors during development.
 };
 
 export const viewport: Viewport = {
