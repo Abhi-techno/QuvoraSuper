@@ -6,6 +6,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTitle,
+  SheetDescription,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -76,7 +77,9 @@ export function AuthModal({ trigger, defaultTab = 'login' }: AuthModalProps) {
               <Image src="/icons/icon-192.png" alt="Quvora" width={64} height={64} priority />
             </div>
             <SheetTitle className="text-3xl font-black tracking-tight">Access Quvora</SheetTitle>
-            <p className="text-muted-foreground text-sm font-medium mt-1">Direct Email & Password Authentication</p>
+            <SheetDescription className="text-muted-foreground text-sm font-medium mt-1">
+              Direct Email & Password Authentication
+            </SheetDescription>
           </SheetHeader>
 
           <Tabs defaultValue={defaultTab} className="w-full">
