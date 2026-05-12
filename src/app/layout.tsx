@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
     title: 'Quvora',
   },
-  // PWA manifest disabled to resolve cloud workstation CORS/Proxy errors during development
+  // manifest: '/manifest.webmanifest', // Disabled to resolve Cloud Workstation CORS/Auth Proxy spam
 };
 
 export const viewport: Viewport = {
