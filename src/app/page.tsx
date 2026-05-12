@@ -87,8 +87,8 @@ const SWIPE_THRESHOLD = 40;
 
 const springConfig = {
   type: "spring",
-  stiffness: 120,
-  damping: 18,
+  stiffness: 150,
+  damping: 20,
   mass: 0.8
 };
 
@@ -105,11 +105,13 @@ export default function LandingPage() {
     const root = window.document.documentElement;
     setIsDark(root.classList.contains('dark'));
 
+    // Client-side icons to prevent hydration mismatch
     const icons = [Store, Bot, MessageCircle, Briefcase, Zap, Sparkles, ShieldCheck, Star, Rocket, Languages];
     setBgIcons(icons.map((Icon, i) => ({
+      id: i,
       Icon,
-      top: `${Math.random() * 80 + 10}%`,
-      left: `${Math.random() * 80 + 10}%`,
+      top: `${Math.floor(Math.random() * 80 + 10)}%`,
+      left: `${Math.floor(Math.random() * 80 + 10)}%`,
       delay: Math.random() * 5,
       duration: 8 + Math.random() * 6
     })));
@@ -172,7 +174,7 @@ export default function LandingPage() {
       opacity: 1,
       scale: 1,
       transition: {
-        x: { type: 'spring', stiffness: 300, damping: 30 },
+        x: { type: 'spring', stiffness: 350, damping: 30 },
         opacity: { duration: 0.4 }
       }
     },
@@ -182,7 +184,7 @@ export default function LandingPage() {
       opacity: 0,
       scale: 0.95,
       transition: {
-        x: { type: 'spring', stiffness: 300, damping: 30 },
+        x: { type: 'spring', stiffness: 350, damping: 30 },
         opacity: { duration: 0.4 }
       }
     })
@@ -197,9 +199,9 @@ export default function LandingPage() {
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none transition-colors duration-700 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
       {/* Dynamic Background Icon Field */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.15]">
-        {bgIcons.map((item, i) => (
+        {bgIcons.map((item) => (
           <motion.div
-            key={i}
+            key={item.id}
             initial={{ opacity: 0 }}
             animate={{ 
               opacity: [0.03, 0.1, 0.03],

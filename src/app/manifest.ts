@@ -9,6 +9,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Quvora AI Superapp',
     short_name: 'Quvora',
     description: "India's first AI-powered marketplace superapp.",
+    id: '/',
     start_url: '/',
     display: 'standalone',
     background_color: '#0D1B2A',
