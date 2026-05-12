@@ -26,59 +26,115 @@ import {
   Smartphone,
   MapPin,
   Heart,
-  Globe
+  Globe,
+  Car,
+  Home,
+  UserCheck,
+  Lock,
+  ShieldAlert,
+  Phone,
+  Mic,
+  BookOpen,
+  GraduationCap,
+  Users,
+  LineChart,
+  ShoppingBag,
+  Brain,
+  TrendingUp,
+  Target
 } from 'lucide-react';
 
 const SLIDES = [
   {
     id: 'marketplace',
-    title: 'Buy & Sell Anything',
-    subtitle: 'Mobiles, cars, homes & 100+ categories',
+    title: 'Buy & Sell Smarter',
+    subtitle: 'Discover nearby products, vehicles, rentals, and verified deals instantly.',
     icon: Store,
     color: '#1A6AFF',
     bg: 'from-blue-500/20 to-transparent',
-    badges: [Zap, ShieldCheck]
+    chips: [
+      { label: 'Mobiles', icon: Smartphone },
+      { label: 'Cars', icon: Car },
+      { label: 'Property', icon: Home },
+      { label: 'Live Chat', icon: MessageCircle },
+      { label: 'Verified Sellers', icon: ShieldCheck }
+    ]
   },
   {
-    id: 'ai-engine',
-    title: 'AI-Powered Insights',
-    subtitle: 'Smart price suggestions & fraud detection',
-    icon: Bot,
+    id: 'ai-assistant',
+    title: 'Your AI Growth Partner',
+    subtitle: 'Get intelligent recommendations, guidance, and personalized opportunities.',
+    icon: Sparkles,
     color: '#FF6B2B',
     bg: 'from-orange-500/20 to-transparent',
-    badges: [Sparkles, Zap]
+    chips: [
+      { label: 'Smart Recommendations', icon: Target },
+      { label: 'Career Guidance', icon: Briefcase },
+      { label: 'AI Insights', icon: TrendingUp },
+      { label: 'Fast Search', icon: Zap },
+      { label: 'Personalized Feed', icon: Brain }
+    ]
   },
   {
     id: 'secure-chat',
-    title: 'Secure Peer Chat',
-    subtitle: 'Direct chat with AI safety scanning',
-    icon: MessageCircle,
+    title: 'Safe & Trusted Connections',
+    subtitle: 'Chat securely with buyers, sellers, employers, and mentors in real time.',
+    icon: ShieldCheck,
     color: '#10B981',
     bg: 'from-emerald-500/20 to-transparent',
-    badges: [Shield, MessageCircle]
+    chips: [
+      { label: 'Secure Messaging', icon: Lock },
+      { label: 'Verified Profiles', icon: UserCheck },
+      { label: 'Location Sharing', icon: MapPin },
+      { label: 'Voice Support', icon: Phone },
+      { label: 'Scam Protection', icon: ShieldAlert }
+    ]
   },
   {
     id: 'languages',
-    title: '12 Indian Languages',
-    subtitle: 'Use Quvora in your native tongue',
+    title: 'Built for Every Language',
+    subtitle: 'Experience Quvora in your preferred language with AI-powered assistance.',
     icon: Languages,
     color: '#7C3AED',
     bg: 'from-purple-500/20 to-transparent',
-    badges: [Languages, Sparkles]
+    chips: [
+      { label: 'Regional Languages', icon: Languages },
+      { label: 'Voice Support', icon: Mic },
+      { label: 'AI Translation', icon: Sparkles },
+      { label: 'Learning Tools', icon: BookOpen },
+      { label: 'Inclusive Access', icon: Globe }
+    ]
   },
   {
-    id: 'careers',
-    title: 'Jobs & Rentals',
-    subtitle: 'Find your next home or career move',
-    icon: Briefcase,
+    id: 'growth',
+    title: 'Learn, Work & Grow',
+    subtitle: 'Explore jobs, freelancing, mentorship, and skill-building opportunities.',
+    icon: GraduationCap,
     color: '#F59E0B',
     bg: 'from-amber-500/20 to-transparent',
-    badges: [Briefcase, Star]
+    chips: [
+      { label: 'Jobs', icon: Briefcase },
+      { label: 'Freelancing', icon: Rocket },
+      { label: 'Courses', icon: GraduationCap },
+      { label: 'Mentorship', icon: Users },
+      { label: 'Career Growth', icon: LineChart }
+    ]
+  },
+  {
+    id: 'ecosystem',
+    title: 'Move Smarter with Quvora',
+    subtitle: 'India’s AI-powered superapp for opportunities, growth, and connections.',
+    icon: Globe,
+    color: '#EC4899',
+    bg: 'from-pink-500/20 to-transparent',
+    chips: [
+      { label: 'Marketplace', icon: ShoppingBag },
+      { label: 'AI Powered', icon: Bot },
+      { label: 'Community', icon: Users },
+      { label: 'Careers', icon: Briefcase },
+      { label: 'Rentals', icon: Home }
+    ]
   }
-];
-
-const AMBIENT_ICONS = [
-  Smartphone, MapPin, Heart, Globe, Star, Zap, Shield, Sparkles, Store, Bot
 ];
 
 const AUTO_PLAY_INTERVAL = 5000;
@@ -96,19 +152,6 @@ export default function LandingPage() {
   const [direction, setDirection] = useState(0);
   const [isDark, setIsDark] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const ambientIcons = useMemo(() => {
-    return Array.from({ length: 20 }).map((_, i) => ({
-      id: i,
-      Icon: AMBIENT_ICONS[i % AMBIENT_ICONS.length],
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-      delay: Math.random() * 5,
-      duration: 15 + Math.random() * 20,
-      scale: 0.6 + Math.random() * 1.2,
-      rotate: Math.random() * 360
-    }));
-  }, []);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -156,38 +199,13 @@ export default function LandingPage() {
         <motion.div 
           animate={{ scale: [1, 1.1, 1], x: [0, 30, 0], y: [0, -20, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-[10%] -left-[10%] w-[70%] h-[70%] rounded-full opacity-20 dark:opacity-40 blur-[120px] bg-primary transform-gpu"
+          className="absolute -top-[10%] -left-[10%] w-[80%] h-[80%] rounded-full opacity-20 dark:opacity-40 blur-[120px] bg-primary transform-gpu"
         />
         <motion.div 
           animate={{ scale: [1.1, 1, 1.1], x: [0, -30, 0], y: [0, 20, 0] }}
           transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-[10%] -right-[10%] w-[70%] h-[70%] rounded-full opacity-20 dark:opacity-40 blur-[120px] bg-accent transform-gpu"
+          className="absolute -bottom-[10%] -right-[10%] w-[80%] h-[80%] rounded-full opacity-20 dark:opacity-40 blur-[120px] bg-accent transform-gpu"
         />
-
-        {/* Drifting Ambient Icons */}
-        <div className="absolute inset-0">
-          {ambientIcons.map((item) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0 }}
-              animate={{ 
-                opacity: [0, 0.15, 0],
-                y: [0, -80, 0],
-                rotate: item.rotate + 15
-              }}
-              transition={{
-                duration: item.duration,
-                repeat: Infinity,
-                delay: item.delay,
-                ease: "easeInOut"
-              }}
-              className="absolute text-foreground/10"
-              style={{ left: item.left, top: item.top }}
-            >
-              <item.Icon size={20 * item.scale} />
-            </motion.div>
-          ))}
-        </div>
       </div>
 
       {/* Header Section */}
@@ -249,106 +267,117 @@ export default function LandingPage() {
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, scale: 0.95, filter: 'blur(8px)' }}
+            initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, scale: 1.05, filter: 'blur(8px)' }}
+            exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
             transition={iosSpring}
-            className="w-full h-full flex items-center justify-center px-8"
+            className="w-full h-full flex items-center justify-center px-8 relative"
           >
-            <div className="relative w-full max-w-[280px] aspect-square flex items-center justify-center">
+            <div className="relative w-full max-w-[300px] aspect-square flex items-center justify-center">
+              {/* Main Icon Orb */}
               <motion.div 
                 animate={{ 
-                  y: [0, -10, 0],
-                  rotate: [0, 1, -1, 0]
+                  y: [0, -15, 0],
+                  rotate: [0, 2, -2, 0]
                 }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 className={cn(
-                  "w-[85%] h-[85%] rounded-[3.5rem] shadow-xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-0.5 transition-all duration-1000",
+                  "w-[70%] h-[70%] rounded-[4rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-0.5 transition-all duration-1000",
                   currentSlide.bg
                 )}
               >
-                <div className="absolute inset-0 glass rounded-[3.4rem] border-none flex items-center justify-center">
+                <div className="absolute inset-0 glass-thick rounded-[3.9rem] border-none flex items-center justify-center">
                    <motion.div
-                      animate={{ scale: [1, 1.05, 1] }}
+                      animate={{ scale: [1, 1.1, 1] }}
                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                    >
-                     <MainIcon size={80} style={{ color: currentSlide.color }} className="drop-shadow-xl" />
+                     <MainIcon size={84} style={{ color: currentSlide.color }} className="drop-shadow-2xl" />
                    </motion.div>
                 </div>
               </motion.div>
 
-              {/* Badges */}
-              {currentSlide.badges.map((BadgeIcon, i) => (
-                <motion.div
-                  key={i}
-                  animate={{ 
-                    y: [0, i === 0 ? -25 : 25, 0],
-                    x: [0, i === 0 ? -20 : 20, 0],
-                    rotate: [0, i === 0 ? -10 : 10, 0]
-                  }}
-                  transition={{ duration: 8 + i, repeat: Infinity, ease: "easeInOut" }}
-                  className={cn(
-                    "absolute w-12 h-12 glass-thick rounded-2xl flex items-center justify-center shadow-lg z-20 border-none",
-                    i === 0 ? "top-2 left-2" : "bottom-2 right-2"
-                  )}
-                >
-                  <BadgeIcon size={24} style={{ color: currentSlide.color }} />
-                </motion.div>
-              ))}
+              {/* Feature Chips Constellation */}
+              {currentSlide.chips.map((chip, i) => {
+                const angle = (i / currentSlide.chips.length) * Math.PI * 2;
+                const radius = 135;
+                const x = Math.cos(angle) * radius;
+                const y = Math.sin(angle) * radius;
+
+                return (
+                  <motion.div
+                    key={chip.label}
+                    initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+                    animate={{ 
+                      opacity: 1, 
+                      scale: 1, 
+                      x, 
+                      y: y + (Math.sin(Date.now() / 1000 + i) * 10)
+                    }}
+                    transition={{
+                      ...iosSpring,
+                      delay: i * 0.1
+                    }}
+                    className="absolute glass-thick rounded-2xl px-3 py-2 flex items-center gap-2 border-none shadow-lg z-20 pointer-events-none"
+                  >
+                    <chip.icon size={14} style={{ color: currentSlide.color }} />
+                    <span className="text-[9px] font-black uppercase tracking-tight text-foreground/80">{chip.label}</span>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
         </AnimatePresence>
       </main>
 
-      {/* Compact Footer Sheet */}
+      {/* Compact System Footer */}
       <footer 
-        className="shrink-0 w-full glass-thick rounded-t-[2.5rem] shadow-2xl pt-5 px-8 text-center flex flex-col items-center z-50 border-t border-white/10"
-        style={{ paddingBottom: 'calc(0.75rem + env(safe-area-inset-bottom))' }}
+        className="shrink-0 w-full glass-thick rounded-t-[3rem] shadow-2xl pt-6 px-8 text-center flex flex-col items-center z-50 border-t border-white/10"
+        style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}
       >
-        <div className="w-10 h-1 bg-foreground/10 rounded-full mb-3 opacity-30" />
+        <div className="w-12 h-1 bg-foreground/10 rounded-full mb-4 opacity-30" />
 
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            exit={{ opacity: 0, y: -15 }}
             transition={iosSpring}
-            className="flex flex-col gap-1 mb-4 w-full"
+            className="flex flex-col gap-2 mb-6 w-full"
           >
             <h1 className="text-2xl font-black tracking-tight text-foreground leading-none">
               {currentSlide.title}
             </h1>
-            <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">
+            <p className="text-[10px] font-bold text-muted-foreground leading-snug px-4">
               {currentSlide.subtitle}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        <div className="w-full max-w-sm flex flex-col gap-2.5">
+        <div className="w-full max-w-sm flex flex-col gap-3">
           <AuthModal 
             defaultTab="register"
             trigger={
-              <Button className="w-full h-12 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-lg shadow-primary/20 border-none active:scale-[0.97] transition-all">
+              <Button className="w-full h-14 rounded-2xl font-black text-sm uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 border-none active:scale-[0.97] transition-all">
                 Get Started
-                <ArrowRight className="w-4 h-4 ml-2" />
+                <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             }
           />
           <AuthModal 
             defaultTab="login"
             trigger={
-              <button className="flex items-center justify-center gap-2 opacity-50 hover:opacity-100 transition-opacity active:scale-95 py-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Existing User?</span>
+              <button className="flex items-center justify-center gap-2 opacity-60 hover:opacity-100 transition-opacity active:scale-95 py-2">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Already a member?</span>
                 <span className="text-[10px] font-black uppercase tracking-widest text-primary">Login</span>
               </button>
             }
           />
         </div>
 
-        <div className="mt-3 flex items-center gap-1.5 opacity-20 pointer-events-none">
-          <ShieldCheck size={12} className="text-primary" />
-          <span className="text-[8px] font-black uppercase tracking-[0.3em] text-foreground">Trusted by 10M+ Indians</span>
+        <div className="mt-4 flex items-center gap-2 opacity-30 pointer-events-none">
+          <ShieldCheck size={14} className="text-primary" />
+          <span className="text-[8px] font-black uppercase tracking-[0.35em] text-foreground">Fast • Secure • AI Powered</span>
         </div>
       </footer>
     </div>
