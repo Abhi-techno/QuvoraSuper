@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -42,7 +43,7 @@ import {
   Brain,
   TrendingUp,
   Target,
-  User
+  LogIn
 } from 'lucide-react';
 
 const SLIDES = [
@@ -268,7 +269,7 @@ export default function LandingPage() {
                     variant="ghost" 
                     className="h-9 w-9 glass rounded-full border-none shadow-sm active:scale-90 transition-all hover:bg-transparent"
                   >
-                    <User className="w-4 h-4 text-primary" />
+                    <LogIn className="w-4 h-4 text-primary" />
                   </Button>
                 }
               />
