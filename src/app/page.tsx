@@ -41,7 +41,8 @@ import {
   ShoppingBag,
   Brain,
   TrendingUp,
-  Target
+  Target,
+  User
 } from 'lucide-react';
 
 const SLIDES = [
@@ -194,17 +195,17 @@ export default function LandingPage() {
   return (
     <div className="h-svh w-full bg-background flex flex-col overflow-hidden select-none touch-none gpu-accelerated relative">
       
-      {/* Background Mesh Layer */}
+      {/* Cinematic Background Mesh Layer */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none transition-all duration-1000">
         <motion.div 
-          animate={{ scale: [1, 1.1, 1], x: [0, 30, 0], y: [0, -20, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-[10%] -left-[10%] w-[80%] h-[80%] rounded-full opacity-20 dark:opacity-40 blur-[120px] bg-primary transform-gpu"
+          animate={{ scale: [1, 1.2, 1], x: [0, 50, 0], y: [0, -40, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-[15%] -left-[15%] w-[90%] h-[90%] rounded-full opacity-30 dark:opacity-60 blur-[140px] bg-primary transform-gpu"
         />
         <motion.div 
-          animate={{ scale: [1.1, 1, 1.1], x: [0, -30, 0], y: [0, 20, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-[10%] -right-[10%] w-[80%] h-[80%] rounded-full opacity-20 dark:opacity-40 blur-[120px] bg-accent transform-gpu"
+          animate={{ scale: [1.2, 1, 1.2], x: [0, -50, 0], y: [0, 40, 0] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute -bottom-[15%] -right-[15%] w-[90%] h-[90%] rounded-full opacity-30 dark:opacity-60 blur-[140px] bg-accent transform-gpu"
         />
       </div>
 
@@ -225,8 +226,8 @@ export default function LandingPage() {
             </div>
           </motion.div>
 
-          <div className="flex items-center gap-3">
-            <div className="flex gap-1 items-center glass px-2 py-1.5 rounded-full border-none shadow-sm">
+          <div className="flex items-center gap-2">
+            <div className="flex gap-1 items-center glass px-2 py-1.5 rounded-full border-none shadow-sm mr-2">
               {SLIDES.map((_, i) => (
                 <motion.div
                   key={i}
@@ -239,25 +240,39 @@ export default function LandingPage() {
                 />
               ))}
             </div>
-            <Button 
-              size="icon" 
-              variant="ghost" 
-              className="h-9 w-9 glass rounded-full border-none shadow-sm active:scale-90 transition-all hover:bg-transparent" 
-              onClick={toggleTheme}
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={isDark ? 'moon' : 'sun'}
-                  initial={{ rotate: -120, scale: 0, opacity: 0 }}
-                  animate={{ rotate: 0, scale: 1, opacity: 1 }}
-                  exit={{ rotate: 120, scale: 0, opacity: 0 }}
-                  transition={iosSpring}
-                  className="flex items-center justify-center"
-                >
-                  {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
-                </motion.div>
-              </AnimatePresence>
-            </Button>
+            <div className="flex items-center gap-1.5">
+              <Button 
+                size="icon" 
+                variant="ghost" 
+                className="h-9 w-9 glass rounded-full border-none shadow-sm active:scale-90 transition-all hover:bg-transparent" 
+                onClick={toggleTheme}
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={isDark ? 'moon' : 'sun'}
+                    initial={{ rotate: -120, scale: 0, opacity: 0 }}
+                    animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                    exit={{ rotate: 120, scale: 0, opacity: 0 }}
+                    transition={iosSpring}
+                    className="flex items-center justify-center"
+                  >
+                    {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
+                  </motion.div>
+                </AnimatePresence>
+              </Button>
+              <AuthModal 
+                defaultTab="login"
+                trigger={
+                  <Button 
+                    size="icon" 
+                    variant="ghost" 
+                    className="h-9 w-9 glass rounded-full border-none shadow-sm active:scale-90 transition-all hover:bg-transparent"
+                  >
+                    <User className="w-4 h-4 text-primary" />
+                  </Button>
+                }
+              />
+            </div>
           </div>
         </div>
       </header>
@@ -267,31 +282,31 @@ export default function LandingPage() {
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
+            initial={{ opacity: 0, scale: 0.85, filter: 'blur(15px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
+            exit={{ opacity: 0, scale: 1.15, filter: 'blur(15px)' }}
             transition={iosSpring}
             className="w-full h-full flex items-center justify-center px-8 relative"
           >
-            <div className="relative w-full max-w-[300px] aspect-square flex items-center justify-center">
+            <div className="relative w-full max-w-[320px] aspect-square flex items-center justify-center">
               {/* Main Icon Orb */}
               <motion.div 
                 animate={{ 
-                  y: [0, -15, 0],
-                  rotate: [0, 2, -2, 0]
+                  y: [0, -20, 0],
+                  rotate: [0, 3, -3, 0]
                 }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
                 className={cn(
-                  "w-[70%] h-[70%] rounded-[4rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-0.5 transition-all duration-1000",
+                  "w-[75%] h-[75%] rounded-[4.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-0.5 transition-all duration-1000",
                   currentSlide.bg
                 )}
               >
-                <div className="absolute inset-0 glass-thick rounded-[3.9rem] border-none flex items-center justify-center">
+                <div className="absolute inset-0 glass-thick rounded-[4.4rem] border-none flex items-center justify-center">
                    <motion.div
-                      animate={{ scale: [1, 1.1, 1] }}
+                      animate={{ scale: [1, 1.12, 1] }}
                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                    >
-                     <MainIcon size={84} style={{ color: currentSlide.color }} className="drop-shadow-2xl" />
+                     <MainIcon size={96} style={{ color: currentSlide.color }} className="drop-shadow-2xl" />
                    </motion.div>
                 </div>
               </motion.div>
@@ -299,7 +314,7 @@ export default function LandingPage() {
               {/* Feature Chips Constellation */}
               {currentSlide.chips.map((chip, i) => {
                 const angle = (i / currentSlide.chips.length) * Math.PI * 2;
-                const radius = 135;
+                const radius = 145;
                 const x = Math.cos(angle) * radius;
                 const y = Math.sin(angle) * radius;
 
@@ -311,16 +326,16 @@ export default function LandingPage() {
                       opacity: 1, 
                       scale: 1, 
                       x, 
-                      y: y + (Math.sin(Date.now() / 1000 + i) * 10)
+                      y: y + (Math.sin(Date.now() / 1200 + i) * 12)
                     }}
                     transition={{
                       ...iosSpring,
-                      delay: i * 0.1
+                      delay: i * 0.08
                     }}
-                    className="absolute glass-thick rounded-2xl px-3 py-2 flex items-center gap-2 border-none shadow-lg z-20 pointer-events-none"
+                    className="absolute glass-thick rounded-2xl px-3.5 py-2 flex items-center gap-2.5 border-none shadow-xl z-20 pointer-events-none"
                   >
-                    <chip.icon size={14} style={{ color: currentSlide.color }} />
-                    <span className="text-[9px] font-black uppercase tracking-tight text-foreground/80">{chip.label}</span>
+                    <chip.icon size={15} style={{ color: currentSlide.color }} />
+                    <span className="text-[10px] font-black uppercase tracking-tight text-foreground/85">{chip.label}</span>
                   </motion.div>
                 );
               })}
@@ -348,7 +363,7 @@ export default function LandingPage() {
             <h1 className="text-2xl font-black tracking-tight text-foreground leading-none">
               {currentSlide.title}
             </h1>
-            <p className="text-[10px] font-bold text-muted-foreground leading-snug px-4">
+            <p className="text-[11px] font-bold text-muted-foreground leading-snug px-6">
               {currentSlide.subtitle}
             </p>
           </motion.div>
