@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 interface Particle {
   id: number;
@@ -18,7 +19,6 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    // Generate random particles only on the client to avoid hydration mismatch
     const newParticles = [...Array(12)].map((_, i) => ({
       id: i,
       width: Math.random() * 200 + 100 + 'px',
@@ -51,7 +51,6 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
             }}
             className="fixed inset-0 z-[1000] flex flex-col items-center justify-center bg-[#0D1B2A] text-white"
           >
-            {/* Animated Particle Field */}
             <div className="absolute inset-0 overflow-hidden opacity-30 pointer-events-none">
               {particles.map((p) => (
                 <motion.div
@@ -90,10 +89,10 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
               }}
               className="relative z-10 flex flex-col items-center gap-6"
             >
-              <div className="w-24 h-24 rounded-3xl bg-primary flex items-center justify-center text-white font-black text-6xl shadow-[0_0_50px_rgba(26,106,255,0.4)]">
-                Q
+              <div className="w-24 h-24 rounded-3xl bg-white flex items-center justify-center shadow-[0_0_60px_rgba(255,255,255,0.15)] overflow-hidden">
+                <Image src="/icons/icon-192.png" alt="Quvora" width={72} height={72} priority className="animate-in fade-in zoom-in-50 duration-700" />
               </div>
-              <div className="flex flex-col items-center gap-1">
+              <div className="flex flex-col items-center gap-1 text-center">
                 <h1 className="text-4xl font-black tracking-tighter">Quvora</h1>
                 <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.3em]">AI Superapp</p>
               </div>

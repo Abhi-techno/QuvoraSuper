@@ -1,8 +1,8 @@
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface Particle {
   id: number;
@@ -19,7 +19,6 @@ export default function SplashScreen() {
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    // Generate particles on client side to avoid hydration mismatch
     const newParticles = [...Array(20)].map((_, i) => ({
       id: i,
       width: Math.random() * 300 + 100 + 'px',
@@ -39,7 +38,6 @@ export default function SplashScreen() {
 
   return (
     <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0D1B2A] overflow-hidden">
-      {/* Background animated particle field */}
       <div className="absolute inset-0 opacity-20">
         {particles.map((p) => (
           <div 
@@ -57,17 +55,17 @@ export default function SplashScreen() {
         ))}
       </div>
 
-      <div className="relative z-10 flex flex-col items-center gap-4">
-        <div className="w-24 h-24 rounded-3xl bg-primary flex items-center justify-center text-white font-bold text-6xl shadow-2xl shadow-primary/40 animate-in zoom-in-50 duration-700 bounce-in">
-          Q
+      <div className="relative z-10 flex flex-col items-center gap-5">
+        <div className="w-28 h-28 rounded-3xl bg-white flex items-center justify-center shadow-2xl shadow-primary/20 animate-in zoom-in-50 duration-700 bounce-in overflow-hidden">
+          <Image src="/icons/icon-192.png" alt="Quvora" width={80} height={80} priority />
         </div>
         <div className="flex flex-col items-center gap-1 animate-in slide-in-from-bottom-4 duration-1000 delay-500 fill-mode-both">
-          <h1 className="text-4xl font-bold tracking-tighter text-white">Quvora</h1>
-          <p className="text-white/60 text-sm font-medium tracking-widest uppercase">Your World. One Place.</p>
+          <h1 className="text-4xl font-black tracking-tighter text-white">Quvora</h1>
+          <p className="text-white/60 text-[10px] font-black tracking-[0.3em] uppercase">Your World. One Place.</p>
         </div>
       </div>
 
-      <div className="absolute bottom-12 text-[10px] text-white/40 font-medium tracking-widest uppercase animate-in fade-in duration-1000 delay-1000">
+      <div className="absolute bottom-12 text-[8px] text-white/20 font-black tracking-[0.4em] uppercase animate-in fade-in duration-1000 delay-1000">
         Powered by Quvora AI
       </div>
     </div>

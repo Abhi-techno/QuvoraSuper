@@ -105,7 +105,6 @@ export default function LandingPage() {
     const root = window.document.documentElement;
     setIsDark(root.classList.contains('dark'));
 
-    // Initialize background constellation
     const icons = [Store, Bot, MessageCircle, Briefcase, Zap, Sparkles, ShieldCheck, Star, Rocket, Languages];
     setBgIcons(icons.map((Icon, i) => ({
       Icon,
@@ -196,7 +195,6 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none transition-colors duration-700 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
-      {/* Background Icon Constellation */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-20">
         {bgIcons.map((item, i) => (
           <motion.div
@@ -221,12 +219,11 @@ export default function LandingPage() {
         ))}
       </div>
 
-      {/* Top Header */}
       <header className="shrink-0 pt-3 px-8 z-50">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-white dark:bg-zinc-900 flex items-center justify-center shadow-2xl border border-white/20 overflow-hidden">
-              <Image src="/icons/icon-192.png" alt="Quvora" width={24} height={24} priority />
+              <Image src="/icons/icon-192.png" alt="Quvora" width={28} height={28} priority />
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] font-black tracking-widest uppercase text-primary/60">Super App</span>
@@ -259,7 +256,6 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* Center Art Canvas (60%) */}
       <main className="flex-[3] relative flex items-center justify-center overflow-hidden cursor-grab active:cursor-grabbing">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
@@ -316,7 +312,6 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      {/* Bottom Conversion Card (40%) */}
       <footer className="shrink-0 w-full bg-card rounded-t-[4rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-12 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
         <AnimatePresence mode="wait">
           <motion.div
