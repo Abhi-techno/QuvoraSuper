@@ -1,11 +1,11 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { AuthModal } from '@/components/auth/auth-modal';
+import { LoginSheet } from '@/components/auth/login-sheet';
+import { RegisterSheet } from '@/components/auth/register-sheet';
 import { useUser } from '@/firebase';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
@@ -258,8 +258,7 @@ export default function LandingPage() {
                   </motion.div>
                 </AnimatePresence>
               </Button>
-              <AuthModal 
-                defaultTab="login"
+              <LoginSheet 
                 trigger={
                   <Button 
                     size="icon" 
@@ -368,8 +367,7 @@ export default function LandingPage() {
         </AnimatePresence>
 
         <div className="w-full max-w-sm flex flex-col gap-3">
-          <AuthModal 
-            defaultTab="register"
+          <RegisterSheet 
             trigger={
               <Button className="w-full h-14 rounded-2xl font-black text-sm uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 border-none active:scale-[0.97] transition-all">
                 Get Started
@@ -377,8 +375,7 @@ export default function LandingPage() {
               </Button>
             }
           />
-          <AuthModal 
-            defaultTab="login"
+          <LoginSheet 
             trigger={
               <button className="flex items-center justify-center gap-2 opacity-60 hover:opacity-100 transition-opacity active:scale-95 py-2">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Already a member?</span>
