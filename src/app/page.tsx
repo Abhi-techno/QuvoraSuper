@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -64,7 +64,7 @@ const SLIDES = [
     id: 'ai-assistant',
     title: 'Your AI Growth Partner',
     subtitle: 'Get intelligent recommendations, guidance, and personalized opportunities.',
-    icon: Sparkles,
+    icon: Bot,
     color: '#FF6B2B',
     bg: 'from-orange-500/20 to-transparent',
     chips: [

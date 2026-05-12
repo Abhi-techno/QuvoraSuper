@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function TopNav({ isScrolled }: { isScrolled: boolean }) {
   const pathname = usePathname();
@@ -42,13 +43,14 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
   };
 
   const context = getContext();
+  const iosSpring = { type: "spring", stiffness: 420, damping: 30 };
 
   return (
     <header className={cn(
-      "ios-top-nav sticky top-0 w-full z-50 transition-all duration-300",
+      "ios-top-nav fixed top-0 w-full z-50 transition-all duration-300",
       isScrolled ? "bg-background/80 glass-thick shadow-sm" : "bg-transparent border-none"
     )}>
-      <div className="flex items-center justify-between w-full px-2">
+      <div className="flex items-center justify-between w-full px-4">
         {context === 'home' ? (
           <>
             <div className="flex items-center gap-3">
@@ -58,8 +60,24 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
               <h1 className="text-sm font-black tracking-tighter uppercase text-primary">Quvora</h1>
             </div>
             <div className="flex items-center gap-2">
-              <Button size="icon" variant="ghost" className="h-9 w-9 glass rounded-full border-none shadow-sm" onClick={toggleTheme}>
-                {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
+              <Button 
+                size="icon" 
+                variant="ghost" 
+                className="h-9 w-9 glass rounded-full border-none shadow-sm active:scale-90 transition-all hover:bg-transparent" 
+                onClick={toggleTheme}
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={isDark ? 'moon' : 'sun'}
+                    initial={{ rotate: -120, scale: 0, opacity: 0 }}
+                    animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                    exit={{ rotate: 120, scale: 0, opacity: 0 }}
+                    transition={iosSpring}
+                    className="flex items-center justify-center"
+                  >
+                    {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
+                  </motion.div>
+                </AnimatePresence>
               </Button>
               <Link href="/notifications">
                 <Button size="icon" variant="ghost" className="h-9 w-9 glass rounded-full border-none shadow-sm relative">
@@ -71,7 +89,7 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
           </>
         ) : (
           <>
-            <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full h-9 w-9 border-none shadow-sm">
+            <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full h-9 w-9 border-none shadow-sm active:scale-90 transition-transform">
               <ChevronLeft className="w-5 h-5" />
             </Button>
             <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/70">
@@ -84,7 +102,7 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
             </h2>
             <div className="flex gap-2">
                {context === 'browse' && (
-                 <Button variant="ghost" size="icon" className="glass rounded-full h-9 w-9 border-none shadow-sm">
+                 <Button variant="ghost" size="icon" className="glass rounded-full h-9 w-9 border-none shadow-sm active:scale-90 transition-transform">
                    <Search className="w-4 h-4" />
                  </Button>
                )}

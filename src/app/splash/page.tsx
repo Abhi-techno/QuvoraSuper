@@ -16,10 +16,6 @@ interface LiquidBlob {
   delay: number;
 }
 
-/**
- * Advanced Liquid-Snap Splash Screen.
- * Provides a cinematic entry experience with hardware-accelerated fluid motion.
- */
 export default function SplashScreen() {
   const router = useRouter();
   const [blobs, setBlobs] = useState<LiquidBlob[]>([]);
@@ -27,7 +23,6 @@ export default function SplashScreen() {
 
   useEffect(() => {
     setMounted(true);
-    // Generate organic blobs on client to avoid hydration mismatch
     const newBlobs = [...Array(4)].map((_, i) => ({
       id: i,
       size: ['300px', '400px', '500px', '350px'][i],

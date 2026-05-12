@@ -66,26 +66,27 @@
     user-select: none;
     -webkit-user-select: none;
     overscroll-behavior: none;
+    background-color: hsl(var(--background));
   }
 }
 
 .glass {
   @apply backdrop-blur-[24px] saturate-[180%] border border-white/20 transform-gpu;
-  background-color: hsla(0, 0%, 100%, 0.6);
+  background-color: hsla(0, 0%, 100%, 0.65);
 }
 
 .dark .glass {
-  background-color: hsla(240, 10%, 10%, 0.45);
+  background-color: hsla(240, 10%, 10%, 0.5);
   @apply border-white/10;
 }
 
 .glass-thick {
   @apply backdrop-blur-[40px] saturate-[190%] border border-white/30 transform-gpu;
-  background-color: hsla(0, 0%, 100%, 0.85);
+  background-color: hsla(0, 0%, 100%, 0.88);
 }
 
 .dark .glass-thick {
-  background-color: hsla(240, 10%, 5%, 0.7);
+  background-color: hsla(240, 10%, 5%, 0.75);
   @apply border-white/10;
 }
 
@@ -96,7 +97,7 @@
 }
 
 .ios-top-nav {
-  @apply sticky top-0 w-full flex items-center z-50 transition-all duration-300;
+  @apply fixed top-0 w-full flex items-center z-50 transition-all duration-300;
   padding-top: env(safe-area-inset-top, 1rem);
   height: calc(64px + env(safe-area-inset-top, 1rem));
 }
@@ -110,4 +111,8 @@
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+.post-ad-fab {
+  @apply w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white shadow-lg active:scale-90 transition-transform duration-200;
 }
