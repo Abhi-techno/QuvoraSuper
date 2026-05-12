@@ -20,13 +20,9 @@ import {
   Sparkles,
   ShieldCheck,
   Zap,
-  Star,
-  Shield,
-  Sun,
-  Moon,
+  Target,
   Smartphone,
   MapPin,
-  Heart,
   Globe,
   Car,
   Home,
@@ -42,8 +38,9 @@ import {
   ShoppingBag,
   Brain,
   TrendingUp,
-  Target,
-  LogIn
+  LogIn,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 const SLIDES = [
@@ -173,7 +170,7 @@ export default function LandingPage() {
   };
 
   useEffect(() => {
-    if (!loading && user) {
+    if (!loading && user && user.emailVerified) {
       router.push('/explore');
     }
   }, [user, loading, router]);

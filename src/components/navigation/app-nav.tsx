@@ -34,14 +34,15 @@ export function AppNav({ children }: { children: React.ReactNode }) {
     if (loading) return;
     
     // Protected Routes strictly require login AND email verification
-    const protectedRoutes = ['/me', '/chat', '/post', '/my-ads', '/notifications', '/saved', '/explore', '/browse'];
+    const protectedRoutes = ['/me', '/chat', '/post', '/my-ads', '/notifications', '/saved', '/explore', '/browse', '/listing'];
     const isProtected = protectedRoutes.some(route => pathname.startsWith(route));
     
     if (isProtected) {
       if (!user) {
+        // User not logged in, force to landing
         router.push('/');
       } else if (!user.emailVerified) {
-        // Redirect if not verified
+        // User logged in but unverified, force to landing where AuthModal will handle prompt
         router.push('/');
       }
     }
