@@ -226,7 +226,7 @@ export default function LandingPage() {
       </div>
 
       {/* 1. TOP: Refined Brand & Theme Header */}
-      <header className="shrink-0 pt-12 px-8 z-50">
+      <header className="shrink-0 pt-8 px-8 z-50">
         <div className="flex justify-between items-center">
           {/* Left: Premium Brand Icon */}
           <div className="flex items-center gap-3">
