@@ -387,7 +387,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            transition={iosSpring}
             className="flex flex-col gap-1.5 mb-6 w-full"
           >
             <h1 className="text-2xl font-black tracking-tighter text-foreground leading-none">
