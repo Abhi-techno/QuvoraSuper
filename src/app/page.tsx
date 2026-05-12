@@ -207,7 +207,7 @@ export default function LandingPage() {
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] gpu-accelerated">
       {/* Background Constellation - Deep Living Atmosphere */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.25]">
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.2]">
         {bgIcons.map((item) => (
           <motion.div
             key={item.id}
@@ -215,7 +215,7 @@ export default function LandingPage() {
               y: [0, -40, 0],
               x: [0, 20, 0],
               rotate: [0, 10, 0],
-              opacity: [0.2, 0.4, 0.2]
+              opacity: [0.1, 0.3, 0.1]
             }}
             transition={{
               duration: item.duration,
@@ -231,7 +231,7 @@ export default function LandingPage() {
         ))}
       </div>
 
-      <header className="shrink-0 pt-12 px-8 z-50 transition-all duration-700">
+      <header className="shrink-0 pt-12 px-8 z-50">
         <div className="flex justify-between items-center w-full">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
@@ -239,8 +239,8 @@ export default function LandingPage() {
             transition={iosSpring}
             className="flex items-center gap-3.5 group"
           >
-            <div className="w-11 h-11 rounded-[1.25rem] bg-white dark:bg-zinc-900 flex items-center justify-center shadow-2xl border border-white/20 overflow-hidden group-active:scale-95 transition-transform duration-300">
-              <Image src="/icons/icon-192.png" alt="Quvora" width={32} height={32} priority />
+            <div className="w-11 h-11 rounded-full glass flex items-center justify-center shadow-lg border-none overflow-hidden group-active:scale-95 transition-transform duration-300">
+              <Image src="/icons/icon-192.png" alt="Quvora" width={28} height={28} priority />
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] font-black tracking-[0.25em] uppercase text-primary/80">Quvora</span>
@@ -249,7 +249,7 @@ export default function LandingPage() {
           </motion.div>
 
           <div className="flex items-center gap-6">
-            <div className="flex gap-1.5 items-center bg-black/5 dark:bg-white/5 px-2.5 py-1.5 rounded-full backdrop-blur-md">
+            <div className="flex gap-1.5 items-center glass px-3 py-1.5 rounded-full border-none backdrop-blur-md">
               {SLIDES.map((_, i) => (
                 <motion.div
                   key={i}
@@ -266,7 +266,7 @@ export default function LandingPage() {
             <Button 
               size="icon" 
               variant="ghost" 
-              className="h-11 w-11 glass-thick rounded-full border-none shadow-md relative overflow-hidden group active:scale-90 transition-transform" 
+              className="h-11 w-11 glass rounded-full border-none shadow-sm relative overflow-hidden group active:scale-90 transition-transform" 
               onClick={toggleTheme}
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -305,7 +305,7 @@ export default function LandingPage() {
             onDragEnd={handleDragEnd}
             className="w-full h-full flex items-center justify-center px-10 relative z-10"
           >
-            <div className="relative w-full max-w-[280px] aspect-square">
+            <div className="relative w-full max-w-[280px] aspect-square overflow-visible">
               {/* Alive Central Stage */}
               <motion.div 
                 animate={{ 
@@ -345,30 +345,32 @@ export default function LandingPage() {
                 />
               </motion.div>
 
-              {/* Staggered "Alive" Badges */}
-              {currentSlide.badges.map((BadgeIcon, i) => (
-                <motion.div
-                  key={i}
-                  animate={{ 
-                    y: [0, -32, 12, -22, 0],
-                    x: [0, i % 2 === 0 ? -22 : 22, i % 2 === 0 ? 15 : -15, 0],
-                    rotate: [0, i % 2 === 0 ? -25 : 25, i % 2 === 0 ? 18 : -18, 0],
-                    scale: [1, 1.2, 0.9, 1.1, 1],
-                  }}
-                  transition={{ 
-                    duration: 8 + i, 
-                    repeat: Infinity, 
-                    ease: "easeInOut",
-                    delay: i * 0.7
-                  }}
-                  className={cn(
-                    "absolute w-16 h-16 glass-thick rounded-[1.75rem] border-none shadow-2xl flex items-center justify-center z-30",
-                    i === 0 ? "-top-12 -left-12" : "-bottom-12 -right-12"
-                  )}
-                >
-                  <BadgeIcon size={34} style={{ color: currentSlide.color }} className="brightness-125 drop-shadow-2xl" />
-                </motion.div>
-              ))}
+              {/* Staggered "Alive" Badges - Move to interaction wrapper for overflow safety */}
+              <div className="absolute inset-0 pointer-events-none z-30">
+                {currentSlide.badges.map((BadgeIcon, i) => (
+                  <motion.div
+                    key={i}
+                    animate={{ 
+                      y: [0, -32, 12, -22, 0],
+                      x: [0, i % 2 === 0 ? -22 : 22, i % 2 === 0 ? 15 : -15, 0],
+                      rotate: [0, i % 2 === 0 ? -25 : 25, i % 2 === 0 ? 18 : -18, 0],
+                      scale: [1, 1.2, 0.9, 1.1, 1],
+                    }}
+                    transition={{ 
+                      duration: 8 + i, 
+                      repeat: Infinity, 
+                      ease: "easeInOut",
+                      delay: i * 0.7
+                    }}
+                    className={cn(
+                      "absolute w-16 h-16 glass-thick rounded-[1.75rem] border-none shadow-2xl flex items-center justify-center",
+                      i === 0 ? "-top-10 -left-10" : "-bottom-10 -right-10"
+                    )}
+                  >
+                    <BadgeIcon size={34} style={{ color: currentSlide.color }} className="brightness-125 drop-shadow-2xl" />
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </AnimatePresence>
@@ -376,7 +378,7 @@ export default function LandingPage() {
 
       <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.15)] pt-6 pb-[env(safe-area-inset-bottom,1.5rem)] px-8 text-center flex flex-col items-center z-50">
         {/* iOS Handle Indicator */}
-        <div className="w-12 h-1.5 bg-foreground/10 rounded-full mb-6" />
+        <div className="w-12 h-1 bg-foreground/10 rounded-full mb-6" />
 
         <AnimatePresence mode="wait">
           <motion.div
