@@ -70,20 +70,15 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
       </SheetTrigger>
       <SheetContent 
         side="bottom" 
-        className="h-fit max-h-[85vh] glass-thick rounded-t-[3rem] p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
+        className="h-fit max-h-[85vh] glass-thick p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
       >
-        {/* iOS Drag Handle */}
-        <div className="flex flex-col items-center pt-3 pb-1 shrink-0">
-          <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-30" />
-        </div>
-        
         <div className="max-w-md mx-auto flex flex-col px-6 pb-10 pt-2">
           <div className="flex flex-col items-center mb-6 text-center">
             <div className="w-14 h-14 rounded-[1.5rem] bg-white flex items-center justify-center mb-3 shadow-lg border border-black/5 overflow-hidden">
               <Image src="/icons/icon-192.png" alt="Quvora" width={36} height={36} priority />
             </div>
             <SheetHeader className="space-y-1">
-              <SheetTitle className="text-xl font-black tracking-tighter">Welcome Back</SheetTitle>
+              <SheetTitle>Welcome Back</SheetTitle>
               <SheetDescription className="text-[9px] font-black uppercase tracking-[0.2em] text-primary">
                 Secure AI Superapp Login
               </SheetDescription>
@@ -91,7 +86,7 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               <div className="space-y-1.5 px-1">
                 <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Email Address</Label>
                 <div className="relative">
@@ -134,7 +129,7 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
             
             <div className="flex items-center justify-center gap-2 mt-4 py-2 opacity-30">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span className="text-[8px] font-black uppercase tracking-widest">End-to-End Encryption</span>
+              <span className="text-[8px] font-black uppercase tracking-widest text-foreground">End-to-End Encryption</span>
             </div>
           </form>
         </div>

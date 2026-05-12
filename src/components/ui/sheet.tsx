@@ -4,6 +4,7 @@ import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
+import { motion, AnimatePresence, useDragControls, useMotionValue, useTransform } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -21,7 +22,7 @@ const SheetOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
-      "fixed inset-0 z-50 bg-black/80 gpu-accelerated data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-black/60 backdrop-blur-[2px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
     {...props}
@@ -31,16 +32,16 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 const sheetVariants = cva(
-  "fixed z-50 gap-4 bg-background shadow-lg transition-all ease-in-out gpu-accelerated data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  "fixed z-50 gap-4 bg-background shadow-lg transition-all ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
   {
     variants: {
       side: {
         top: "inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
         bottom:
-          "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
+          "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom rounded-t-[2.5rem]",
         left: "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
         right:
-          "inset-y-0 right-0 h-full w-3/4  border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
+          "inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
       },
     },
     defaultVariants: {
@@ -56,22 +57,56 @@ interface SheetContentProps
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ side = "right", className, children, ...props }, ref) => (
-  <SheetPortal>
-    <SheetOverlay />
-    <SheetPrimitive.Content
-      ref={ref}
-      className={cn(sheetVariants({ side }), className)}
-      {...props}
-    >
-      {children}
-      <SheetPrimitive.Close className="absolute right-6 top-6 rounded-full glass p-2 opacity-70 transition-all hover:opacity-100 focus:outline-none active:scale-90 z-50 border-none">
-        <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
-      </SheetPrimitive.Close>
-    </SheetPrimitive.Content>
-  </SheetPortal>
-))
+>(({ side = "right", className, children, ...props }, ref) => {
+  const y = useMotionValue(0)
+  const [isClosing, setIsClosing] = React.useState(false)
+
+  // Native swipe-to-dismiss logic for bottom sheets
+  const handleDragEnd = (_: any, info: any) => {
+    if (side === "bottom" && (info.offset.y > 100 || info.velocity.y > 500)) {
+      setIsClosing(true)
+      // Trigger the actual Radix close
+      const closeButton = document.querySelector('[data-sheet-close]') as HTMLButtonElement
+      closeButton?.click()
+    }
+  }
+
+  return (
+    <SheetPortal>
+      <SheetOverlay />
+      <SheetPrimitive.Content
+        ref={ref}
+        className={cn(sheetVariants({ side }), "overflow-hidden", className)}
+        {...props}
+      >
+        {side === "bottom" ? (
+          <motion.div
+            drag="y"
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={{ top: 0, bottom: 0.5 }}
+            onDragEnd={handleDragEnd}
+            style={{ y }}
+            className="h-full w-full flex flex-col relative"
+          >
+            {/* iOS Drag Handle */}
+            <div className="flex flex-col items-center pt-3 pb-1 shrink-0 cursor-grab active:cursor-grabbing">
+              <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-30" />
+            </div>
+            {children}
+            {/* Hidden Close for Gesture Trigger */}
+            <SheetPrimitive.Close className="hidden" data-sheet-close />
+          </motion.div>
+        ) : (
+          children
+        )}
+        <SheetPrimitive.Close className="absolute right-6 top-6 rounded-full glass p-2 opacity-70 transition-all hover:opacity-100 focus:outline-none active:scale-90 z-50 border-none">
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </SheetPrimitive.Close>
+      </SheetPrimitive.Content>
+    </SheetPortal>
+  )
+})
 SheetContent.displayName = SheetPrimitive.Content.displayName
 
 const SheetHeader = ({
@@ -108,7 +143,7 @@ const SheetTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
-    className={cn("text-lg font-semibold text-foreground", className)}
+    className={cn("text-lg font-black tracking-tighter text-foreground", className)}
     {...props}
   />
 ))

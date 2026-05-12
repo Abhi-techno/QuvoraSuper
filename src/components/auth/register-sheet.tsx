@@ -104,12 +104,8 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
       </SheetTrigger>
       <SheetContent 
         side="bottom" 
-        className="h-fit max-h-[92vh] glass-thick rounded-t-[3rem] p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
+        className="h-fit max-h-[92vh] glass-thick p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
       >
-        <div className="flex flex-col items-center pt-3 pb-1 shrink-0">
-          <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-30" />
-        </div>
-        
         <div className="max-w-md mx-auto flex flex-col px-6 pb-10 pt-2">
           {!showVerifyPrompt ? (
             <div>
@@ -118,7 +114,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
                   <Image src="/icons/icon-192.png" alt="Quvora" width={36} height={36} priority />
                 </div>
                 <SheetHeader className="space-y-1">
-                  <SheetTitle className="text-xl font-black tracking-tighter">Join Quvora</SheetTitle>
+                  <SheetTitle>Join Quvora</SheetTitle>
                   <SheetDescription className="text-[9px] font-black uppercase tracking-[0.2em] text-primary">
                     Create Your Official Identity
                   </SheetDescription>
@@ -170,7 +166,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
                 <MailWarning className="w-8 h-8 text-primary animate-pulse" />
               </div>
               <SheetHeader className="mb-6">
-                <SheetTitle className="text-2xl font-black tracking-tighter">Check Your Inbox</SheetTitle>
+                <SheetTitle>Check Your Inbox</SheetTitle>
                 <SheetDescription className="text-muted-foreground text-[10px] font-bold leading-relaxed px-4 uppercase tracking-tight">
                   Verification sent to <span className="text-foreground font-black lowercase">{email}</span>. Click it to activate.
                 </SheetDescription>
