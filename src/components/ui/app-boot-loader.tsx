@@ -14,26 +14,31 @@ interface Particle {
   delay: number;
 }
 
+/**
+ * Intelligent App Boot Sequence for Quvora.
+ * Resolves hydration mismatches by generating dynamic styles on client mount.
+ */
 export function AppBootLoader({ children }: { children: React.ReactNode }) {
   const [isBooting, setIsBooting] = useState(true);
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    // Generate particles only on client to avoid hydration mismatch
+    // Generate particle styles strictly on client to avoid SSR mismatch
     const newParticles = [...Array(12)].map((_, i) => ({
       id: i,
-      width: Math.random() * 200 + 100 + 'px',
-      height: Math.random() * 200 + 100 + 'px',
-      left: Math.random() * 100 + '%',
-      top: Math.random() * 100 + '%',
-      duration: 5 + i,
-      delay: i * 0.2
+      width: Math.floor(Math.random() * 200 + 100) + 'px',
+      height: Math.floor(Math.random() * 200 + 100) + 'px',
+      left: Math.floor(Math.random() * 100) + '%',
+      top: Math.floor(Math.random() * 100) + '%',
+      duration: 5 + i * 0.5,
+      delay: i * 0.1
     }));
     setParticles(newParticles);
 
+    // Boot duration optimized for premium perceived performance
     const timer = setTimeout(() => {
       setIsBooting(false);
-    }, 2400);
+    }, 2600);
     return () => clearTimeout(timer);
   }, []);
 
@@ -42,25 +47,26 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
       <AnimatePresence mode="wait">
         {isBooting && (
           <motion.div
-            key="splash"
+            key="boot-sequence"
             initial={{ opacity: 1 }}
             exit={{ 
               opacity: 0,
-              scale: 1.1,
-              filter: 'blur(20px)',
+              scale: 1.05,
+              filter: 'blur(15px)',
               transition: { duration: 0.8, ease: [0.32, 0, 0.67, 0] }
             }}
             className="fixed inset-0 z-[1000] flex flex-col items-center justify-center bg-[#0D1B2A] text-white"
           >
-            <div className="absolute inset-0 overflow-hidden opacity-30 pointer-events-none">
+            {/* GPU-Accelerated Background Blobs */}
+            <div className="absolute inset-0 overflow-hidden opacity-25 pointer-events-none">
               {particles.map((p) => (
                 <motion.div
                   key={p.id}
                   animate={{
-                    y: [0, -40, 0],
-                    x: [0, 20, 0],
-                    opacity: [0.1, 0.3, 0.1],
-                    scale: [1, 1.2, 1]
+                    y: [0, -30, 0],
+                    x: [0, 15, 0],
+                    opacity: [0.1, 0.2, 0.1],
+                    scale: [1, 1.15, 1]
                   }}
                   transition={{
                     duration: p.duration,
@@ -80,39 +86,39 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
             </div>
 
             <motion.div 
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ 
                 type: "spring", 
                 stiffness: 100, 
                 damping: 20,
-                delay: 0.2
+                delay: 0.3
               }}
-              className="relative z-10 flex flex-col items-center gap-6"
+              className="relative z-10 flex flex-col items-center gap-7"
             >
-              <div className="w-24 h-24 rounded-3xl bg-white flex items-center justify-center shadow-[0_0_60px_rgba(255,255,255,0.15)] overflow-hidden">
+              <div className="w-26 h-26 rounded-[2.5rem] bg-white flex items-center justify-center shadow-[0_0_50px_rgba(255,255,255,0.1)] overflow-hidden">
                 <Image 
                   src="/icons/icon-192.png" 
                   alt="Quvora" 
-                  width={72} 
-                  height={72} 
+                  width={80} 
+                  height={80} 
                   priority 
                   className="animate-in fade-in zoom-in-50 duration-700" 
                 />
               </div>
-              <div className="flex flex-col items-center gap-1 text-center">
+              <div className="flex flex-col items-center gap-1.5 text-center">
                 <h1 className="text-4xl font-black tracking-tighter">Quvora</h1>
-                <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.3em]">AI Superapp</p>
+                <p className="text-white/40 text-[10px] font-black uppercase tracking-[0.35em]">Your World. One App.</p>
               </div>
             </motion.div>
 
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.5 }}
-              className="absolute bottom-16 text-[8px] font-black text-white/20 uppercase tracking-[0.4em]"
+              transition={{ delay: 1.8 }}
+              className="absolute bottom-16 text-[8px] font-black text-white/20 uppercase tracking-[0.45em]"
             >
-              Establishing Secure Node
+              Initializing Secure AI Node
             </motion.div>
           </motion.div>
         )}

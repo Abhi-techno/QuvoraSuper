@@ -1,10 +1,14 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
 
+/**
+ * PWA Manifest Generator for Quvora.
+ * Optimized for a Pure Native iOS PWA experience.
+ */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Quvora',
+    name: 'Quvora AI Superapp',
     short_name: 'Quvora',
-    description: "India's first AI-powered superapp.",
+    description: "India's first AI-powered marketplace superapp.",
     start_url: '/',
     display: 'standalone',
     background_color: '#0D1B2A',
@@ -36,5 +40,5 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: 'maskable',
       },
     ],
-  }
+  };
 }
