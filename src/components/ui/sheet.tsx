@@ -4,7 +4,7 @@ import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
-import { motion, useMotionValue, useTransform, useDragControls } from "framer-motion"
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -29,7 +29,7 @@ const SheetOverlay = React.forwardRef<
     ref={ref}
   />
 ))
-SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
+AlertDialogOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 const sheetVariants = cva(
   "fixed z-50 gap-4 bg-background shadow-lg transition-all ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
@@ -59,13 +59,15 @@ const SheetContent = React.forwardRef<
   SheetContentProps
 >(({ side = "right", className, children, ...props }, ref) => {
   const y = useMotionValue(0)
-  const dragControls = useDragControls()
+  const springY = useSpring(y, { stiffness: 400, damping: 30 })
 
   const handleDragEnd = (_: any, info: any) => {
     // If dragged down significantly or with high velocity, close the sheet
-    if (side === "bottom" && (info.offset.y > 100 || info.velocity.y > 500)) {
+    if (side === "bottom" && (info.offset.y > 120 || info.velocity.y > 600)) {
       const closeButton = document.querySelector('[data-sheet-close]') as HTMLButtonElement
       closeButton?.click()
+    } else {
+      y.set(0)
     }
   }
 
@@ -80,22 +82,17 @@ const SheetContent = React.forwardRef<
         {side === "bottom" ? (
           <motion.div
             drag="y"
-            dragControls={dragControls}
-            dragListener={false}
             dragConstraints={{ top: 0, bottom: 0 }}
-            dragElastic={{ top: 0, bottom: 0.5 }}
+            dragElastic={{ top: 0, bottom: 0.6 }}
             onDragEnd={handleDragEnd}
-            style={{ y }}
-            className="h-full w-full flex flex-col relative"
+            style={{ y: springY }}
+            className="h-full w-full flex flex-col relative touch-none"
           >
-            {/* iOS Drag Handle Zone */}
-            <div 
-              onPointerDown={(e) => dragControls.start(e)}
-              className="flex flex-col items-center pt-3 pb-3 shrink-0 cursor-grab active:cursor-grabbing touch-none"
-            >
+            {/* iOS Drag Handle Zone - Visual + Interactive Anchor */}
+            <div className="flex flex-col items-center pt-3 pb-4 shrink-0 cursor-grab active:cursor-grabbing">
               <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-30" />
             </div>
-            <div className="flex-1 overflow-y-auto overscroll-contain">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-1">
               {children}
             </div>
             {/* Hidden Close for Gesture Trigger */}

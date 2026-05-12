@@ -45,7 +45,7 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
         toast({ 
           variant: "destructive", 
           title: "Verification Required", 
-          description: "Please check your inbox to verify your account." 
+          description: "Please activate your account via the email link." 
         });
         return;
       }
@@ -70,17 +70,17 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
       </SheetTrigger>
       <SheetContent 
         side="bottom" 
-        className="h-fit max-h-[85vh] glass-thick p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
+        className="h-fit max-h-[80vh] glass-thick p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
       >
-        <div className="max-w-md mx-auto flex flex-col px-6 pb-10">
+        <div className="max-w-md mx-auto flex flex-col px-6 pb-12">
           <div className="flex flex-col items-center mb-6 text-center">
-            <div className="w-14 h-14 rounded-[1.5rem] bg-white flex items-center justify-center mb-3 shadow-lg border border-black/5 overflow-hidden">
-              <Image src="/icons/icon-192.png" alt="Quvora" width={36} height={36} priority />
+            <div className="w-14 h-14 rounded-[1.4rem] bg-white flex items-center justify-center mb-3 shadow-xl border border-black/5 overflow-hidden">
+              <Image src="/icons/icon-192.png" alt="Quvora" width={34} height={34} priority />
             </div>
             <SheetHeader className="space-y-1">
-              <SheetTitle className="text-xl font-black tracking-tighter">Welcome Back</SheetTitle>
+              <SheetTitle className="text-xl font-black tracking-tighter">Member Access</SheetTitle>
               <SheetDescription className="text-[9px] font-black uppercase tracking-[0.2em] text-primary">
-                Secure AI Superapp Login
+                Secure AI Dashboard Login
               </SheetDescription>
             </SheetHeader>
           </div>
@@ -88,11 +88,11 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-3">
               <div className="space-y-1 px-1">
-                <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Email Address</Label>
+                <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Account Email</Label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
                   <Input 
-                    className="h-12 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
+                    className="h-13 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
                     placeholder="name@email.com" 
                     type="email" 
                     value={email} 
@@ -102,11 +102,11 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
                 </div>
               </div>
               <div className="space-y-1 px-1">
-                <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Password</Label>
+                <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Secure Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
                   <Input 
-                    className="h-12 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
+                    className="h-13 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
                     placeholder="••••••••" 
                     type={showPassword ? "text" : "password"} 
                     value={password} 
@@ -120,16 +120,16 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
               </div>
             </div>
             <Button 
-              className="w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-4" 
+              className="w-full h-15 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-4" 
               disabled={loading}
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <ArrowRight className="w-5 h-5 mr-2" />}
-              {loading ? "Verifying..." : "Login to Quvora"}
+              {loading ? "Authenticating..." : "Login to Quvora"}
             </Button>
             
-            <div className="flex items-center justify-center gap-2 mt-4 py-2 opacity-30">
+            <div className="flex items-center justify-center gap-2 mt-4 py-1.5 opacity-30">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span className="text-[8px] font-black uppercase tracking-widest text-foreground">End-to-End Encryption</span>
+              <span className="text-[8px] font-black uppercase tracking-widest text-foreground">Hardware-Backed Security</span>
             </div>
           </form>
         </div>
