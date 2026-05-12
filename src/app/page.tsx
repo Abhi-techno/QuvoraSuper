@@ -335,28 +335,46 @@ export default function LandingPage() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="w-full max-w-[320px] flex flex-col gap-4">
+        <div className="w-full max-w-[320px] flex flex-col gap-5">
           <AuthModal 
             defaultTab="register"
             trigger={
-              <Button className="w-full h-15 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all border-none group">
-                Create Free Account
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
+              <motion.div whileTap={{ scale: 0.96 }}>
+                <Button className="w-full h-16 rounded-[1.5rem] font-black text-xs uppercase tracking-widest bg-primary text-white shadow-[0_20px_40px_-15px_rgba(var(--primary),0.3)] hover:brightness-110 active:scale-[0.98] transition-all border-none group relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  Create Free Account
+                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </motion.div>
             }
           />
           <AuthModal 
             defaultTab="login"
             trigger={
-              <button className="text-[10px] font-black text-muted-foreground/50 hover:text-primary transition-colors py-2 uppercase tracking-widest">
-                Already member? <span className="text-primary underline underline-offset-8 decoration-2 ml-1">Sign in</span>
+              <button className="group flex flex-col items-center gap-1.5 py-2">
+                <p className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest transition-colors group-hover:text-muted-foreground/60">
+                  Already a member?
+                </p>
+                <span className="text-xs font-black text-primary uppercase tracking-[0.15em] border-b-2 border-primary/20 group-hover:border-primary transition-all">
+                  Sign in to Quvora
+                </span>
               </button>
             }
           />
-          <p className="text-[9px] font-black text-primary/60 uppercase tracking-[0.2em] flex items-center justify-center gap-2 mt-2">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            Trusted by 10M+ Indians
-          </p>
+          
+          <div className="flex flex-col items-center gap-2 mt-2">
+            <div className="flex items-center gap-2 text-[9px] font-black text-primary/60 uppercase tracking-[0.25em]">
+              <div className="relative">
+                <ShieldCheck className="w-4 h-4" />
+                <motion.div 
+                  animate={{ opacity: [0, 0.5, 0], scale: [1, 1.5, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute inset-0 bg-primary/20 rounded-full blur-sm"
+                />
+              </div>
+              Trusted by 10M+ Indians
+            </div>
+          </div>
         </div>
       </footer>
     </div>
