@@ -80,6 +80,17 @@ const SLIDES = [
   }
 ];
 
+const BACKGROUND_ICONS = [
+  { Icon: Store, top: '10%', left: '5%', delay: 0 },
+  { Icon: Bot, top: '15%', left: '85%', delay: 1 },
+  { Icon: MessageCircle, top: '45%', left: '10%', delay: 2 },
+  { Icon: Briefcase, top: '70%', left: '80%', delay: 0.5 },
+  { Icon: Zap, top: '80%', left: '15%', delay: 1.5 },
+  { Icon: Sparkles, top: '30%', left: '90%', delay: 2.5 },
+  { Icon: ShieldCheck, top: '60%', left: '5%', delay: 3 },
+  { Icon: Star, top: '10%', left: '50%', delay: 1.2 },
+];
+
 const AUTO_PLAY_INTERVAL = 4800;
 const SWIPE_THRESHOLD = 50;
 
@@ -167,6 +178,32 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-[#FDF8F3] flex flex-col overflow-hidden select-none touch-none">
+      {/* Background Animated Constellation */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        {BACKGROUND_ICONS.map((item, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ 
+              opacity: [0.03, 0.08, 0.03],
+              scale: [0.8, 1, 0.8],
+              y: [0, -20, 0],
+              x: [0, 10, 0]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              delay: item.delay,
+              ease: "easeInOut"
+            }}
+            className="absolute text-primary"
+            style={{ top: item.top, left: item.left }}
+          >
+            <item.Icon size={48} strokeWidth={1} />
+          </motion.div>
+        ))}
+      </div>
+
       {/* 1. TOP: Navigation & Progress */}
       <header className="shrink-0 pt-6 px-6 z-50">
         <div className="flex justify-between items-center px-2 mb-4">
