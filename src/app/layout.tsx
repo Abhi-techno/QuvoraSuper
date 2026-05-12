@@ -1,8 +1,10 @@
+
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { AppNav } from '@/components/navigation/app-nav';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
+import { AppBootLoader } from '@/components/ui/app-boot-loader';
 import React from 'react';
 
 export const metadata: Metadata = {
@@ -15,10 +17,6 @@ export const metadata: Metadata = {
   },
   formatDetection: {
     telephone: false,
-  },
-  icons: {
-    icon: '/icons/icon-192.png',
-    apple: '/icons/icon-192.png',
   },
 };
 
@@ -51,13 +49,15 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body className="antialiased selection:bg-primary selection:text-white overflow-hidden bg-[#FDF8F3] touch-none">
+      <body className="antialiased selection:bg-primary selection:text-white overflow-hidden bg-background touch-none">
         <FirebaseClientProvider>
-          <AppNav>
-            <main className="relative h-svh w-full overflow-hidden">
-              {children}
-            </main>
-          </AppNav>
+          <AppBootLoader>
+            <AppNav>
+              <main className="relative h-svh w-full overflow-hidden">
+                {children}
+              </main>
+            </AppNav>
+          </AppBootLoader>
           <Toaster />
         </FirebaseClientProvider>
       </body>

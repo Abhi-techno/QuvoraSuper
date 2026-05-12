@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -84,14 +85,16 @@ const SLIDES = [
 ];
 
 const BACKGROUND_ICONS = [
-  { Icon: Store, top: '10%', left: '5%', delay: 0 },
-  { Icon: Bot, top: '15%', left: '85%', delay: 1 },
-  { Icon: MessageCircle, top: '45%', left: '10%', delay: 2 },
-  { Icon: Briefcase, top: '70%', left: '80%', delay: 0.5 },
-  { Icon: Zap, top: '80%', left: '15%', delay: 1.5 },
-  { Icon: Sparkles, top: '30%', left: '90%', delay: 2.5 },
-  { Icon: ShieldCheck, top: '60%', left: '5%', delay: 3 },
-  { Icon: Star, top: '10%', left: '50%', delay: 1.2 },
+  { Icon: Store, top: '10%', left: '10%', delay: 0 },
+  { Icon: Bot, top: '15%', left: '80%', delay: 1.5 },
+  { Icon: MessageCircle, top: '40%', left: '5%', delay: 3 },
+  { Icon: Briefcase, top: '65%', left: '85%', delay: 0.8 },
+  { Icon: Zap, top: '80%', left: '15%', delay: 2.2 },
+  { Icon: Sparkles, top: '30%', left: '90%', delay: 4.1 },
+  { Icon: ShieldCheck, top: '55%', left: '10%', delay: 1.2 },
+  { Icon: Star, top: '12%', left: '45%', delay: 3.5 },
+  { Icon: Rocket, top: '85%', left: '75%', delay: 0.5 },
+  { Icon: Languages, top: '45%', left: '80%', delay: 2.7 },
 ];
 
 const AUTO_PLAY_INTERVAL = 4800;
@@ -197,8 +200,8 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none transition-colors duration-700 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
-      {/* Background Animated Constellation */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-30">
+      {/* Dynamic Background Icon Constellation */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-20">
         {BACKGROUND_ICONS.map((item, i) => (
           <motion.div
             key={i}
@@ -206,11 +209,11 @@ export default function LandingPage() {
             animate={{ 
               opacity: [0.03, 0.08, 0.03],
               scale: [0.8, 1, 0.8],
-              y: [0, -25, 0],
-              x: [0, 15, 0]
+              y: [0, -30, 0],
+              x: [0, 10, 0]
             }}
             transition={{
-              duration: 8 + i,
+              duration: 7 + i,
               repeat: Infinity,
               delay: item.delay,
               ease: "easeInOut"
@@ -218,15 +221,14 @@ export default function LandingPage() {
             className="absolute text-primary"
             style={{ top: item.top, left: item.left }}
           >
-            <item.Icon size={40} strokeWidth={1} />
+            <item.Icon size={44} strokeWidth={1} />
           </motion.div>
         ))}
       </div>
 
-      {/* 1. TOP: Refined Brand & Theme Header */}
-      <header className="shrink-0 pt-3 px-8 z-50">
+      {/* 1. TOP: Refined Brand Header */}
+      <header className="shrink-0 pt-4 px-8 z-50">
         <div className="flex justify-between items-center">
-          {/* Left: Premium Brand Icon */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-white dark:bg-zinc-900 flex items-center justify-center shadow-2xl shadow-black/5 border border-white/20 overflow-hidden ring-1 ring-black/5">
               <Image src="/icons/icon-192.png" alt="Quvora" width={24} height={24} priority />
@@ -237,7 +239,6 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right: Dots & Theme Toggle */}
           <div className="flex items-center gap-4">
             <div className="flex gap-1.5 items-center">
               {SLIDES.map((_, i) => (
@@ -245,7 +246,7 @@ export default function LandingPage() {
                   key={i}
                   initial={false}
                   animate={{ 
-                    width: i === index ? 22 : 6,
+                    width: i === index ? 24 : 6,
                     backgroundColor: i === index ? currentSlide.color : isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'
                   }}
                   className="h-1.5 rounded-full transition-all duration-300"
@@ -291,7 +292,7 @@ export default function LandingPage() {
             className="w-full h-full flex items-center justify-center px-8"
           >
             <div className={cn(
-              "w-full max-w-[210px] aspect-square rounded-[3.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center transition-all duration-700",
+              "w-full max-w-[220px] aspect-square rounded-[4rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center transition-all duration-700",
               currentSlide.bg
             )}>
               <motion.div 
@@ -299,8 +300,8 @@ export default function LandingPage() {
                 transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 opacity-20"
               >
-                <div className="absolute top-0 left-0 w-24 h-24 bg-white blur-3xl rounded-full" />
-                <div className="absolute bottom-0 right-0 w-32 h-32 bg-black/10 blur-3xl rounded-full" />
+                <div className="absolute top-0 left-0 w-32 h-32 bg-white blur-3xl rounded-full" />
+                <div className="absolute bottom-0 right-0 w-40 h-40 bg-black/10 blur-3xl rounded-full" />
               </motion.div>
 
               <div className="relative z-10">
@@ -308,16 +309,16 @@ export default function LandingPage() {
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={springConfig}
-                  className="p-8 glass rounded-[2.5rem] border-none shadow-2xl flex items-center justify-center relative"
+                  className="p-10 glass rounded-[3rem] border-none shadow-2xl flex items-center justify-center relative"
                 >
-                  <MainIcon size={56} style={{ color: currentSlide.color }} className="drop-shadow-lg" />
+                  <MainIcon size={64} style={{ color: currentSlide.color }} className="drop-shadow-lg" />
                   
                   {currentSlide.badges.map((BadgeIcon, i) => (
                     <motion.div
                       key={i}
                       animate={{ 
-                        y: i === 0 ? [0, -10, 0] : [0, 10, 0],
-                        x: i === 0 ? [0, 5, 0] : [0, -5, 0]
+                        y: i === 0 ? [0, -12, 0] : [0, 12, 0],
+                        x: i === 0 ? [0, 6, 0] : [0, -6, 0]
                       }}
                       transition={{ 
                         duration: i === 0 ? 4 : 3.5, 
@@ -326,11 +327,11 @@ export default function LandingPage() {
                         delay: i * 0.5
                       }}
                       className={cn(
-                        "absolute w-10 h-10 glass rounded-2xl border-none shadow-lg flex items-center justify-center",
-                        i === 0 ? "-top-4 -left-4" : "-bottom-4 -right-4"
+                        "absolute w-12 h-12 glass rounded-2xl border-none shadow-lg flex items-center justify-center",
+                        i === 0 ? "-top-6 -left-6" : "-bottom-6 -right-6"
                       )}
                     >
-                      <BadgeIcon size={20} style={{ color: currentSlide.color }} />
+                      <BadgeIcon size={24} style={{ color: currentSlide.color }} />
                     </motion.div>
                   ))}
                 </motion.div>
@@ -341,7 +342,7 @@ export default function LandingPage() {
       </main>
 
       {/* 3. BOTTOM: Action Card (40%) */}
-      <footer className="shrink-0 w-full bg-card rounded-t-[3.5rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-10 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
+      <footer className="shrink-0 w-full bg-card rounded-t-[4rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-12 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -349,9 +350,9 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className="flex flex-col gap-3 mb-10 w-full"
+            className="flex flex-col gap-3 mb-12 w-full"
           >
-            <h1 className="text-[28px] font-black tracking-tighter text-foreground leading-tight">
+            <h1 className="text-3xl font-black tracking-tighter text-foreground leading-tight">
               {currentSlide.title}
             </h1>
             <p className="text-[11px] font-black text-muted-foreground/50 leading-relaxed uppercase tracking-[0.2em] max-w-[280px] mx-auto">
@@ -371,7 +372,7 @@ export default function LandingPage() {
                 <AuthModal 
                   defaultTab="register"
                   trigger={
-                    <Button className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all border-none group">
+                    <Button className="w-full h-15 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all border-none group">
                       Create Free Account
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
@@ -387,7 +388,7 @@ export default function LandingPage() {
             ) : (
               <Button 
                 onClick={() => paginate(1)}
-                className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 active:scale-[0.98] flex items-center justify-center gap-2 border-none transition-all"
+                className="w-full h-15 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 active:scale-[0.98] flex items-center justify-center gap-2 border-none transition-all"
               >
                 <span>Continue</span>
                 <ChevronRight size={14} className="ml-1 opacity-50" />
