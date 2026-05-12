@@ -70,8 +70,9 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
       </SheetTrigger>
       <SheetContent 
         side="bottom" 
-        className="h-fit max-h-[85vh] glass-thick rounded-t-[3rem] p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
+        className="h-fit max-h-[92vh] glass-thick rounded-t-[3rem] p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
       >
+        {/* iOS Drag Handle */}
         <div className="flex flex-col items-center pt-3 pb-2 shrink-0">
           <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-30" />
         </div>
@@ -84,15 +85,15 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
             <SheetHeader className="space-y-1">
               <SheetTitle className="text-2xl font-black tracking-tighter">Welcome Back</SheetTitle>
               <SheetDescription className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
-                Secure AI Portal
+                Secure AI Superapp Dashboard
               </SheetDescription>
             </SheetHeader>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-3">
-              <div className="space-y-1.5">
-                <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Email</Label>
+              <div className="space-y-1.5 px-1">
+                <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Email Address</Label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
                   <Input 
@@ -105,8 +106,8 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
                   />
                 </div>
               </div>
-              <div className="space-y-1.5">
-                <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Password</Label>
+              <div className="space-y-1.5 px-1">
+                <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Secret Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
                   <Input 
@@ -124,14 +125,14 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
               </div>
             </div>
             <Button 
-              className="w-full h-16 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-2" 
+              className="w-full h-16 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-4" 
               disabled={loading}
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <ArrowRight className="w-5 h-5 mr-2" />}
-              {loading ? "Authenticating..." : "Login to Quvora"}
+              {loading ? "Verifying..." : "Login to Quvora"}
             </Button>
             
-            <div className="flex items-center justify-center gap-2 mt-4 py-2 opacity-40">
+            <div className="flex items-center justify-center gap-2 mt-4 py-2 opacity-30">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span className="text-[8px] font-black uppercase tracking-widest">End-to-End Encryption</span>
             </div>
