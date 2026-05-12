@@ -8,7 +8,7 @@ import React from 'react';
 
 export const metadata: Metadata = {
   title: 'Quvora',
-  description: "India's first AI-powered superapp.",
+  description: "India's first AI-powered marketplace superapp.",
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   other: {
     'apple-mobile-web-app-capable': 'yes',
     'mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+  },
+  icons: {
+    icon: '/icons/favicon.ico',
+    apple: '/icons/apple-touch-icon.png',
   }
 };
 
@@ -47,8 +52,8 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
-        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-        <link rel="icon" href="/icons/favicon.ico" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
       <body className="antialiased selection:bg-primary selection:text-white overflow-hidden bg-background touch-none">
         <FirebaseClientProvider>

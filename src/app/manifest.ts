@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 
 /**
  * PWA Manifest Generator for Quvora.
- * Optimized for a Pure Native iOS PWA experience.
+ * Optimized for a Pure Native iOS PWA experience and Vercel compatibility.
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
