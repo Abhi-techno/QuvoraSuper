@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -34,7 +33,7 @@ const SLIDES = [
     subtitle: 'Mobiles, cars, homes, jobs & 100+ categories near you',
     icon: Store,
     color: '#1A6AFF',
-    bg: 'from-blue-50 to-blue-100/50',
+    bg: 'from-blue-500/10 to-blue-500/5',
     badges: [Zap, ShieldCheck]
   },
   {
@@ -43,7 +42,7 @@ const SLIDES = [
     subtitle: 'Smart price suggestions, auto-fill & fraud detection',
     icon: Bot,
     color: '#FF6B2B',
-    bg: 'from-orange-50 to-orange-100/50',
+    bg: 'from-orange-500/10 to-orange-500/5',
     badges: [Sparkles, Zap]
   },
   {
@@ -52,7 +51,7 @@ const SLIDES = [
     subtitle: 'Direct peer-to-peer chat with AI safety scanning',
     icon: MessageCircle,
     color: '#10B981',
-    bg: 'from-emerald-50 to-emerald-100/50',
+    bg: 'from-emerald-500/10 to-emerald-500/5',
     badges: [Shield, MessageCircle]
   },
   {
@@ -61,7 +60,7 @@ const SLIDES = [
     subtitle: 'Use Quvora in your native tongue with AI voice support',
     icon: Languages,
     color: '#7C3AED',
-    bg: 'from-purple-50 to-purple-100/50',
+    bg: 'from-purple-500/10 to-purple-500/5',
     badges: [Languages, Sparkles]
   },
   {
@@ -70,7 +69,7 @@ const SLIDES = [
     subtitle: 'Find your next home or career move for free today',
     icon: Briefcase,
     color: '#F59E0B',
-    bg: 'from-amber-50 to-amber-100/50',
+    bg: 'from-amber-500/10 to-amber-500/5',
     badges: [Briefcase, Star]
   },
   {
@@ -79,22 +78,9 @@ const SLIDES = [
     subtitle: "India's fastest growing AI marketplace super-app",
     icon: Rocket,
     color: '#EC4899',
-    bg: 'from-pink-50 to-pink-100/50',
+    bg: 'from-pink-500/10 to-pink-500/5',
     badges: [Rocket, ShieldCheck]
   }
-];
-
-const BACKGROUND_ICONS = [
-  { Icon: Store, top: '10%', left: '10%', delay: 0 },
-  { Icon: Bot, top: '15%', left: '80%', delay: 1.5 },
-  { Icon: MessageCircle, top: '40%', left: '5%', delay: 3 },
-  { Icon: Briefcase, top: '65%', left: '85%', delay: 0.8 },
-  { Icon: Zap, top: '80%', left: '15%', delay: 2.2 },
-  { Icon: Sparkles, top: '30%', left: '90%', delay: 4.1 },
-  { Icon: ShieldCheck, top: '55%', left: '10%', delay: 1.2 },
-  { Icon: Star, top: '12%', left: '45%', delay: 3.5 },
-  { Icon: Rocket, top: '85%', left: '75%', delay: 0.5 },
-  { Icon: Languages, top: '45%', left: '80%', delay: 2.7 },
 ];
 
 const AUTO_PLAY_INTERVAL = 4800;
@@ -113,11 +99,22 @@ export default function LandingPage() {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isDark, setIsDark] = useState(false);
+  const [bgIcons, setBgIcons] = useState<any[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const root = window.document.documentElement;
     setIsDark(root.classList.contains('dark'));
+
+    // Generate background icons on client only to avoid hydration mismatch
+    const icons = [Store, Bot, MessageCircle, Briefcase, Zap, Sparkles, ShieldCheck, Star, Rocket, Languages];
+    setBgIcons(icons.map((Icon, i) => ({
+      Icon,
+      top: `${Math.random() * 80 + 10}%`,
+      left: `${Math.random() * 80 + 10}%`,
+      delay: Math.random() * 5,
+      duration: 7 + Math.random() * 5
+    })));
   }, []);
 
   const toggleTheme = () => {
@@ -200,20 +197,19 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none transition-colors duration-700 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
-      {/* Dynamic Background Icon Constellation */}
+      {/* Background Icon Constellation */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-20">
-        {BACKGROUND_ICONS.map((item, i) => (
+        {bgIcons.map((item, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, scale: 0 }}
+            initial={{ opacity: 0 }}
             animate={{ 
-              opacity: [0.03, 0.08, 0.03],
-              scale: [0.8, 1, 0.8],
+              opacity: [0.03, 0.1, 0.03],
               y: [0, -30, 0],
               x: [0, 10, 0]
             }}
             transition={{
-              duration: 7 + i,
+              duration: item.duration,
               repeat: Infinity,
               delay: item.delay,
               ease: "easeInOut"
@@ -221,16 +217,16 @@ export default function LandingPage() {
             className="absolute text-primary"
             style={{ top: item.top, left: item.left }}
           >
-            <item.Icon size={44} strokeWidth={1} />
+            <item.Icon size={40} strokeWidth={1} />
           </motion.div>
         ))}
       </div>
 
-      {/* 1. TOP: Refined Brand Header */}
-      <header className="shrink-0 pt-4 px-8 z-50">
+      {/* Top Header */}
+      <header className="shrink-0 pt-3 px-8 z-50">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white dark:bg-zinc-900 flex items-center justify-center shadow-2xl shadow-black/5 border border-white/20 overflow-hidden ring-1 ring-black/5">
+            <div className="w-10 h-10 rounded-2xl bg-white dark:bg-zinc-900 flex items-center justify-center shadow-2xl border border-white/20 overflow-hidden">
               <Image src="/icons/icon-192.png" alt="Quvora" width={24} height={24} priority />
             </div>
             <div className="flex flex-col">
@@ -244,10 +240,9 @@ export default function LandingPage() {
               {SLIDES.map((_, i) => (
                 <motion.div
                   key={i}
-                  initial={false}
                   animate={{ 
                     width: i === index ? 24 : 6,
-                    backgroundColor: i === index ? currentSlide.color : isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'
+                    backgroundColor: i === index ? currentSlide.color : (isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)')
                   }}
                   className="h-1.5 rounded-full transition-all duration-300"
                 />
@@ -256,26 +251,16 @@ export default function LandingPage() {
             <Button 
               size="icon" 
               variant="ghost" 
-              className="h-10 w-10 glass rounded-full border-none shadow-sm transition-transform active:scale-90" 
+              className="h-10 w-10 glass rounded-full border-none shadow-sm" 
               onClick={toggleTheme}
             >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={isDark ? 'dark' : 'light'}
-                  initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
-                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                  exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
-                </motion.div>
-              </AnimatePresence>
+              {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
             </Button>
           </div>
         </div>
       </header>
 
-      {/* 2. CENTER: Art Canvas (60%) */}
+      {/* Center Art Canvas (60%) */}
       <main className="flex-[3] relative flex items-center justify-center overflow-hidden cursor-grab active:cursor-grabbing">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
@@ -295,15 +280,6 @@ export default function LandingPage() {
               "w-full max-w-[220px] aspect-square rounded-[4rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center transition-all duration-700",
               currentSlide.bg
             )}>
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 opacity-20"
-              >
-                <div className="absolute top-0 left-0 w-32 h-32 bg-white blur-3xl rounded-full" />
-                <div className="absolute bottom-0 right-0 w-40 h-40 bg-black/10 blur-3xl rounded-full" />
-              </motion.div>
-
               <div className="relative z-10">
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0 }}
@@ -341,7 +317,7 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      {/* 3. BOTTOM: Action Card (40%) */}
+      {/* Bottom Conversion Card (40%) */}
       <footer className="shrink-0 w-full bg-card rounded-t-[4rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-12 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
         <AnimatePresence mode="wait">
           <motion.div
@@ -349,7 +325,6 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
             className="flex flex-col gap-3 mb-12 w-full"
           >
             <h1 className="text-3xl font-black tracking-tighter text-foreground leading-tight">
@@ -362,40 +337,15 @@ export default function LandingPage() {
         </AnimatePresence>
 
         <div className="w-full max-w-[320px] flex flex-col gap-4">
-          <AnimatePresence mode="wait">
-            {index === SLIDES.length - 1 ? (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col gap-4 w-full"
-              >
-                <AuthModal 
-                  defaultTab="register"
-                  trigger={
-                    <Button className="w-full h-15 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all border-none group">
-                      Create Free Account
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  }
-                />
-                <div className="flex flex-col gap-1 items-center">
-                  <p className="text-[9px] font-black text-primary/60 uppercase tracking-[0.2em] flex items-center gap-2">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                    Trusted by 10M+ Indians
-                  </p>
-                </div>
-              </motion.div>
-            ) : (
-              <Button 
-                onClick={() => paginate(1)}
-                className="w-full h-15 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 active:scale-[0.98] flex items-center justify-center gap-2 border-none transition-all"
-              >
-                <span>Continue</span>
-                <ChevronRight size={14} className="ml-1 opacity-50" />
+          <AuthModal 
+            defaultTab="register"
+            trigger={
+              <Button className="w-full h-15 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all border-none group">
+                Create Free Account
+                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
-            )}
-          </AnimatePresence>
-
+            }
+          />
           <AuthModal 
             defaultTab="login"
             trigger={
@@ -404,6 +354,10 @@ export default function LandingPage() {
               </button>
             }
           />
+          <p className="text-[9px] font-black text-primary/60 uppercase tracking-[0.2em] flex items-center justify-center gap-2 mt-2">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            Trusted by 10M+ Indians
+          </p>
         </div>
       </footer>
     </div>
