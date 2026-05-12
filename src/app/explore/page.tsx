@@ -70,7 +70,7 @@ export default function ExplorePage({
   ];
 
   return (
-    <div className="flex flex-col gap-8 px-5 pt-6 pb-28 animate-in fade-in duration-700">
+    <div className="flex flex-col gap-8 px-5 pt-4 pb-32 animate-in fade-in duration-700">
       {/* Top Header */}
       <div className="flex items-center justify-between">
         <div className="flex flex-col">
@@ -93,13 +93,14 @@ export default function ExplorePage({
       </div>
 
       {/* Hero Slider */}
-      <section className="relative h-56 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-primary/10">
+      <section className="relative h-52 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-primary/10">
         <Image 
           src="https://picsum.photos/seed/hero/800/400" 
           alt="Quvora Promo" 
           fill 
           className="object-cover"
           priority
+          data-ai-hint="modern city"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
           <div className="flex items-center gap-2 mb-2">

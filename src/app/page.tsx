@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -23,9 +23,7 @@ import {
   Star,
   Shield,
   Sun,
-  Moon,
-  Smartphone,
-  CheckCircle2
+  Moon
 } from 'lucide-react';
 
 const SLIDES = [
@@ -200,7 +198,7 @@ export default function LandingPage() {
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none transition-colors duration-700">
       {/* Background Animated Constellation */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-40">
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-30">
         {BACKGROUND_ICONS.map((item, i) => (
           <motion.div
             key={i}
@@ -225,8 +223,8 @@ export default function LandingPage() {
         ))}
       </div>
 
-      {/* 1. TOP: Refined Brand & Theme Header */}
-      <header className="shrink-0 pt-8 px-8 z-50">
+      {/* 1. TOP: Refined Brand & Theme Header - Shifted UP */}
+      <header className="shrink-0 pt-3 px-8 z-50">
         <div className="flex justify-between items-center">
           {/* Left: Premium Brand Icon */}
           <div className="flex items-center gap-3">
@@ -293,7 +291,7 @@ export default function LandingPage() {
             className="w-full h-full flex items-center justify-center px-8"
           >
             <div className={cn(
-              "w-full max-w-[200px] aspect-square rounded-[3.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center transition-all duration-700",
+              "w-full max-w-[210px] aspect-square rounded-[3.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center transition-all duration-700",
               currentSlide.bg
             )}>
               <motion.div 
