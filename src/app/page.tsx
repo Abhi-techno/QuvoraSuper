@@ -316,8 +316,8 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      {/* Premium iOS Footer Card */}
-      <footer className="shrink-0 w-full glass-thick rounded-t-[4rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-12 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
+      {/* Compact Premium iOS Footer Card */}
+      <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-10 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -325,18 +325,18 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ type: "spring", stiffness: 100, damping: 20 }}
-            className="flex flex-col gap-3 mb-10 w-full"
+            className="flex flex-col gap-3 mb-8 w-full"
           >
-            <h1 className="text-4xl font-black tracking-tighter text-foreground leading-tight">
+            <h1 className="text-3xl font-black tracking-tighter text-foreground leading-tight">
               {currentSlide.title}
             </h1>
-            <p className="text-[11px] font-black text-muted-foreground/50 leading-relaxed uppercase tracking-[0.25em] max-w-[280px] mx-auto">
+            <p className="text-[10px] font-black text-muted-foreground/50 leading-relaxed uppercase tracking-[0.25em] max-w-[280px] mx-auto">
               {currentSlide.subtitle}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        <div className="w-full max-w-[320px] flex flex-col gap-6">
+        <div className="w-full max-w-[320px] flex flex-col gap-5">
           <AuthModal 
             defaultTab="register"
             trigger={
@@ -352,7 +352,7 @@ export default function LandingPage() {
           <AuthModal 
             defaultTab="login"
             trigger={
-              <button className="group flex flex-col items-center gap-1.5 py-2 transition-transform active:scale-95">
+              <button className="group flex flex-col items-center gap-1.5 py-1 transition-transform active:scale-95">
                 <p className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest transition-colors group-hover:text-muted-foreground/60">
                   Already a member?
                 </p>
@@ -363,7 +363,7 @@ export default function LandingPage() {
             }
           />
           
-          <div className="flex flex-col items-center gap-2 mt-2">
+          <div className="flex flex-col items-center gap-2 mt-1">
             <div className="flex items-center gap-2 text-[9px] font-black text-primary/60 uppercase tracking-[0.25em]">
               <div className="relative">
                 <ShieldCheck className="w-4 h-4" />
