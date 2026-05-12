@@ -20,7 +20,9 @@ import {
   ShieldCheck,
   Zap,
   Star,
-  Shield
+  Shield,
+  Sun,
+  Moon
 } from 'lucide-react';
 
 const SLIDES = [
@@ -107,7 +109,24 @@ export default function LandingPage() {
   const { user, loading } = useUser();
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [isDark, setIsDark] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    setIsDark(root.classList.contains('dark'));
+  }, []);
+
+  const toggleTheme = () => {
+    const root = window.document.documentElement;
+    if (isDark) {
+      root.classList.remove('dark');
+      setIsDark(false);
+    } else {
+      root.classList.add('dark');
+      setIsDark(true);
+    }
+  };
 
   useEffect(() => {
     if (!loading && user) {
@@ -177,7 +196,7 @@ export default function LandingPage() {
   const MainIcon = currentSlide.icon;
 
   return (
-    <div className="fixed inset-0 bg-[#FDF8F3] flex flex-col overflow-hidden select-none touch-none">
+    <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none transition-colors duration-500">
       {/* Background Animated Constellation */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         {BACKGROUND_ICONS.map((item, i) => (
@@ -209,7 +228,7 @@ export default function LandingPage() {
         <div className="flex justify-between items-center px-2 mb-4">
           <div className="flex gap-1.5 flex-1 max-w-[180px]">
             {SLIDES.map((_, i) => (
-              <div key={i} className="h-1 flex-1 bg-black/5 rounded-full overflow-hidden">
+              <div key={i} className="h-1 flex-1 bg-black/5 dark:bg-white/10 rounded-full overflow-hidden">
                 <motion.div
                   initial={false}
                   animate={{ 
@@ -221,12 +240,24 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
-          <button 
-            onClick={() => { setIndex(SLIDES.length - 1); startTimer(); }}
-            className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/50 active:scale-95 transition-transform"
+          <Button 
+            size="icon" 
+            variant="ghost" 
+            className="h-9 w-9 glass rounded-full" 
+            onClick={toggleTheme}
           >
-            Skip
-          </button>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={isDark ? 'dark' : 'light'}
+                initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                transition={{ duration: 0.2 }}
+              >
+                {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </motion.div>
+            </AnimatePresence>
+          </Button>
         </div>
       </header>
 
@@ -267,7 +298,7 @@ export default function LandingPage() {
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={springConfig}
-                  className="p-8 bg-white/40 backdrop-blur-2xl rounded-[2.5rem] shadow-2xl border border-white/50 flex items-center justify-center relative"
+                  className="p-8 bg-white/40 dark:bg-black/20 backdrop-blur-2xl rounded-[2.5rem] shadow-2xl border border-white/50 dark:border-white/10 flex items-center justify-center relative"
                 >
                   <MainIcon size={64} style={{ color: currentSlide.color }} className="drop-shadow-lg" />
                   
@@ -286,7 +317,7 @@ export default function LandingPage() {
                         delay: i * 0.5
                       }}
                       className={cn(
-                        "absolute w-10 h-10 bg-white/95 rounded-2xl shadow-lg flex items-center justify-center border border-white/50",
+                        "absolute w-10 h-10 bg-white/95 dark:bg-black/80 rounded-2xl shadow-lg flex items-center justify-center border border-white/50 dark:border-white/10",
                         i === 0 ? "-top-3 -left-3" : "-bottom-3 -right-3"
                       )}
                     >
@@ -307,7 +338,7 @@ export default function LandingPage() {
       </main>
 
       {/* 3. BOTTOM: Action Card (40%) */}
-      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-8 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50">
+      <footer className="shrink-0 w-full bg-card rounded-t-[3.5rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-8 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-500">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -317,7 +348,7 @@ export default function LandingPage() {
             transition={{ duration: 0.3 }}
             className="flex flex-col gap-3 mb-10 w-full"
           >
-            <h1 className="text-[28px] font-black tracking-tight text-[#0D1B2A] leading-tight">
+            <h1 className="text-[28px] font-black tracking-tight text-foreground leading-tight">
               {currentSlide.title}
             </h1>
             <p className="text-[14px] font-medium text-muted-foreground/60 leading-relaxed max-w-[280px] mx-auto">
