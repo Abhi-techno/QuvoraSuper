@@ -86,7 +86,7 @@ const AUTO_PLAY_INTERVAL = 6000;
 const SWIPE_THRESHOLD = 30;
 const VELOCITY_THRESHOLD = 400;
 
-const springConfig = {
+const iosSpring = {
   type: "spring",
   stiffness: 400,
   damping: 35,
@@ -180,7 +180,7 @@ export default function LandingPage() {
       scale: 1,
       filter: 'blur(0px)',
       transition: {
-        x: { type: 'spring', stiffness: 400, damping: 35, mass: 1 },
+        x: iosSpring,
         opacity: { duration: 0.35 },
         scale: { duration: 0.45, ease: "easeOut" },
         filter: { duration: 0.4 }
@@ -193,7 +193,7 @@ export default function LandingPage() {
       scale: 0.8,
       filter: 'blur(15px)',
       transition: {
-        x: { type: 'spring', stiffness: 400, damping: 35 },
+        x: iosSpring,
         opacity: { duration: 0.25 }
       }
     })
@@ -205,7 +205,7 @@ export default function LandingPage() {
   const MainIcon = currentSlide.icon;
 
   return (
-    <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] transition-colors duration-1000">
+    <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] gpu-accelerated">
       {/* Background Constellation - Living Atmosphere */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.2]">
         {bgIcons.map((item) => (
@@ -252,7 +252,7 @@ export default function LandingPage() {
                     width: i === index ? 24 : 6,
                     backgroundColor: i === index ? currentSlide.color : (isDark ? '#27272a' : '#e2e8f0')
                   }}
-                  transition={springConfig}
+                  transition={iosSpring}
                   className="h-1.5 rounded-full"
                 />
               ))}
@@ -270,7 +270,7 @@ export default function LandingPage() {
                   initial={{ y: 25, opacity: 0, scale: 0.5, rotate: -90 }}
                   animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
                   exit={{ y: -25, opacity: 0, scale: 0.5, rotate: 90 }}
-                  transition={springConfig}
+                  transition={iosSpring}
                   className="flex items-center justify-center w-full h-full"
                 >
                   {isDark ? (
@@ -369,7 +369,7 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      <footer className="shrink-0 w-full glass-thick rounded-t-[4.5rem] shadow-[0_-30px_80px_-20px_rgba(0,0,0,0.2)] pt-14 pb-[env(safe-area-inset-bottom,3rem)] px-10 text-center flex flex-col items-center z-50 transition-all duration-700">
+      <footer className="shrink-0 w-full glass-thick rounded-t-[4.5rem] shadow-[0_-30px_80px_-20px_rgba(0,0,0,0.2)] pt-14 pb-[env(safe-area-inset-bottom,3rem)] px-10 text-center flex flex-col items-center z-50">
         {/* iOS Handle Indicator */}
         <div className="w-12 h-1.5 bg-foreground/10 rounded-full mb-10" />
 

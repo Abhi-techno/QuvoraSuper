@@ -53,25 +53,22 @@
   * {
     @apply border-border;
     -webkit-tap-highlight-color: transparent;
-    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   body {
     @apply bg-background text-foreground font-body antialiased;
     min-height: 100svh;
     overflow-x: hidden;
-    touch-action: none;
+    touch-action: pan-y;
     overscroll-behavior: none;
     user-select: none;
     -webkit-user-select: none;
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
 }
 
 .glass {
   @apply backdrop-blur-[24px] saturate-[180%] border border-white/20;
   background-color: hsla(0, 0%, 100%, 0.5);
-  transform: translateZ(0);
 }
 
 .dark .glass {
@@ -82,7 +79,6 @@
 .glass-thick {
   @apply backdrop-blur-[40px] saturate-[170%] border border-white/30;
   background-color: hsla(0, 0%, 100%, 0.7);
-  transform: translateZ(0);
 }
 
 .dark .glass-thick {
@@ -94,27 +90,27 @@
   @apply fixed bottom-8 left-6 right-6 h-16 rounded-[2.5rem] glass-thick flex items-center justify-around px-4 z-50;
   box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.2);
   margin-bottom: env(safe-area-inset-bottom, 0px);
-  will-change: transform;
 }
 
 .ios-top-nav {
   @apply sticky top-0 w-full h-14 glass flex items-center px-4 z-40;
   padding-top: env(safe-area-inset-top, 0px);
-  will-change: transform;
 }
 
 .post-ad-fab {
   @apply w-12 h-12 rounded-[1.5rem] bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/30;
-  will-change: transform;
 }
 
 ::-webkit-scrollbar {
   display: none;
 }
 
-* {
+.gpu-accelerated {
   transform: translateZ(0);
-  will-change: transform, opacity;
   backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+* {
   -webkit-font-smoothing: antialiased;
 }
