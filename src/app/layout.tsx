@@ -8,16 +8,18 @@ import React from 'react';
 export const metadata: Metadata = {
   title: 'Quvora',
   description: "India's first AI-powered superapp.",
-  icons: {
-    icon: '/icons/favicon.ico',
-    apple: '/icons/apple-touch-icon.png',
-  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
     title: 'Quvora',
   },
-  // Manifest is disconnected to avoid workstation proxy CORS errors during development.
+  formatDetection: {
+    telephone: false,
+  },
+  icons: {
+    icon: '/icons/icon-192.png',
+    apple: '/icons/icon-192.png',
+  },
 };
 
 export const viewport: Viewport = {
@@ -46,9 +48,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body className="antialiased selection:bg-primary selection:text-white overflow-hidden bg-[#FDF8F3]">
+      <body className="antialiased selection:bg-primary selection:text-white overflow-hidden bg-[#FDF8F3] touch-none">
         <FirebaseClientProvider>
           <AppNav>
             <main className="relative h-svh w-full overflow-hidden">

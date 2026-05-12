@@ -196,7 +196,7 @@ export default function LandingPage() {
   const MainIcon = currentSlide.icon;
 
   return (
-    <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none transition-colors duration-700">
+    <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none transition-colors duration-700 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
       {/* Background Animated Constellation */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-30">
         {BACKGROUND_ICONS.map((item, i) => (
@@ -223,7 +223,7 @@ export default function LandingPage() {
         ))}
       </div>
 
-      {/* 1. TOP: Refined Brand & Theme Header - Shifted UP */}
+      {/* 1. TOP: Refined Brand & Theme Header */}
       <header className="shrink-0 pt-3 px-8 z-50">
         <div className="flex justify-between items-center">
           {/* Left: Premium Brand Icon */}
@@ -340,7 +340,7 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      {/* 3. BOTTOM: Premium Conversion Footer (40%) */}
+      {/* 3. BOTTOM: Action Card (40%) */}
       <footer className="shrink-0 w-full bg-card rounded-t-[3.5rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-10 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
         <AnimatePresence mode="wait">
           <motion.div
