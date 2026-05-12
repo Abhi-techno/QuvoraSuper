@@ -23,7 +23,7 @@
     --border: 0 0% 92%;
     --input: 0 0% 92%;
     --ring: 258 90% 66%;
-    --radius: 2rem;
+    --radius: 2.5rem;
   }
 
   .dark {
@@ -66,8 +66,8 @@
 }
 
 .glass {
-  @apply backdrop-blur-[30px] saturate-[180%] border border-white/20;
-  background-color: hsla(0, 0%, 100%, 0.7);
+  @apply backdrop-blur-[24px] saturate-[180%] border border-white/20;
+  background-color: hsla(0, 0%, 100%, 0.6);
 }
 
 .dark .glass {
@@ -76,8 +76,8 @@
 }
 
 .glass-thick {
-  @apply backdrop-blur-[40px] saturate-[160%] border border-white/30;
-  background-color: hsla(0, 0%, 100%, 0.8);
+  @apply backdrop-blur-[32px] saturate-[160%] border border-white/30;
+  background-color: hsla(0, 0%, 100%, 0.75);
 }
 
 .dark .glass-thick {
@@ -96,9 +96,22 @@
 }
 
 .post-ad-fab {
-  @apply w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-white transition-transform active:scale-90 shadow-lg shadow-primary/20;
+  @apply w-12 h-12 rounded-[1.5rem] bg-primary flex items-center justify-center text-white transition-transform active:scale-90 shadow-lg shadow-primary/20;
 }
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 8s ease-in-out infinite 1s;
 }

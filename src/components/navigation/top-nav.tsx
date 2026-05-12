@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { ChevronLeft, Bell, Sun, Moon } from 'lucide-react';
+import { ChevronLeft, Bell, Sun, Moon, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
@@ -36,6 +36,8 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
     if (pathname === '/chat') return 'chat-list';
     if (pathname === '/me') return 'profile';
     if (pathname.startsWith('/post')) return 'post';
+    if (pathname === '/notifications') return 'notifications';
+    if (pathname === '/saved') return 'saved';
     return 'default';
   };
 
@@ -44,24 +46,24 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
   return (
     <header className={cn(
       "ios-top-nav sticky top-0 w-full z-50 transition-all duration-300",
-      isScrolled ? "bg-background/80 glass-thick shadow-sm" : "bg-transparent"
+      isScrolled ? "bg-background/80 glass-thick shadow-sm" : "bg-transparent border-none"
     )}>
       <div className="flex items-center justify-between w-full px-2">
         {context === 'home' ? (
           <>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-black/5 overflow-hidden">
-                <Image src="/icons/icon-192.png" alt="Quvora" width={32} height={32} />
+              <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-black/5 overflow-hidden border border-white/20">
+                <Image src="/icons/icon-192.png" alt="Quvora" width={28} height={28} />
               </div>
-              <h1 className="text-sm font-black tracking-tighter uppercase">Quvora</h1>
+              <h1 className="text-sm font-black tracking-tighter uppercase text-primary">Quvora</h1>
             </div>
-            <div className="flex items-center gap-1.5">
-              <Button size="icon" variant="ghost" className="h-9 w-9 glass rounded-full" onClick={toggleTheme}>
-                {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            <div className="flex items-center gap-2">
+              <Button size="icon" variant="ghost" className="h-9 w-9 glass rounded-full border-none shadow-sm" onClick={toggleTheme}>
+                {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
               </Button>
               <Link href="/notifications">
-                <Button size="icon" variant="ghost" className="h-9 w-9 glass rounded-full relative">
-                  <Bell className="w-4 h-4" />
+                <Button size="icon" variant="ghost" className="h-9 w-9 glass rounded-full border-none shadow-sm relative">
+                  <Bell className="w-4 h-4 text-primary" />
                   <span className="absolute top-2.5 right-2.5 w-1.5 h-1.5 bg-red-500 rounded-full border-2 border-white" />
                 </Button>
               </Link>
@@ -69,16 +71,25 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
           </>
         ) : (
           <>
-            <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full h-9 w-9">
+            <Button variant="ghost" size="icon" onClick={() => router.back()} className="glass rounded-full h-9 w-9 border-none shadow-sm">
               <ChevronLeft className="w-5 h-5" />
             </Button>
-            <h2 className="text-[10px] font-black uppercase tracking-widest">
+            <h2 className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground/70">
               {context === 'browse' ? 'Browse' : 
                context === 'chat-list' ? 'Messages' : 
                context === 'profile' ? 'Profile' : 
-               context === 'post' ? 'Create Ad' : 'Quvora'}
+               context === 'post' ? 'Create Ad' : 
+               context === 'notifications' ? 'Alerts' :
+               context === 'saved' ? 'Saved' : 'Quvora'}
             </h2>
-            <div className="w-9" />
+            <div className="flex gap-2">
+               {context === 'browse' && (
+                 <Button variant="ghost" size="icon" className="glass rounded-full h-9 w-9 border-none shadow-sm">
+                   <Search className="w-4 h-4" />
+                 </Button>
+               )}
+               <div className="w-9" />
+            </div>
           </>
         )}
       </div>

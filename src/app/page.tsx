@@ -198,7 +198,7 @@ export default function LandingPage() {
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none transition-colors duration-500">
       {/* Background Animated Constellation */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-50">
         {BACKGROUND_ICONS.map((item, i) => (
           <motion.div
             key={i}
@@ -223,12 +223,12 @@ export default function LandingPage() {
         ))}
       </div>
 
-      {/* 1. TOP: Navigation & Progress */}
-      <header className="shrink-0 pt-6 px-6 z-50">
+      {/* 1. TOP: Progress & Theme */}
+      <header className="shrink-0 pt-8 px-8 z-50">
         <div className="flex justify-between items-center px-2 mb-4">
-          <div className="flex gap-1.5 flex-1 max-w-[180px]">
+          <div className="flex gap-2 flex-1 max-w-[200px]">
             {SLIDES.map((_, i) => (
-              <div key={i} className="h-1 flex-1 bg-black/5 dark:bg-white/10 rounded-full overflow-hidden">
+              <div key={i} className="h-1.5 flex-1 bg-black/5 dark:bg-white/10 rounded-full overflow-hidden">
                 <motion.div
                   initial={false}
                   animate={{ 
@@ -243,7 +243,7 @@ export default function LandingPage() {
           <Button 
             size="icon" 
             variant="ghost" 
-            className="h-9 w-9 glass rounded-full" 
+            className="h-10 w-10 glass rounded-full border-none shadow-sm ml-4" 
             onClick={toggleTheme}
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -254,7 +254,7 @@ export default function LandingPage() {
                 exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
                 transition={{ duration: 0.2 }}
               >
-                {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
               </motion.div>
             </AnimatePresence>
           </Button>
@@ -276,10 +276,10 @@ export default function LandingPage() {
             dragElastic={0.2}
             onDragEnd={handleDragEnd}
             className="w-full h-full flex items-center justify-center px-8"
-            style={{ transform: 'translateZ(0)' }} // GPU Acceleration
+            style={{ transform: 'translateZ(0)' }}
           >
             <div className={cn(
-              "w-full max-w-[220px] aspect-square rounded-[3.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center transition-colors duration-700",
+              "w-full max-w-[200px] aspect-square rounded-[3.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center transition-all duration-700",
               currentSlide.bg
             )}>
               {/* Internal Liquid Motion */}
@@ -298,9 +298,9 @@ export default function LandingPage() {
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={springConfig}
-                  className="p-8 bg-white/40 dark:bg-black/20 backdrop-blur-2xl rounded-[2.5rem] shadow-2xl border border-white/50 dark:border-white/10 flex items-center justify-center relative"
+                  className="p-8 glass rounded-[2.5rem] border-none shadow-2xl flex items-center justify-center relative"
                 >
-                  <MainIcon size={64} style={{ color: currentSlide.color }} className="drop-shadow-lg" />
+                  <MainIcon size={56} style={{ color: currentSlide.color }} className="drop-shadow-lg" />
                   
                   {/* Floating Badges */}
                   {currentSlide.badges.map((BadgeIcon, i) => (
@@ -317,8 +317,8 @@ export default function LandingPage() {
                         delay: i * 0.5
                       }}
                       className={cn(
-                        "absolute w-10 h-10 bg-white/95 dark:bg-black/80 rounded-2xl shadow-lg flex items-center justify-center border border-white/50 dark:border-white/10",
-                        i === 0 ? "-top-3 -left-3" : "-bottom-3 -right-3"
+                        "absolute w-10 h-10 glass rounded-2xl border-none shadow-lg flex items-center justify-center",
+                        i === 0 ? "-top-4 -left-4" : "-bottom-4 -right-4"
                       )}
                     >
                       <BadgeIcon size={20} style={{ color: currentSlide.color }} />
@@ -331,14 +331,14 @@ export default function LandingPage() {
         </AnimatePresence>
 
         {/* Peek Indicators */}
-        <div className="absolute inset-y-0 left-2 right-2 flex items-center justify-between pointer-events-none opacity-20">
+        <div className="absolute inset-y-0 left-4 right-4 flex items-center justify-between pointer-events-none opacity-10">
           <ChevronRight className="w-8 h-8 rotate-180" />
           <ChevronRight className="w-8 h-8" />
         </div>
       </main>
 
       {/* 3. BOTTOM: Action Card (40%) */}
-      <footer className="shrink-0 w-full bg-card rounded-t-[3.5rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-8 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-500">
+      <footer className="shrink-0 w-full bg-card rounded-t-[3.5rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-10 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-500">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -348,10 +348,10 @@ export default function LandingPage() {
             transition={{ duration: 0.3 }}
             className="flex flex-col gap-3 mb-10 w-full"
           >
-            <h1 className="text-[28px] font-black tracking-tight text-foreground leading-tight">
+            <h1 className="text-[28px] font-black tracking-tighter text-foreground leading-tight">
               {currentSlide.title}
             </h1>
-            <p className="text-[14px] font-medium text-muted-foreground/60 leading-relaxed max-w-[280px] mx-auto">
+            <p className="text-[14px] font-bold text-muted-foreground/60 leading-relaxed max-w-[280px] mx-auto uppercase tracking-wider text-[10px]">
               {currentSlide.subtitle}
             </p>
           </motion.div>
@@ -368,15 +368,15 @@ export default function LandingPage() {
                 <AuthModal 
                   defaultTab="register"
                   trigger={
-                    <Button className="w-full h-14 rounded-2xl font-black text-sm bg-gradient-to-r from-[#1A6AFF] to-[#3B82F6] text-white shadow-xl shadow-primary/20 active:scale-[0.98] group">
-                      CREATE FREE ACCOUNT
+                    <Button className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 active:scale-[0.98] group border-none">
+                      Create Free Account
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   }
                 />
                 <div className="flex flex-col gap-1 items-center">
-                  <p className="text-[10px] font-black text-primary/60 uppercase tracking-widest flex items-center gap-1.5">
-                    <ShieldCheck className="w-3 h-3" />
+                  <p className="text-[9px] font-black text-primary/60 uppercase tracking-[0.2em] flex items-center gap-2">
+                    <ShieldCheck className="w-3.5 h-3.5" />
                     Trusted by 10M+ Indians
                   </p>
                 </div>
@@ -384,13 +384,10 @@ export default function LandingPage() {
             ) : (
               <Button 
                 onClick={() => paginate(1)}
-                className="w-full h-14 rounded-2xl font-black text-sm bg-[#1A6AFF] text-white shadow-xl shadow-primary/20 active:scale-[0.98] flex items-center justify-center gap-2"
+                className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 active:scale-[0.98] flex items-center justify-center gap-2 border-none"
               >
-                <span>GET STARTED</span>
-                <div className="flex -space-x-1.5 opacity-40">
-                  <ChevronRight size={14} />
-                  <ChevronRight size={14} />
-                </div>
+                <span>Continue</span>
+                <ChevronRight size={14} className="ml-1 opacity-50" />
               </Button>
             )}
           </AnimatePresence>
@@ -398,8 +395,8 @@ export default function LandingPage() {
           <AuthModal 
             defaultTab="login"
             trigger={
-              <button className="text-[11px] font-bold text-muted-foreground/60 hover:text-primary transition-colors py-2">
-                Already have an account? <span className="text-[#1A6AFF] font-black underline underline-offset-4 decoration-2">Sign in</span>
+              <button className="text-[10px] font-black text-muted-foreground/50 hover:text-primary transition-colors py-2 uppercase tracking-widest">
+                Already member? <span className="text-primary underline underline-offset-4 decoration-2 ml-1">Sign in</span>
               </button>
             }
           />
