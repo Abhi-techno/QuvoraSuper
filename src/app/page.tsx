@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,6 @@ import {
   Star,
   Shield
 } from 'lucide-react';
-import Image from 'next/image';
 
 const SLIDES = [
   {
