@@ -19,7 +19,7 @@ const SheetOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
-      "fixed inset-0 z-50 bg-black/60 backdrop-blur-[4px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 transform-gpu",
+      "fixed inset-0 z-50 bg-black/40 backdrop-blur-[2px] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 transform-gpu",
       className
     )}
     {...props}
@@ -29,16 +29,16 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = "SheetOverlay"
 
 const sheetVariants = cva(
-  "fixed z-50 gap-4 bg-background shadow-2xl transition-all ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
+  "fixed z-50 gap-4 bg-background shadow-2xl transition-none transform-gpu",
   {
     variants: {
       side: {
-        top: "inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
+        top: "inset-x-0 top-0 border-b",
         bottom:
-          "inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom rounded-t-[3rem]",
-        left: "inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
+          "inset-x-0 bottom-0 rounded-t-[3rem] border-t border-white/10",
+        left: "inset-y-0 left-0 h-full w-3/4 border-r sm:max-w-sm",
         right:
-          "inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
+          "inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm",
       },
     },
     defaultVariants: {
@@ -56,7 +56,7 @@ const SheetContent = React.forwardRef<
   SheetContentProps
 >(({ side = "bottom", className, children, ...props }, ref) => {
   const y = useMotionValue(0)
-  const springY = useSpring(y, { stiffness: 400, damping: 40, mass: 1 })
+  const springY = useSpring(y, { stiffness: 420, damping: 40, mass: 1 })
   const opacity = useTransform(y, [0, 200], [1, 0])
 
   const handleDragEnd = (_: any, info: any) => {
@@ -78,30 +78,32 @@ const SheetContent = React.forwardRef<
         className={cn(sheetVariants({ side }), "overflow-hidden transform-gpu will-change-transform h-fit max-h-[92vh]", className)}
         {...props}
       >
-        {side === "bottom" ? (
-          <motion.div
-            drag="y"
-            dragConstraints={{ top: 0, bottom: 0 }}
-            dragElastic={{ top: 0, bottom: 0.5 }}
-            onDragEnd={handleDragEnd}
-            style={{ y: springY, opacity }}
-            className="h-full w-full flex flex-col relative touch-pan-y"
-          >
-            <div className="flex flex-col items-center pt-3 pb-2 shrink-0 cursor-grab active:cursor-grabbing">
-              <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-30" />
+        <motion.div
+          initial={{ y: "100%" }}
+          animate={{ y: 0 }}
+          exit={{ y: "100%" }}
+          transition={{ type: "spring", stiffness: 420, damping: 40, mass: 1 }}
+          drag={side === "bottom" ? "y" : false}
+          dragConstraints={{ top: 0, bottom: 0 }}
+          dragElastic={{ top: 0, bottom: 0.5 }}
+          onDragEnd={handleDragEnd}
+          style={{ y: springY, opacity, transformStyle: "preserve-3d" }}
+          className="h-full w-full flex flex-col relative touch-pan-y gpu-accelerated"
+        >
+          {side === "bottom" && (
+            <div className="flex flex-col items-center pt-4 pb-2 shrink-0 cursor-grab active:cursor-grabbing">
+              <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-20" />
             </div>
-            <div className="flex-1 overflow-y-auto overscroll-contain px-1 pb-[calc(2rem+env(safe-area-inset-bottom))]">
-              {children}
-            </div>
-            <SheetPrimitive.Close className="hidden" data-sheet-close />
-          </motion.div>
-        ) : (
-          children
-        )}
-        <SheetPrimitive.Close className="absolute right-6 top-6 rounded-full glass p-2 opacity-70 transition-all hover:opacity-100 focus:outline-none active:scale-90 z-50 border-none">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </SheetPrimitive.Close>
+          )}
+          <div className="flex-1 overflow-y-auto overscroll-contain px-1 pb-[calc(2rem+env(safe-area-inset-bottom))]">
+            {children}
+          </div>
+          <SheetPrimitive.Close className="hidden" data-sheet-close />
+          <SheetPrimitive.Close className="absolute right-6 top-6 rounded-full glass p-2 opacity-70 transition-all hover:opacity-100 focus:outline-none active:scale-90 z-50 border-none shadow-sm">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </SheetPrimitive.Close>
+        </motion.div>
       </SheetPrimitive.Content>
     </SheetPortal>
   )

@@ -139,7 +139,7 @@ const SLIDES = [
 const AUTO_PLAY_INTERVAL = 5000;
 const iosSpring = {
   type: "spring",
-  stiffness: 400,
+  stiffness: 420,
   damping: 40,
   mass: 1
 };

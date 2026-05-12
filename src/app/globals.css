@@ -67,27 +67,36 @@
 }
 
 .glass {
-  @apply backdrop-blur-[16px] saturate-[180%] border border-white/20 transform-gpu;
-  background-color: hsla(0, 0%, 100%, 0.65);
-  will-change: backdrop-filter, transform;
+  @apply backdrop-blur-[12px] saturate-[160%] border border-white/20 transform-gpu;
+  background-color: hsla(0, 0%, 100%, 0.6);
+  will-change: transform, opacity;
   backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .dark .glass {
-  background-color: hsla(240, 10%, 10%, 0.5);
+  background-color: hsla(240, 10%, 10%, 0.4);
   @apply border-white/10;
 }
 
 .glass-thick {
-  @apply backdrop-blur-[32px] saturate-[190%] border border-white/30 transform-gpu;
-  background-color: hsla(0, 0%, 100%, 0.88);
-  will-change: backdrop-filter, transform;
+  @apply backdrop-blur-[24px] saturate-[170%] border border-white/30 transform-gpu;
+  background-color: hsla(0, 0%, 100%, 0.8);
+  will-change: transform, opacity;
   backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .dark .glass-thick {
-  background-color: hsla(240, 10%, 5%, 0.75);
+  background-color: hsla(240, 10%, 5%, 0.7);
   @apply border-white/10;
+}
+
+.gpu-accelerated {
+  transform: translate3d(0,0,0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
 }
 
 .ios-tab-bar {
@@ -102,13 +111,6 @@
   padding-top: env(safe-area-inset-top, 1rem);
   height: calc(64px + env(safe-area-inset-top, 1rem));
   transform: translateZ(0);
-}
-
-.gpu-accelerated {
-  transform: translate3d(0,0,0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-  will-change: transform, opacity;
 }
 
 ::-webkit-scrollbar {
