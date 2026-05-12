@@ -84,6 +84,7 @@ const SLIDES = [
 
 const AUTO_PLAY_INTERVAL = 6000;
 const SWIPE_THRESHOLD = 50;
+const VELOCITY_THRESHOLD = 500;
 
 const springConfig = {
   type: "spring",
@@ -155,9 +156,12 @@ export default function LandingPage() {
   };
 
   const handleDragEnd = (event: any, info: PanInfo) => {
-    if (info.offset.x < -SWIPE_THRESHOLD) {
+    const swipe = info.offset.x;
+    const velocity = info.velocity.x;
+
+    if (swipe < -SWIPE_THRESHOLD || velocity < -VELOCITY_THRESHOLD) {
       paginate(1);
-    } else if (info.offset.x > SWIPE_THRESHOLD) {
+    } else if (swipe > SWIPE_THRESHOLD || velocity > VELOCITY_THRESHOLD) {
       paginate(-1);
     }
   };
@@ -166,25 +170,30 @@ export default function LandingPage() {
     enter: (direction: number) => ({
       x: direction > 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.9
+      scale: 0.92,
+      filter: 'blur(10px)'
     }),
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
       scale: 1,
+      filter: 'blur(0px)',
       transition: {
-        x: { type: 'spring', stiffness: 350, damping: 30 },
-        opacity: { duration: 0.4 }
+        x: { type: 'spring', stiffness: 350, damping: 32 },
+        opacity: { duration: 0.4 },
+        scale: { duration: 0.4 },
+        filter: { duration: 0.4 }
       }
     },
     exit: (direction: number) => ({
       zIndex: 0,
       x: direction < 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.9,
+      scale: 0.92,
+      filter: 'blur(10px)',
       transition: {
-        x: { type: 'spring', stiffness: 350, damping: 30 },
+        x: { type: 'spring', stiffness: 350, damping: 32 },
         opacity: { duration: 0.4 }
       }
     })
@@ -197,7 +206,7 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none transition-colors duration-700 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
-      {/* Dynamic Background Icon Field */}
+      {/* Dynamic Background Icon Field - GPU Accelerated */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.12]">
         {bgIcons.map((item) => (
           <motion.div
@@ -272,7 +281,7 @@ export default function LandingPage() {
             exit="exit"
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.2}
+            dragElastic={0.4}
             onDragEnd={handleDragEnd}
             className="w-full h-full flex items-center justify-center px-8"
           >
@@ -317,8 +326,8 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      {/* Refined Compact Footer Conversion Card */}
-      <footer className="shrink-0 w-full glass-thick rounded-t-[4rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-10 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
+      {/* Refined Compact Footer Conversion Card - iOS 144Hz Smooth */}
+      <footer className="shrink-0 w-full glass-thick rounded-t-[4rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-10 pb-[env(safe-area-inset-bottom,2.5rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -353,14 +362,14 @@ export default function LandingPage() {
           <AuthModal 
             defaultTab="login"
             trigger={
-              <button className="group flex flex-col items-center gap-1 py-1 transition-transform active:scale-95">
+              <motion.button whileTap={{ scale: 0.96 }} className="group flex flex-col items-center gap-1 py-1 transition-transform">
                 <p className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest transition-colors group-hover:text-muted-foreground/60">
                   Already a member?
                 </p>
                 <span className="text-xs font-black text-primary uppercase tracking-[0.15em] border-b-2 border-primary/20 group-hover:border-primary transition-all">
                   Sign in to Quvora
                 </span>
-              </button>
+              </motion.button>
             }
           />
           

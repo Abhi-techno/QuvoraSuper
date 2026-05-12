@@ -8,6 +8,13 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    // This allows HMR and dev resources to work across cloud workstation origins
+    allowedDevOrigins: [
+      '6000-firebase-studio-1778421706854.cluster-a6zx3cwnb5hnuwbgyxmofxpkfe.cloudworkstations.dev',
+      '*.cloudworkstations.dev'
+    ]
+  },
   images: {
     remotePatterns: [
       {
