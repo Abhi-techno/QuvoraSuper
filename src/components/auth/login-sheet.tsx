@@ -72,7 +72,7 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
         side="bottom" 
         className="h-fit max-h-[80vh] glass-thick p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
       >
-        <div className="max-w-md mx-auto flex flex-col px-6 pb-12">
+        <div className="max-w-md mx-auto flex flex-col px-6 pb-8">
           <div className="flex flex-col items-center mb-6 text-center">
             <div className="w-14 h-14 rounded-[1.4rem] bg-white flex items-center justify-center mb-3 shadow-xl border border-black/5 overflow-hidden">
               <Image src="/icons/icon-192.png" alt="Quvora" width={34} height={34} priority />
@@ -95,6 +95,7 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
                     className="h-13 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
                     placeholder="name@email.com" 
                     type="email" 
+                    autoComplete="email"
                     value={email} 
                     onChange={e => setEmail(e.target.value)} 
                     required 
@@ -109,6 +110,7 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
                     className="h-13 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
                     placeholder="••••••••" 
                     type={showPassword ? "text" : "password"} 
+                    autoComplete="current-password"
                     value={password} 
                     onChange={e => setPassword(e.target.value)} 
                     required 

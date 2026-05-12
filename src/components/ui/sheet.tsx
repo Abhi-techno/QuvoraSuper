@@ -29,7 +29,7 @@ const SheetOverlay = React.forwardRef<
     ref={ref}
   />
 ))
-SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
+SheetOverlay.displayName = "SheetOverlay"
 
 const sheetVariants = cva(
   "fixed z-50 gap-4 bg-background shadow-lg transition-all ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500",
@@ -59,10 +59,10 @@ const SheetContent = React.forwardRef<
   SheetContentProps
 >(({ side = "right", className, children, ...props }, ref) => {
   const y = useMotionValue(0)
-  const springY = useSpring(y, { stiffness: 400, damping: 40 })
+  const springY = useSpring(y, { stiffness: 400, damping: 40, mass: 1 })
 
   const handleDragEnd = (_: any, info: any) => {
-    // If dragged down significantly or with high velocity, close the sheet
+    // Native-feel velocity-aware dismissal
     if (side === "bottom" && (info.offset.y > 100 || info.velocity.y > 500)) {
       const closeButton = document.querySelector('[data-sheet-close]') as HTMLButtonElement
       closeButton?.click()
@@ -76,14 +76,15 @@ const SheetContent = React.forwardRef<
       <SheetOverlay />
       <SheetPrimitive.Content
         ref={ref}
-        className={cn(sheetVariants({ side }), "overflow-hidden transform-gpu", className)}
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className={cn(sheetVariants({ side }), "overflow-hidden transform-gpu will-change-transform", className)}
         {...props}
       >
         {side === "bottom" ? (
           <motion.div
             drag="y"
             dragConstraints={{ top: 0, bottom: 0 }}
-            dragElastic={{ top: 0, bottom: 0.7 }}
+            dragElastic={{ top: 0, bottom: 0.5 }}
             onDragEnd={handleDragEnd}
             style={{ y: springY }}
             className="h-full w-full flex flex-col relative touch-pan-y"
@@ -92,7 +93,7 @@ const SheetContent = React.forwardRef<
             <div className="flex flex-col items-center pt-3 pb-4 shrink-0 cursor-grab active:cursor-grabbing">
               <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-30" />
             </div>
-            <div className="flex-1 overflow-y-auto overscroll-contain px-1">
+            <div className="flex-1 overflow-y-auto overscroll-contain px-1 pb-[env(safe-area-inset-bottom)]">
               {children}
             </div>
             {/* Hidden Close for Gesture Trigger */}

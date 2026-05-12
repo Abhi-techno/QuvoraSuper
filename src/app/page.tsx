@@ -50,7 +50,7 @@ const SLIDES = [
     subtitle: 'Discover nearby products, vehicles, rentals, and verified deals instantly.',
     icon: Store,
     color: '#1A6AFF',
-    bg: 'from-blue-500/20 to-transparent',
+    bg: 'from-blue-500/10 to-transparent',
     chips: [
       { label: 'Mobiles', icon: Smartphone },
       { label: 'Cars', icon: Car },
@@ -65,7 +65,7 @@ const SLIDES = [
     subtitle: 'Get intelligent recommendations, guidance, and personalized opportunities.',
     icon: Bot,
     color: '#FF6B2B',
-    bg: 'from-orange-500/20 to-transparent',
+    bg: 'from-orange-500/10 to-transparent',
     chips: [
       { label: 'Smart Recommendations', icon: Target },
       { label: 'Career Guidance', icon: Briefcase },
@@ -80,7 +80,7 @@ const SLIDES = [
     subtitle: 'Chat securely with buyers, sellers, employers, and mentors in real time.',
     icon: ShieldCheck,
     color: '#10B981',
-    bg: 'from-emerald-500/20 to-transparent',
+    bg: 'from-emerald-500/10 to-transparent',
     chips: [
       { label: 'Secure Messaging', icon: Lock },
       { label: 'Verified Profiles', icon: UserCheck },
@@ -95,7 +95,7 @@ const SLIDES = [
     subtitle: 'Experience Quvora in your preferred language with AI-powered assistance.',
     icon: Languages,
     color: '#7C3AED',
-    bg: 'from-purple-500/20 to-transparent',
+    bg: 'from-purple-500/10 to-transparent',
     chips: [
       { label: 'Regional Languages', icon: Languages },
       { label: 'Voice Support', icon: Mic },
@@ -110,7 +110,7 @@ const SLIDES = [
     subtitle: 'Explore jobs, freelancing, mentorship, and skill-building opportunities.',
     icon: GraduationCap,
     color: '#F59E0B',
-    bg: 'from-amber-500/20 to-transparent',
+    bg: 'from-amber-500/10 to-transparent',
     chips: [
       { label: 'Jobs', icon: Briefcase },
       { label: 'Freelancing', icon: Rocket },
@@ -125,7 +125,7 @@ const SLIDES = [
     subtitle: 'India’s AI-powered superapp for opportunities, growth, and connections.',
     icon: Globe,
     color: '#EC4899',
-    bg: 'from-pink-500/20 to-transparent',
+    bg: 'from-pink-500/10 to-transparent',
     chips: [
       { label: 'Marketplace', icon: ShoppingBag },
       { label: 'AI Powered', icon: Bot },
@@ -139,8 +139,8 @@ const SLIDES = [
 const AUTO_PLAY_INTERVAL = 5000;
 const iosSpring = {
   type: "spring",
-  stiffness: 420,
-  damping: 30,
+  stiffness: 400,
+  damping: 40,
   mass: 1
 };
 
@@ -193,17 +193,17 @@ export default function LandingPage() {
   return (
     <div className="h-svh w-full bg-background flex flex-col overflow-hidden select-none touch-none gpu-accelerated relative">
       
-      {/* Cinematic Background Mesh Layer */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none transition-all duration-1000">
+      {/* Optimized Background Mesh Layer */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-30 dark:opacity-60 transform-gpu">
         <motion.div 
-          animate={{ scale: [1, 1.2, 1], x: [0, 50, 0], y: [0, -40, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-[15%] -left-[15%] w-[90%] h-[90%] rounded-full opacity-30 dark:opacity-60 blur-[140px] bg-primary transform-gpu"
+          animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-[10%] -left-[10%] w-[80%] h-[80%] rounded-full blur-[80px] bg-primary/20 transform-gpu"
         />
         <motion.div 
-          animate={{ scale: [1.2, 1, 1.2], x: [0, -50, 0], y: [0, 40, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-[15%] -right-[15%] w-[90%] h-[90%] rounded-full opacity-30 dark:opacity-60 blur-[140px] bg-accent transform-gpu"
+          animate={{ x: [0, -30, 0], y: [0, 20, 0] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+          className="absolute -bottom-[10%] -right-[10%] w-[80%] h-[80%] rounded-full blur-[80px] bg-accent/20 transform-gpu"
         />
       </div>
 
@@ -279,9 +279,9 @@ export default function LandingPage() {
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, scale: 0.85, filter: 'blur(15px)' }}
+            initial={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, scale: 1.15, filter: 'blur(15px)' }}
+            exit={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
             transition={iosSpring}
             className="w-full h-full flex items-center justify-center px-8 relative"
           >
@@ -289,21 +289,20 @@ export default function LandingPage() {
               {/* Main Icon Orb */}
               <motion.div 
                 animate={{ 
-                  y: [0, -20, 0],
-                  rotate: [0, 3, -3, 0]
+                  y: [0, -15, 0],
                 }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 className={cn(
-                  "w-[75%] h-[75%] rounded-[4.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-0.5 transition-all duration-1000",
+                  "w-[70%] h-[70%] rounded-[4.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-0.5 transform-gpu",
                   currentSlide.bg
                 )}
               >
                 <div className="absolute inset-0 glass-thick rounded-[4.4rem] border-none flex items-center justify-center">
                    <motion.div
-                      animate={{ scale: [1, 1.12, 1] }}
+                      animate={{ scale: [1, 1.1, 1] }}
                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                    >
-                     <MainIcon size={96} style={{ color: currentSlide.color }} className="drop-shadow-2xl" />
+                     <MainIcon size={80} style={{ color: currentSlide.color }} className="drop-shadow-2xl" />
                    </motion.div>
                 </div>
               </motion.div>
@@ -311,7 +310,7 @@ export default function LandingPage() {
               {/* Feature Chips Constellation */}
               {currentSlide.chips.map((chip, i) => {
                 const angle = (i / currentSlide.chips.length) * Math.PI * 2;
-                const radius = 145;
+                const radius = 135;
                 const x = Math.cos(angle) * radius;
                 const y = Math.sin(angle) * radius;
 
@@ -323,16 +322,16 @@ export default function LandingPage() {
                       opacity: 1, 
                       scale: 1, 
                       x, 
-                      y: y + (Math.sin(Date.now() / 1200 + i) * 12)
+                      y: y + (Math.sin(Date.now() / 1500 + i) * 10)
                     }}
                     transition={{
                       ...iosSpring,
-                      delay: i * 0.08
+                      delay: i * 0.05
                     }}
-                    className="absolute glass-thick rounded-2xl px-3.5 py-2 flex items-center gap-2.5 border-none shadow-xl z-20 pointer-events-none"
+                    className="absolute glass-thick rounded-2xl px-3 py-1.5 flex items-center gap-2 border-none shadow-lg z-20 pointer-events-none"
                   >
-                    <chip.icon size={15} style={{ color: currentSlide.color }} />
-                    <span className="text-[10px] font-black uppercase tracking-tight text-foreground/85">{chip.label}</span>
+                    <chip.icon size={13} style={{ color: currentSlide.color }} />
+                    <span className="text-[9px] font-black uppercase tracking-tight text-foreground/85">{chip.label}</span>
                   </motion.div>
                 );
               })}
@@ -343,7 +342,7 @@ export default function LandingPage() {
 
       {/* Compact System Footer */}
       <footer 
-        className="shrink-0 w-full glass-thick rounded-t-[3rem] shadow-2xl pt-6 px-8 text-center flex flex-col items-center z-50 border-t border-white/10"
+        className="shrink-0 w-full glass-thick rounded-t-[3rem] shadow-2xl pt-6 px-8 text-center flex flex-col items-center z-50 border-t border-white/10 transform-gpu"
         style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}
       >
         <div className="w-12 h-1 bg-foreground/10 rounded-full mb-4 opacity-30" />
@@ -351,9 +350,9 @@ export default function LandingPage() {
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={iosSpring}
             className="flex flex-col gap-2 mb-6 w-full"
           >

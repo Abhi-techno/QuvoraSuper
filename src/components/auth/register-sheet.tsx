@@ -106,7 +106,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
         side="bottom" 
         className="h-fit max-h-[85vh] glass-thick p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
       >
-        <div className="max-w-md mx-auto flex flex-col px-6 pb-12">
+        <div className="max-w-md mx-auto flex flex-col px-6 pb-8">
           {!showVerifyPrompt ? (
             <div>
               <div className="flex flex-col items-center mb-6 text-center">
@@ -127,21 +127,44 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
                     <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Full Name</Label>
                     <div className="relative">
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
-                      <Input className="h-13 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="Arjun Varma" value={name} onChange={e => setName(e.target.value)} required />
+                      <Input 
+                        className="h-13 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
+                        placeholder="Arjun Varma" 
+                        autoComplete="name"
+                        value={name} 
+                        onChange={e => setName(e.target.value)} 
+                        required 
+                      />
                     </div>
                   </div>
                   <div className="space-y-1 px-1">
                     <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Email</Label>
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
-                      <Input className="h-13 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="name@email.com" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
+                      <Input 
+                        className="h-13 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
+                        placeholder="name@email.com" 
+                        type="email" 
+                        autoComplete="email"
+                        value={email} 
+                        onChange={e => setEmail(e.target.value)} 
+                        required 
+                      />
                     </div>
                   </div>
                   <div className="space-y-1 px-1">
                     <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Password</Label>
                     <div className="relative">
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
-                      <Input className="h-13 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="Min. 6 characters" type={showPassword ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} required />
+                      <Input 
+                        className="h-13 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
+                        placeholder="Min. 6 characters" 
+                        type={showPassword ? "text" : "password"} 
+                        autoComplete="new-password"
+                        value={password} 
+                        onChange={e => setPassword(e.target.value)} 
+                        required 
+                      />
                       <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 active:scale-90 transition-transform">
                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>

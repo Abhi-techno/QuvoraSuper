@@ -61,12 +61,16 @@
     height: 100svh;
     width: 100vw;
     background-color: hsl(var(--background));
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
 .glass {
-  @apply backdrop-blur-[24px] saturate-[180%] border border-white/20 transform-gpu transition-all duration-300;
+  @apply backdrop-blur-[16px] saturate-[180%] border border-white/20 transform-gpu;
   background-color: hsla(0, 0%, 100%, 0.65);
+  will-change: backdrop-filter, transform;
+  backface-visibility: hidden;
 }
 
 .dark .glass {
@@ -75,8 +79,10 @@
 }
 
 .glass-thick {
-  @apply backdrop-blur-[40px] saturate-[190%] border border-white/30 transform-gpu transition-all duration-300;
+  @apply backdrop-blur-[32px] saturate-[190%] border border-white/30 transform-gpu;
   background-color: hsla(0, 0%, 100%, 0.88);
+  will-change: backdrop-filter, transform;
+  backface-visibility: hidden;
 }
 
 .dark .glass-thick {
@@ -88,12 +94,14 @@
   @apply fixed bottom-0 left-0 right-0 h-[calc(64px+env(safe-area-inset-bottom))] glass-thick flex items-center justify-around px-8 z-50;
   padding-bottom: env(safe-area-inset-bottom);
   box-shadow: 0 -10px 40px rgba(0,0,0,0.05);
+  transform: translateZ(0);
 }
 
 .ios-top-nav {
-  @apply fixed top-0 w-full flex items-center z-50 transition-all duration-300;
+  @apply fixed top-0 w-full flex items-center z-50;
   padding-top: env(safe-area-inset-top, 1rem);
   height: calc(64px + env(safe-area-inset-top, 1rem));
+  transform: translateZ(0);
 }
 
 .gpu-accelerated {
@@ -109,4 +117,5 @@
 
 .post-ad-fab {
   @apply w-14 h-14 rounded-full bg-primary flex items-center justify-center text-white shadow-lg active:scale-90 transition-transform duration-200;
+  transform: translateZ(0);
 }
