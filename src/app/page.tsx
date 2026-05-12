@@ -369,9 +369,9 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      <footer className="shrink-0 w-full glass-thick rounded-t-[4.5rem] shadow-[0_-30px_80px_-20px_rgba(0,0,0,0.2)] pt-14 pb-[env(safe-area-inset-bottom,3rem)] px-10 text-center flex flex-col items-center z-50">
+      <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.15)] pt-8 pb-[env(safe-area-inset-bottom,2rem)] px-8 text-center flex flex-col items-center z-50">
         {/* iOS Handle Indicator */}
-        <div className="w-12 h-1.5 bg-foreground/10 rounded-full mb-10" />
+        <div className="w-12 h-1.5 bg-foreground/10 rounded-full mb-8" />
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -380,25 +380,25 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="flex flex-col gap-3 mb-12 w-full"
+            className="flex flex-col gap-2 mb-8 w-full"
           >
-            <h1 className="text-4xl font-black tracking-tighter text-foreground leading-none">
+            <h1 className="text-3xl font-black tracking-tighter text-foreground leading-none">
               {currentSlide.title}
             </h1>
-            <p className="text-[11px] font-black text-muted-foreground leading-relaxed uppercase tracking-[0.3em] opacity-60">
+            <p className="text-[10px] font-black text-muted-foreground leading-relaxed uppercase tracking-[0.25em] opacity-60">
               {currentSlide.subtitle}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        <div className="w-full max-w-[340px] flex flex-col gap-6">
+        <div className="w-full max-w-[320px] flex flex-col gap-4">
           <AuthModal 
             defaultTab="register"
             trigger={
               <motion.div whileTap={{ scale: 0.95 }}>
-                <Button className="w-full h-16 rounded-[2rem] font-black text-sm uppercase tracking-[0.15em] bg-primary text-white shadow-[0_20px_40px_-10px_rgba(26,106,255,0.4)] transition-all border-none hover:brightness-110">
+                <Button className="w-full h-14 rounded-[1.75rem] font-black text-sm uppercase tracking-[0.1em] bg-primary text-white shadow-lg shadow-primary/20 transition-all border-none hover:brightness-110">
                   Create Free Account
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </motion.div>
             }
@@ -406,11 +406,11 @@ export default function LandingPage() {
           <AuthModal 
             defaultTab="login"
             trigger={
-              <button className="flex flex-col items-center gap-1.5 group outline-none">
-                <p className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest group-hover:text-muted-foreground/60 transition-colors">
+              <button className="flex flex-col items-center gap-1 group outline-none">
+                <p className="text-[9px] font-black text-muted-foreground/40 uppercase tracking-widest group-hover:text-muted-foreground/60 transition-colors">
                   Already a member?
                 </p>
-                <span className="text-[12px] font-black text-primary uppercase tracking-[0.2em] group-active:opacity-70 transition-opacity">
+                <span className="text-[11px] font-black text-primary uppercase tracking-[0.15em] group-active:opacity-70 transition-opacity">
                   Sign in to Quvora
                 </span>
               </button>
@@ -418,9 +418,9 @@ export default function LandingPage() {
           />
         </div>
 
-        <div className="mt-14 flex items-center gap-2.5 opacity-40">
-          <ShieldCheck size={16} className="text-primary" />
-          <span className="text-[10px] font-black uppercase tracking-[0.45em] text-foreground">
+        <div className="mt-8 flex items-center gap-2 opacity-30">
+          <ShieldCheck size={14} className="text-primary" />
+          <span className="text-[9px] font-black uppercase tracking-[0.35em] text-foreground">
             Trusted by 10M+ Indians
           </span>
         </div>
