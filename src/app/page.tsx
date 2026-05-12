@@ -18,7 +18,10 @@ import {
   ChevronRight,
   Signal,
   Wifi,
-  Battery
+  Battery,
+  Sparkles,
+  ShieldCheck,
+  Zap
 } from 'lucide-react';
 
 const SLIDES = [
@@ -27,8 +30,8 @@ const SLIDES = [
     title: 'Buy & Sell Anything',
     subtitle: 'Mobiles, cars, homes, jobs & 100+ categories near you',
     icon: Store,
-    badge1: '💼',
-    badge2: '🏷️',
+    badge1: <Zap className="w-5 h-5 text-yellow-500" />,
+    badge2: <ShieldCheck className="w-5 h-5 text-blue-500" />,
     bgGradient: 'from-[#EBF3FF] to-[#DBEEFF]',
     accentColor: '#1A6AFF'
   },
@@ -37,8 +40,8 @@ const SLIDES = [
     title: 'AI That Works For You',
     subtitle: 'Smart price suggestions, auto-fill & fraud detection',
     icon: Bot,
-    badge1: '✨',
-    badge2: '🔍',
+    badge1: <Sparkles className="w-5 h-5 text-purple-500" />,
+    badge2: <Zap className="w-5 h-5 text-orange-500" />,
     bgGradient: 'from-[#FFF3EE] to-[#FFE8DC]',
     accentColor: '#FF6B2B'
   },
@@ -47,8 +50,8 @@ const SLIDES = [
     title: 'Negotiate Safely',
     subtitle: 'Direct peer-to-peer chat with zero middlemen',
     icon: MessageCircle,
-    badge1: '🔒',
-    badge2: '🤝',
+    badge1: <ShieldCheck className="w-5 h-5 text-green-500" />,
+    badge2: <Zap className="w-5 h-5 text-blue-500" />,
     bgGradient: 'from-[#E8FFF4] to-[#D1F5E8]',
     accentColor: '#10B981'
   },
@@ -57,8 +60,8 @@ const SLIDES = [
     title: '12 Indian Languages',
     subtitle: 'Use Quvora in your own language with AI support',
     icon: Languages,
-    badge1: '🇮🇳',
-    badge2: '🗣️',
+    badge1: <Sparkles className="w-5 h-5 text-orange-500" />,
+    badge2: <Zap className="w-5 h-5 text-purple-500" />,
     bgGradient: 'from-[#F0EEFF] to-[#E2D9FF]',
     accentColor: '#7C3AED'
   },
@@ -67,8 +70,8 @@ const SLIDES = [
     title: 'Homes & Careers',
     subtitle: 'Find rentals and post jobs for free today',
     icon: Briefcase,
-    badge1: '🏠',
-    badge2: '💎',
+    badge1: <Zap className="w-5 h-5 text-amber-500" />,
+    badge2: <ShieldCheck className="w-5 h-5 text-blue-500" />,
     bgGradient: 'from-[#FFFBEB] to-[#FFF3C4]',
     accentColor: '#F59E0B'
   },
@@ -77,8 +80,8 @@ const SLIDES = [
     title: 'Join 10M+ Indians',
     subtitle: "India's fastest growing marketplace super-app",
     icon: Rocket,
-    badge1: '⭐',
-    badge2: '🎯',
+    badge1: <Sparkles className="w-5 h-5 text-pink-500" />,
+    badge2: <Zap className="w-5 h-5 text-blue-500" />,
     bgGradient: 'from-[#FFF0F3] to-[#FFE0E8]',
     accentColor: '#EC4899'
   }
@@ -244,14 +247,14 @@ export default function LandingPage() {
                 <motion.div
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -top-3 -left-3 w-10 h-10 bg-white/95 rounded-2xl shadow-lg flex items-center justify-center text-lg border border-white/50"
+                  className="absolute -top-3 -left-3 w-10 h-10 bg-white/95 rounded-2xl shadow-lg flex items-center justify-center text-lg border border-white/50 overflow-hidden"
                 >
                   {currentSlide.badge1}
                 </motion.div>
                 <motion.div
                   animate={{ y: [0, 6, 0] }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                  className="absolute -bottom-3 -right-3 w-10 h-10 bg-white/95 rounded-2xl shadow-lg flex items-center justify-center text-lg border border-white/50"
+                  className="absolute -bottom-3 -right-3 w-10 h-10 bg-white/95 rounded-2xl shadow-lg flex items-center justify-center text-lg border border-white/50 overflow-hidden"
                 >
                   {currentSlide.badge2}
                 </motion.div>
