@@ -22,8 +22,7 @@ import {
   Star,
   Shield,
   Sun,
-  Moon,
-  ShieldAlert
+  Moon
 } from 'lucide-react';
 
 const SLIDES = [
@@ -107,7 +106,6 @@ export default function LandingPage() {
     const root = window.document.documentElement;
     setIsDark(root.classList.contains('dark'));
 
-    // Optimized client-only random particle generation to avoid hydration mismatch
     const icons = [Store, Bot, MessageCircle, Briefcase, Zap, Sparkles];
     setBgIcons(icons.map((Icon, i) => ({
       id: i,
@@ -245,33 +243,43 @@ export default function LandingPage() {
                   key={i}
                   animate={{ 
                     width: i === index ? 20 : 6,
-                    backgroundColor: i === index ? currentSlide.color : 'hsla(var(--foreground), 0.1)'
+                    backgroundColor: i === index ? currentSlide.color : 'hsla(var(--foreground), 0.2)'
                   }}
                   transition={springConfig}
                   className="h-1.5 rounded-full"
                 />
               ))}
             </div>
-            {/* Refined iOS Theme Button */}
-            <motion.div whileTap={{ scale: 0.85 }} transition={{ type: "spring", stiffness: 400, damping: 15 }}>
+            
+            <motion.div whileTap={{ scale: 0.9, rotate: isDark ? 15 : -15 }} transition={{ type: "spring", stiffness: 500, damping: 20 }}>
               <Button 
                 size="icon" 
                 variant="ghost" 
-                className="h-10 w-10 glass rounded-full border-none shadow-sm relative overflow-hidden" 
+                className="h-10 w-10 glass-thick rounded-full border-none shadow-md relative overflow-hidden group" 
                 onClick={toggleTheme}
               >
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
                     key={isDark ? 'dark' : 'light'}
-                    initial={{ y: 20, opacity: 0, rotate: -45 }}
-                    animate={{ y: 0, opacity: 1, rotate: 0 }}
-                    exit={{ y: -20, opacity: 0, rotate: 45 }}
-                    transition={{ duration: 0.25, ease: [0.32, 0, 0.67, 0] }}
-                    className="flex items-center justify-center"
+                    initial={{ y: 25, opacity: 0, scale: 0.5, rotate: -90 }}
+                    animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
+                    exit={{ y: -25, opacity: 0, scale: 0.5, rotate: 90 }}
+                    transition={{ 
+                      type: "spring", 
+                      stiffness: 300, 
+                      damping: 25,
+                      opacity: { duration: 0.15 }
+                    }}
+                    className="flex items-center justify-center w-full h-full"
                   >
-                    {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
+                    {isDark ? (
+                      <Sun className="w-4 h-4 text-primary fill-primary/20" />
+                    ) : (
+                      <Moon className="w-4 h-4 text-primary fill-primary/20" />
+                    )}
                   </motion.div>
                 </AnimatePresence>
+                <div className="absolute inset-0 bg-primary/5 opacity-0 group-active:opacity-100 transition-opacity" />
               </Button>
             </motion.div>
           </div>
