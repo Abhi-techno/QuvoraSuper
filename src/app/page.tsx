@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -90,7 +89,7 @@ const VELOCITY_THRESHOLD = 400;
 const springConfig = {
   type: "spring",
   stiffness: 400,
-  damping: 35,
+  damping: 30,
   mass: 1
 };
 
@@ -172,8 +171,7 @@ export default function LandingPage() {
       x: direction > 0 ? '100%' : '-100%',
       opacity: 0,
       scale: 0.8,
-      filter: 'blur(10px)',
-      rotateY: direction > 0 ? 45 : -45
+      filter: 'blur(12px)',
     }),
     center: {
       zIndex: 1,
@@ -181,24 +179,21 @@ export default function LandingPage() {
       opacity: 1,
       scale: 1,
       filter: 'blur(0px)',
-      rotateY: 0,
       transition: {
-        x: { type: 'spring', stiffness: 400, damping: 35 },
-        opacity: { duration: 0.3 },
-        scale: { duration: 0.4 },
-        filter: { duration: 0.4 },
-        rotateY: { type: 'spring', stiffness: 300, damping: 30 }
+        x: { type: 'spring', stiffness: 400, damping: 30, mass: 1 },
+        opacity: { duration: 0.35 },
+        scale: { duration: 0.45, ease: "easeOut" },
+        filter: { duration: 0.4 }
       }
     },
     exit: (direction: number) => ({
       zIndex: 0,
       x: direction < 0 ? '50%' : '-50%',
       opacity: 0,
-      scale: 0.85,
+      scale: 0.8,
       filter: 'blur(15px)',
-      rotateY: direction < 0 ? 25 : -25,
       transition: {
-        x: { type: 'spring', stiffness: 400, damping: 35 },
+        x: { type: 'spring', stiffness: 400, damping: 30 },
         opacity: { duration: 0.25 }
       }
     })
@@ -212,7 +207,7 @@ export default function LandingPage() {
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] transition-colors duration-1000">
       {/* Background Constellation - Drifting & Alive */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.2]">
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.25]">
         {bgIcons.map((item) => (
           <motion.div
             key={item.id}
@@ -236,10 +231,10 @@ export default function LandingPage() {
         ))}
       </div>
 
-      <header className="shrink-0 pt-6 px-8 z-50">
+      <header className="shrink-0 pt-8 px-8 z-50">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white dark:bg-zinc-900 flex items-center justify-center shadow-xl border border-white/20 overflow-hidden">
+            <div className="w-10 h-10 rounded-2xl bg-white dark:bg-zinc-900 flex items-center justify-center shadow-2xl border border-white/20 overflow-hidden">
               <Image src="/icons/icon-192.png" alt="Quvora" width={28} height={28} priority />
             </div>
             <div className="flex flex-col">
@@ -263,7 +258,7 @@ export default function LandingPage() {
               ))}
             </div>
             
-            <motion.div whileTap={{ scale: 0.9, rotate: isDark ? 15 : -15 }} transition={{ type: "spring", stiffness: 500, damping: 20 }}>
+            <motion.div whileTap={{ scale: 0.9, rotate: isDark ? 15 : -15 }}>
               <Button 
                 size="icon" 
                 variant="ghost" 
@@ -276,12 +271,7 @@ export default function LandingPage() {
                     initial={{ y: 25, opacity: 0, scale: 0.5, rotate: -90 }}
                     animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
                     exit={{ y: -25, opacity: 0, scale: 0.5, rotate: 90 }}
-                    transition={{ 
-                      type: "spring", 
-                      stiffness: 300, 
-                      damping: 25,
-                      opacity: { duration: 0.15 }
-                    }}
+                    transition={springConfig}
                     className="flex items-center justify-center w-full h-full"
                   >
                     {isDark ? (
@@ -291,7 +281,6 @@ export default function LandingPage() {
                     )}
                   </motion.div>
                 </AnimatePresence>
-                <div className="absolute inset-0 bg-primary/5 opacity-0 group-active:opacity-100 transition-opacity" />
               </Button>
             </motion.div>
           </div>
@@ -318,21 +307,17 @@ export default function LandingPage() {
               <motion.div 
                 animate={{ 
                   scale: [1, 1.02, 1],
-                  rotateZ: [0, 0.5, -0.5, 0],
                 }}
                 transition={{
-                  scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-                  rotateZ: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+                  duration: 4, repeat: Infinity, ease: "easeInOut"
                 }}
                 className={cn(
-                  "w-full h-full rounded-[4.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-1.5 transition-all duration-700",
+                  "w-full h-full rounded-[4.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.3)] relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-1.5 transition-all duration-700",
                   currentSlide.bg
                 )}
               >
                 <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl" />
-                <motion.div
-                  className="w-full h-full glass rounded-[4rem] border-none shadow-2xl flex items-center justify-center relative z-10 group"
-                >
+                <div className="w-full h-full glass rounded-[4rem] border-none shadow-2xl flex items-center justify-center relative z-10">
                    <motion.div
                       animate={{ 
                         filter: [
@@ -345,7 +330,7 @@ export default function LandingPage() {
                    >
                      <MainIcon size={84} style={{ color: currentSlide.color }} className="drop-shadow-2xl brightness-125" />
                    </motion.div>
-                </motion.div>
+                </div>
                 
                 {/* Radial Glow */}
                 <div 
@@ -383,13 +368,13 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-15px_50px_rgba(0,0,0,0.1)] pt-12 pb-[env(safe-area-inset-bottom,2.5rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-500">
+      <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.15)] pt-12 pb-[env(safe-area-inset-bottom,2.5rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-500">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 15, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -15, scale: 0.95 }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
             className="flex flex-col gap-2 mb-10 w-full"
           >
@@ -407,7 +392,7 @@ export default function LandingPage() {
             defaultTab="register"
             trigger={
               <motion.div whileTap={{ scale: 0.96 }}>
-                <Button className="w-full h-15 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-2xl shadow-primary/30 transition-all border-none hover:brightness-110 active:scale-[0.98]">
+                <Button className="w-full h-15 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-[0_15px_30px_-5px_rgba(26,106,255,0.4)] transition-all border-none hover:brightness-110">
                   Create Free Account
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -417,7 +402,7 @@ export default function LandingPage() {
           <AuthModal 
             defaultTab="login"
             trigger={
-              <button className="flex flex-col items-center gap-1 py-1 group outline-none">
+              <button className="flex flex-col items-center gap-1 group outline-none">
                 <p className="text-[9px] font-black text-muted-foreground/50 uppercase tracking-widest group-hover:text-muted-foreground/70 transition-colors">
                   Already a member?
                 </p>
@@ -429,7 +414,7 @@ export default function LandingPage() {
           />
         </div>
 
-        <div className="mt-10 flex items-center gap-2 opacity-30">
+        <div className="mt-12 flex items-center gap-2 opacity-30">
           <ShieldCheck size={14} className="text-primary" />
           <span className="text-[9px] font-black uppercase tracking-[0.4em] text-foreground">
             Trusted by 10M+ Indians

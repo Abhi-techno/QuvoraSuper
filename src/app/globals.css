@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -70,19 +69,19 @@
 }
 
 .glass {
-  @apply backdrop-blur-[28px] saturate-[190%] border border-white/20;
-  background-color: hsla(0, 0%, 100%, 0.6);
+  @apply backdrop-blur-[24px] saturate-[180%] border border-white/20;
+  background-color: hsla(0, 0%, 100%, 0.5);
   transform: translateZ(0);
 }
 
 .dark .glass {
-  background-color: hsla(0, 0%, 0%, 0.4);
+  background-color: hsla(0, 0%, 0%, 0.35);
   @apply border-white/10;
 }
 
 .glass-thick {
   @apply backdrop-blur-[40px] saturate-[170%] border border-white/30;
-  background-color: hsla(0, 0%, 100%, 0.75);
+  background-color: hsla(0, 0%, 100%, 0.7);
   transform: translateZ(0);
 }
 
@@ -92,18 +91,21 @@
 }
 
 .ios-tab-bar {
-  @apply fixed bottom-6 left-6 right-6 h-16 rounded-[2.5rem] glass-thick flex items-center justify-around px-4 z-50;
-  box-shadow: 0 15px 45px -10px rgba(0, 0, 0, 0.15);
+  @apply fixed bottom-8 left-6 right-6 h-16 rounded-[2.5rem] glass-thick flex items-center justify-around px-4 z-50;
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.2);
   margin-bottom: env(safe-area-inset-bottom, 0px);
+  will-change: transform;
 }
 
 .ios-top-nav {
   @apply sticky top-0 w-full h-14 glass flex items-center px-4 z-40;
   padding-top: env(safe-area-inset-top, 0px);
+  will-change: transform;
 }
 
 .post-ad-fab {
-  @apply w-12 h-12 rounded-[1.5rem] bg-primary flex items-center justify-center text-white transition-transform active:scale-90 shadow-lg shadow-primary/20;
+  @apply w-12 h-12 rounded-[1.5rem] bg-primary flex items-center justify-center text-white shadow-lg shadow-primary/30;
+  will-change: transform;
 }
 
 ::-webkit-scrollbar {
@@ -114,4 +116,5 @@
   transform: translateZ(0);
   will-change: transform, opacity;
   backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
 }

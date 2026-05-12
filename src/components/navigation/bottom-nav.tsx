@@ -17,6 +17,13 @@ export function BottomNav() {
     { label: 'Me', icon: User, href: '/me' },
   ];
 
+  const springConfig = {
+    type: "spring",
+    stiffness: 400,
+    damping: 30,
+    mass: 1
+  };
+
   return (
     <nav className="ios-tab-bar">
       {tabs.map((tab) => {
@@ -27,8 +34,9 @@ export function BottomNav() {
           return (
             <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-8 group">
               <motion.div 
-                whileTap={{ scale: 0.9 }}
-                className="post-ad-fab shadow-xl shadow-primary/30 border-2 border-white/20 hover:scale-105 transition-transform"
+                whileTap={{ scale: 0.9, y: 2 }}
+                transition={springConfig}
+                className="post-ad-fab shadow-xl shadow-primary/40 border-2 border-white/20"
               >
                 <Plus className="w-7 h-7" />
               </motion.div>
@@ -45,7 +53,8 @@ export function BottomNav() {
         return (
           <Link key={tab.href} href={tab.href} className="flex flex-col items-center gap-1 group">
             <motion.div 
-              whileTap={{ scale: 0.8 }}
+              whileTap={{ scale: 0.8, y: 1 }}
+              transition={springConfig}
               className="relative"
             >
               <Icon className={cn(
