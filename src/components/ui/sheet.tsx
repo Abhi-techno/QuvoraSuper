@@ -4,7 +4,7 @@ import * as React from "react"
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { cva, type VariantProps } from "class-variance-authority"
 import { X } from "lucide-react"
-import { motion, AnimatePresence, useDragControls, useMotionValue, useTransform } from "framer-motion"
+import { motion, useMotionValue, useTransform, useDragControls } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
@@ -59,13 +59,11 @@ const SheetContent = React.forwardRef<
   SheetContentProps
 >(({ side = "right", className, children, ...props }, ref) => {
   const y = useMotionValue(0)
-  const [isClosing, setIsClosing] = React.useState(false)
+  const dragControls = useDragControls()
 
-  // Native swipe-to-dismiss logic for bottom sheets
   const handleDragEnd = (_: any, info: any) => {
+    // If dragged down significantly or with high velocity, close the sheet
     if (side === "bottom" && (info.offset.y > 100 || info.velocity.y > 500)) {
-      setIsClosing(true)
-      // Trigger the actual Radix close
       const closeButton = document.querySelector('[data-sheet-close]') as HTMLButtonElement
       closeButton?.click()
     }
@@ -76,23 +74,30 @@ const SheetContent = React.forwardRef<
       <SheetOverlay />
       <SheetPrimitive.Content
         ref={ref}
-        className={cn(sheetVariants({ side }), "overflow-hidden", className)}
+        className={cn(sheetVariants({ side }), "overflow-hidden transform-gpu", className)}
         {...props}
       >
         {side === "bottom" ? (
           <motion.div
             drag="y"
+            dragControls={dragControls}
+            dragListener={false}
             dragConstraints={{ top: 0, bottom: 0 }}
             dragElastic={{ top: 0, bottom: 0.5 }}
             onDragEnd={handleDragEnd}
             style={{ y }}
             className="h-full w-full flex flex-col relative"
           >
-            {/* iOS Drag Handle */}
-            <div className="flex flex-col items-center pt-3 pb-1 shrink-0 cursor-grab active:cursor-grabbing">
+            {/* iOS Drag Handle Zone */}
+            <div 
+              onPointerDown={(e) => dragControls.start(e)}
+              className="flex flex-col items-center pt-3 pb-3 shrink-0 cursor-grab active:cursor-grabbing touch-none"
+            >
               <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-30" />
             </div>
-            {children}
+            <div className="flex-1 overflow-y-auto overscroll-contain">
+              {children}
+            </div>
             {/* Hidden Close for Gesture Trigger */}
             <SheetPrimitive.Close className="hidden" data-sheet-close />
           </motion.div>

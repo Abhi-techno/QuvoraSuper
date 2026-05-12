@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Lock, Mail, User, Eye, EyeOff, MailWarning, Loader2, Sparkles, ShieldCheck } from 'lucide-react';
+import { Lock, Mail, User, Eye, EyeOff, MailWarning, Loader2, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth, useFirestore } from '@/firebase';
 import { 
@@ -104,9 +104,9 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
       </SheetTrigger>
       <SheetContent 
         side="bottom" 
-        className="h-fit max-h-[92vh] glass-thick p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
+        className="h-fit max-h-[85vh] glass-thick p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
       >
-        <div className="max-w-md mx-auto flex flex-col px-6 pb-10 pt-2">
+        <div className="max-w-md mx-auto flex flex-col px-6 pb-10">
           {!showVerifyPrompt ? (
             <div>
               <div className="flex flex-col items-center mb-6 text-center">
@@ -114,7 +114,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
                   <Image src="/icons/icon-192.png" alt="Quvora" width={36} height={36} priority />
                 </div>
                 <SheetHeader className="space-y-1">
-                  <SheetTitle>Join Quvora</SheetTitle>
+                  <SheetTitle className="text-xl font-black tracking-tighter">Join Quvora</SheetTitle>
                   <SheetDescription className="text-[9px] font-black uppercase tracking-[0.2em] text-primary">
                     Create Your Official Identity
                   </SheetDescription>
@@ -123,27 +123,27 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
 
               <form onSubmit={handleRegister} className="space-y-3">
                 <div className="space-y-2">
-                  <div className="space-y-1.5 px-1">
+                  <div className="space-y-1 px-1">
                     <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Full Name</Label>
                     <div className="relative">
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
-                      <Input className="h-14 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="Arjun Varma" value={name} onChange={e => setName(e.target.value)} required />
+                      <Input className="h-12 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="Arjun Varma" value={name} onChange={e => setName(e.target.value)} required />
                     </div>
                   </div>
-                  <div className="space-y-1.5 px-1">
+                  <div className="space-y-1 px-1">
                     <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Email</Label>
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
-                      <Input className="h-14 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="name@email.com" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
+                      <Input className="h-12 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="name@email.com" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
                     </div>
                   </div>
-                  <div className="space-y-1.5 px-1">
+                  <div className="space-y-1 px-1">
                     <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Password</Label>
                     <div className="relative">
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
-                      <Input className="h-14 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="Min. 6 characters" type={showPassword ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} required />
+                      <Input className="h-12 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" placeholder="Min. 6 characters" type={showPassword ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} required />
                       <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 active:scale-90 transition-transform">
-                        {showPassword ? <EyeOff className="w-4.5 h-4.5" /> : <Eye className="w-4.5 h-4.5" />}
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
                     </div>
                   </div>
@@ -154,7 +154,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
                     </label>
                   </div>
                 </div>
-                <Button className="w-full h-16 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-4" disabled={loading || !termsAccepted}>
+                <Button className="w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-4" disabled={loading || !termsAccepted}>
                   {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <Sparkles className="w-4 h-4 mr-2" />}
                   {loading ? "Joining..." : "Join Quvora"}
                 </Button>
@@ -166,7 +166,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
                 <MailWarning className="w-8 h-8 text-primary animate-pulse" />
               </div>
               <SheetHeader className="mb-6">
-                <SheetTitle>Check Your Inbox</SheetTitle>
+                <SheetTitle className="text-xl font-black tracking-tighter">Check Your Inbox</SheetTitle>
                 <SheetDescription className="text-muted-foreground text-[10px] font-bold leading-relaxed px-4 uppercase tracking-tight">
                   Verification sent to <span className="text-foreground font-black lowercase">{email}</span>. Click it to activate.
                 </SheetDescription>

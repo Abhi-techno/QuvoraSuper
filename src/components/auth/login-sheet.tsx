@@ -72,13 +72,13 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
         side="bottom" 
         className="h-fit max-h-[85vh] glass-thick p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
       >
-        <div className="max-w-md mx-auto flex flex-col px-6 pb-10 pt-2">
+        <div className="max-w-md mx-auto flex flex-col px-6 pb-10">
           <div className="flex flex-col items-center mb-6 text-center">
             <div className="w-14 h-14 rounded-[1.5rem] bg-white flex items-center justify-center mb-3 shadow-lg border border-black/5 overflow-hidden">
               <Image src="/icons/icon-192.png" alt="Quvora" width={36} height={36} priority />
             </div>
             <SheetHeader className="space-y-1">
-              <SheetTitle>Welcome Back</SheetTitle>
+              <SheetTitle className="text-xl font-black tracking-tighter">Welcome Back</SheetTitle>
               <SheetDescription className="text-[9px] font-black uppercase tracking-[0.2em] text-primary">
                 Secure AI Superapp Login
               </SheetDescription>
@@ -87,12 +87,12 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-3">
-              <div className="space-y-1.5 px-1">
+              <div className="space-y-1 px-1">
                 <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Email Address</Label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
                   <Input 
-                    className="h-14 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
+                    className="h-12 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
                     placeholder="name@email.com" 
                     type="email" 
                     value={email} 
@@ -101,12 +101,12 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
                   />
                 </div>
               </div>
-              <div className="space-y-1.5 px-1">
+              <div className="space-y-1 px-1">
                 <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
                   <Input 
-                    className="h-14 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
+                    className="h-12 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
                     placeholder="••••••••" 
                     type={showPassword ? "text" : "password"} 
                     value={password} 
@@ -114,13 +114,13 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
                     required 
                   />
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 active:scale-90 transition-transform">
-                    {showPassword ? <EyeOff className="w-4.5 h-4.5" /> : <Eye className="w-4.5 h-4.5" />}
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
               </div>
             </div>
             <Button 
-              className="w-full h-16 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-4" 
+              className="w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-4" 
               disabled={loading}
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <ArrowRight className="w-5 h-5 mr-2" />}
