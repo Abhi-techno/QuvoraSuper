@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Lock, Mail, User, Eye, EyeOff, MailWarning, Loader2, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Lock, Mail, User, Eye, EyeOff, MailWarning, Loader2, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth, useFirestore } from '@/firebase';
 import { 
@@ -194,3 +194,5 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
         </div>
       </SheetContent>
     </Sheet>
+  );
+}

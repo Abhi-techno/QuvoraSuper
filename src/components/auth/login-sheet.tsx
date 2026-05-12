@@ -135,3 +135,5 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
         </div>
       </SheetContent>
     </Sheet>
+  );
+}
