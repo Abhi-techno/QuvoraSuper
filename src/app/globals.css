@@ -53,10 +53,11 @@
   * {
     @apply border-border;
     -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.5s ease, border-color 0.5s ease;
   }
   
   body {
-    @apply bg-background text-foreground font-body antialiased transition-colors duration-500;
+    @apply bg-background text-foreground font-body antialiased;
     min-height: 100svh;
     overflow-x: hidden;
     touch-action: pan-y;
@@ -90,11 +91,12 @@
 .ios-tab-bar {
   @apply fixed bottom-6 left-6 right-6 h-16 rounded-[2.5rem] glass-thick flex items-center justify-around px-4 z-50;
   box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.1);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  margin-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .ios-top-nav {
-  @apply sticky top-0 w-full h-14 glass flex items-center px-4 z-40 pt-[env(safe-area-inset-top)];
+  @apply sticky top-0 w-full h-14 glass flex items-center px-4 z-40;
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .post-ad-fab {
@@ -105,7 +107,6 @@
   display: none;
 }
 
-/* GPU Accelerated Smoothness Bridge */
 * {
   transform: translateZ(0);
   will-change: transform, opacity;

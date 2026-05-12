@@ -35,7 +35,6 @@ export default function RootLayout({
   children: React.ReactNode;
   params: Promise<any>;
 }>) {
-  // Unwrap params for Next.js 15 compatibility
   React.use(params);
 
   return (

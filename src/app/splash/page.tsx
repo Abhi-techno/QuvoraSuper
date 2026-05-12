@@ -19,6 +19,7 @@ export default function SplashScreen() {
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
+    // Generate particles on client to avoid hydration mismatch
     const newParticles = [...Array(20)].map((_, i) => ({
       id: i,
       width: Math.random() * 300 + 100 + 'px',

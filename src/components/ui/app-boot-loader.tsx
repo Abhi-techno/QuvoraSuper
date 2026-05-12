@@ -19,6 +19,7 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
+    // Generate particles only on client to avoid hydration mismatch
     const newParticles = [...Array(12)].map((_, i) => ({
       id: i,
       width: Math.random() * 200 + 100 + 'px',
@@ -90,7 +91,14 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
               className="relative z-10 flex flex-col items-center gap-6"
             >
               <div className="w-24 h-24 rounded-3xl bg-white flex items-center justify-center shadow-[0_0_60px_rgba(255,255,255,0.15)] overflow-hidden">
-                <Image src="/icons/icon-192.png" alt="Quvora" width={72} height={72} priority className="animate-in fade-in zoom-in-50 duration-700" />
+                <Image 
+                  src="/icons/icon-192.png" 
+                  alt="Quvora" 
+                  width={72} 
+                  height={72} 
+                  priority 
+                  className="animate-in fade-in zoom-in-50 duration-700" 
+                />
               </div>
               <div className="flex flex-col items-center gap-1 text-center">
                 <h1 className="text-4xl font-black tracking-tighter">Quvora</h1>
