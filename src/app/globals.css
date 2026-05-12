@@ -51,19 +51,19 @@
 
 @layer base {
   * {
-    @apply border-border transition-colors duration-500;
+    @apply border-border;
     -webkit-tap-highlight-color: transparent;
   }
+  
   body {
-    @apply bg-background text-foreground font-body antialiased transition-colors duration-700;
+    @apply bg-background text-foreground font-body antialiased transition-colors duration-500;
     min-height: 100svh;
     overflow-x: hidden;
     touch-action: pan-y;
     overscroll-behavior: none;
     user-select: none;
     -webkit-user-select: none;
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
 }
 

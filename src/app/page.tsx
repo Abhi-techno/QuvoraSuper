@@ -105,6 +105,7 @@ export default function LandingPage() {
     const root = window.document.documentElement;
     setIsDark(root.classList.contains('dark'));
 
+    // Initialize background constellation
     const icons = [Store, Bot, MessageCircle, Briefcase, Zap, Sparkles, ShieldCheck, Star, Rocket, Languages];
     setBgIcons(icons.map((Icon, i) => ({
       Icon,
@@ -249,7 +250,7 @@ export default function LandingPage() {
             <Button 
               size="icon" 
               variant="ghost" 
-              className="h-10 w-10 glass rounded-full border-none shadow-sm" 
+              className="h-10 w-10 glass rounded-full border-none shadow-sm active:scale-90 transition-transform" 
               onClick={toggleTheme}
             >
               {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}

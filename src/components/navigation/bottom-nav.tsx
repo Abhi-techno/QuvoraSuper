@@ -4,6 +4,7 @@ import { Home, Plus, MessageCircle, User, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 export function BottomNav() {
   const pathname = usePathname();
@@ -25,11 +26,14 @@ export function BottomNav() {
         if (tab.isFab) {
           return (
             <Link key={tab.href} href={tab.href} className="flex flex-col items-center -mt-8 group">
-              <div className="post-ad-fab shadow-xl shadow-primary/30 border-2 border-white/20 hover:scale-105 transition-transform active:scale-95">
+              <motion.div 
+                whileTap={{ scale: 0.9 }}
+                className="post-ad-fab shadow-xl shadow-primary/30 border-2 border-white/20 hover:scale-105 transition-transform"
+              >
                 <Plus className="w-7 h-7" />
-              </div>
+              </motion.div>
               <span className={cn(
-                "text-[8px] font-black mt-1.5 uppercase tracking-widest",
+                "text-[8px] font-black mt-1.5 uppercase tracking-widest transition-colors",
                 isActive ? "text-primary" : "text-muted-foreground/50"
               )}>
                 Post
@@ -40,9 +44,12 @@ export function BottomNav() {
 
         return (
           <Link key={tab.href} href={tab.href} className="flex flex-col items-center gap-1 group">
-            <div className="relative">
+            <motion.div 
+              whileTap={{ scale: 0.8 }}
+              className="relative"
+            >
               <Icon className={cn(
-                "w-5 h-5 transition-all group-active:scale-90",
+                "w-5 h-5 transition-all duration-300",
                 isActive ? "text-primary fill-primary/10" : "text-muted-foreground/40"
               )} />
               {tab.badge && (
@@ -54,7 +61,7 @@ export function BottomNav() {
                   {tab.badge}
                 </motion.span>
               )}
-            </div>
+            </motion.div>
             <span className={cn(
               "text-[8px] font-black transition-colors uppercase tracking-widest",
               isActive ? "text-primary" : "text-muted-foreground/50"
@@ -67,4 +74,3 @@ export function BottomNav() {
     </nav>
   );
 }
-import { motion } from 'framer-motion';
