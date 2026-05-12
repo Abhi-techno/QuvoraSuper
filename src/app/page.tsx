@@ -231,7 +231,7 @@ export default function LandingPage() {
         ))}
       </div>
 
-      <header className="shrink-0 pt-8 px-8 z-50">
+      <header className="shrink-0 pt-4 px-8 z-50">
         <div className="flex justify-between items-center w-full">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
