@@ -170,24 +170,28 @@ export default function LandingPage() {
     enter: (direction: number) => ({
       x: direction > 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.95
+      scale: 0.9,
+      filter: 'blur(10px)'
     }),
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
       scale: 1,
+      filter: 'blur(0px)',
       transition: {
         x: { type: 'spring', stiffness: 400, damping: 35 },
         opacity: { duration: 0.3 },
-        scale: { duration: 0.3 }
+        scale: { duration: 0.3 },
+        filter: { duration: 0.3 }
       }
     },
     exit: (direction: number) => ({
       zIndex: 0,
       x: direction < 0 ? '50%' : '-50%',
       opacity: 0,
-      scale: 0.95,
+      scale: 0.9,
+      filter: 'blur(10px)',
       transition: {
         x: { type: 'spring', stiffness: 400, damping: 35 },
         opacity: { duration: 0.2 }
@@ -243,7 +247,7 @@ export default function LandingPage() {
                   key={i}
                   animate={{ 
                     width: i === index ? 20 : 6,
-                    backgroundColor: i === index ? currentSlide.color : 'hsla(var(--foreground), 0.2)'
+                    backgroundColor: i === index ? currentSlide.color : '#e2e8f0'
                   }}
                   transition={springConfig}
                   className="h-1.5 rounded-full"
@@ -301,30 +305,56 @@ export default function LandingPage() {
             onDragEnd={handleDragEnd}
             className="w-full h-full flex items-center justify-center px-10"
           >
-            <div className={cn(
-              "w-full max-w-[200px] aspect-square rounded-[4rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center",
-              currentSlide.bg
-            )}>
+            <motion.div 
+              initial={{ scale: 0.8, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              transition={{ ...springConfig, delay: 0.1 }}
+              className={cn(
+                "w-full max-w-[240px] aspect-square rounded-[4.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-1",
+                currentSlide.bg
+              )}
+            >
+              <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl" />
+              
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={springConfig}
-                className="p-8 glass rounded-[3rem] border-none shadow-2xl flex items-center justify-center relative"
+                className="w-full h-full glass rounded-[4rem] border-none shadow-2xl flex items-center justify-center relative z-10"
               >
-                <MainIcon size={64} style={{ color: currentSlide.color }} />
+                <MainIcon size={80} style={{ color: currentSlide.color }} className="drop-shadow-2xl" />
                 
-                {currentSlide.badges.slice(0, 1).map((BadgeIcon, i) => (
+                {/* Floating Badges */}
+                {currentSlide.badges.map((BadgeIcon, i) => (
                   <motion.div
                     key={i}
-                    animate={{ y: [0, -8, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute -top-6 -left-6 w-12 h-12 glass rounded-2xl border-none shadow-lg flex items-center justify-center"
+                    animate={{ 
+                      y: [0, -12, 0],
+                      x: [0, i % 2 === 0 ? -5 : 5, 0],
+                      rotate: [0, i % 2 === 0 ? -10 : 10, 0]
+                    }}
+                    transition={{ 
+                      duration: 4 + i, 
+                      repeat: Infinity, 
+                      ease: "easeInOut",
+                      delay: i * 0.5
+                    }}
+                    className={cn(
+                      "absolute w-14 h-14 glass rounded-2xl border-none shadow-xl flex items-center justify-center z-20",
+                      i === 0 ? "-top-6 -left-6" : "-bottom-6 -right-6"
+                    )}
                   >
-                    <BadgeIcon size={24} style={{ color: currentSlide.color }} />
+                    <BadgeIcon size={28} style={{ color: currentSlide.color }} />
                   </motion.div>
                 ))}
               </motion.div>
-            </div>
+              
+              {/* Radial Glow */}
+              <div 
+                className="absolute inset-0 opacity-20 blur-[60px] rounded-full" 
+                style={{ backgroundColor: currentSlide.color }} 
+              />
+            </motion.div>
           </motion.div>
         </AnimatePresence>
       </main>
