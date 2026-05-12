@@ -244,7 +244,6 @@ export default function LandingPage() {
                   key={i}
                   animate={{ 
                     width: i === index ? 20 : 6,
-                    // Use a concrete HSL value instead of currentColor to avoid animation errors
                     backgroundColor: i === index ? currentSlide.color : 'hsla(var(--foreground), 0.1)'
                   }}
                   transition={springConfig}
@@ -351,6 +350,13 @@ export default function LandingPage() {
               </button>
             }
           />
+        </div>
+
+        <div className="mt-8 flex items-center gap-2 opacity-30 grayscale contrast-200">
+          <ShieldCheck size={12} className="text-primary" />
+          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-foreground">
+            Trusted by 10M+ Indians
+          </span>
         </div>
       </footer>
     </div>
