@@ -86,11 +86,11 @@ const AUTO_PLAY_INTERVAL = 6000;
 const SWIPE_THRESHOLD = 30;
 const VELOCITY_THRESHOLD = 400;
 
-// High-fidelity iOS Spring Physics
+// Snappier iOS Liquid Spring Physics
 const iosSpring = {
   type: "spring",
-  stiffness: 400,
-  damping: 35,
+  stiffness: 450,
+  damping: 38,
   mass: 1
 };
 
@@ -114,7 +114,7 @@ export default function LandingPage() {
       top: `${15 + (i * 10)}%`,
       left: `${(i % 2 === 0 ? 12 : 88)}%`,
       delay: i * 0.4,
-      duration: 10 + i
+      duration: 12 + i
     })));
   }, []);
 
@@ -171,8 +171,8 @@ export default function LandingPage() {
     enter: (direction: number) => ({
       x: direction > 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.92,
-      filter: 'blur(12px)',
+      scale: 0.9,
+      filter: 'blur(10px)',
     }),
     center: {
       zIndex: 1,
@@ -182,20 +182,20 @@ export default function LandingPage() {
       filter: 'blur(0px)',
       transition: {
         x: iosSpring,
-        opacity: { duration: 0.3 },
-        scale: { duration: 0.45, ease: "easeOut" },
-        filter: { duration: 0.4 }
+        opacity: { duration: 0.2 },
+        scale: { duration: 0.4, ease: "easeOut" },
+        filter: { duration: 0.3 }
       }
     },
     exit: (direction: number) => ({
       zIndex: 0,
       x: direction < 0 ? '50%' : '-50%',
       opacity: 0,
-      scale: 0.88,
-      filter: 'blur(15px)',
+      scale: 0.9,
+      filter: 'blur(10px)',
       transition: {
         x: iosSpring,
-        opacity: { duration: 0.25 }
+        opacity: { duration: 0.2 }
       }
     })
   };
@@ -207,7 +207,7 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] gpu-accelerated">
-      {/* Background Constellation - Atmospheric Depth */}
+      {/* Background Constellation - Cinematic Depth */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.2]">
         {bgIcons.map((item) => (
           <motion.div
@@ -238,7 +238,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={iosSpring}
-            className="flex items-center gap-3.5 group"
+            className="flex items-center gap-3.5 group cursor-pointer"
           >
             <div className="w-10 h-10 rounded-full glass flex items-center justify-center shadow-lg border-none overflow-hidden group-active:scale-95 transition-transform duration-300">
               <Image src="/icons/icon-192.png" alt="Quvora" width={24} height={24} priority />
@@ -306,18 +306,18 @@ export default function LandingPage() {
             onDragEnd={handleDragEnd}
             className="w-full h-full flex items-center justify-center px-10 relative z-10"
           >
-            <div className="relative w-full max-w-[260px] aspect-square overflow-visible">
-              {/* Interaction Stage */}
+            <div className="relative w-full max-w-[260px] aspect-square overflow-visible transform-gpu">
+              {/* Liquid Interaction Stage */}
               <motion.div 
                 animate={{ 
-                  scale: [1, 1.03, 1],
-                  y: [0, -5, 0]
+                  scale: [1, 1.02, 1],
+                  y: [0, -6, 0]
                 }}
                 transition={{
                   duration: 5, repeat: Infinity, ease: "easeInOut"
                 }}
                 className={cn(
-                  "w-full h-full rounded-[4.5rem] shadow-[0_50px_120px_-30px_rgba(0,0,0,0.3)] relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-1.5 transition-all duration-1000",
+                  "w-full h-full rounded-[4.5rem] shadow-[0_50px_120px_-30px_rgba(0,0,0,0.3)] relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-1 transition-all duration-1000",
                   currentSlide.bg
                 )}
               >
@@ -327,11 +327,11 @@ export default function LandingPage() {
                       animate={{ 
                         filter: [
                           `drop-shadow(0 0 0px ${currentSlide.color}00)`,
-                          `drop-shadow(0 0 30px ${currentSlide.color}60)`,
+                          `drop-shadow(0 0 35px ${currentSlide.color}70)`,
                           `drop-shadow(0 0 0px ${currentSlide.color}00)`
                         ],
-                        scale: [1, 1.1, 1],
-                        rotate: [0, 2, 0, -2, 0]
+                        scale: [1, 1.12, 1],
+                        rotate: [0, 3, 0, -3, 0]
                       }}
                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                    >
@@ -339,21 +339,21 @@ export default function LandingPage() {
                    </motion.div>
                 </div>
                 
-                {/* Volumetric Pulse */}
+                {/* Dynamic Aura */}
                 <div 
-                  className="absolute inset-0 opacity-40 blur-[80px] rounded-full" 
+                  className="absolute inset-0 opacity-40 blur-[90px] rounded-full" 
                   style={{ backgroundColor: currentSlide.color }} 
                 />
               </motion.div>
 
-              {/* Liquid Motion Badges */}
-              <div className="absolute inset-0 pointer-events-none z-30">
+              {/* Liquid Motion Badges - 5-Point Non-Linear Path */}
+              <div className="absolute inset-0 pointer-events-none z-30 overflow-visible">
                 {currentSlide.badges.map((BadgeIcon, i) => (
                   <motion.div
                     key={i}
                     animate={{ 
-                      y: [0, -28, 10, -20, 0],
-                      x: [0, i % 2 === 0 ? -20 : 20, i % 2 === 0 ? 12 : -12, 0],
+                      y: [0, -32, 12, -24, 0],
+                      x: [0, i % 2 === 0 ? -24 : 24, i % 2 === 0 ? 15 : -15, 0],
                       rotate: [0, i % 2 === 0 ? -20 : 20, i % 2 === 0 ? 15 : -15, 0],
                       scale: [1, 1.15, 0.95, 1.1, 1],
                     }}
@@ -361,10 +361,10 @@ export default function LandingPage() {
                       duration: 7 + i, 
                       repeat: Infinity, 
                       ease: "easeInOut",
-                      delay: i * 0.7
+                      delay: i * 0.6
                     }}
                     className={cn(
-                      "absolute w-14 h-14 glass-thick rounded-[1.5rem] border-none shadow-2xl flex items-center justify-center overflow-visible",
+                      "absolute w-14 h-14 glass-thick rounded-[1.8rem] border-none shadow-2xl flex items-center justify-center overflow-visible z-40",
                       i === 0 ? "-top-8 -left-8" : "-bottom-8 -right-8"
                     )}
                   >
@@ -378,7 +378,7 @@ export default function LandingPage() {
       </main>
 
       <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.15)] pt-6 pb-[env(safe-area-inset-bottom,1.5rem)] px-8 text-center flex flex-col items-center z-50">
-        {/* iOS Handle */}
+        {/* iOS Fluid Handle */}
         <div className="w-12 h-1 bg-foreground/10 rounded-full mb-6" />
 
         <AnimatePresence mode="wait">
@@ -393,13 +393,13 @@ export default function LandingPage() {
             <h1 className="text-2xl font-black tracking-tighter text-foreground leading-none">
               {currentSlide.title}
             </h1>
-            <p className="text-[8px] font-black text-muted-foreground leading-relaxed uppercase tracking-[0.2em] opacity-60">
+            <p className="text-[8px] font-black text-muted-foreground leading-relaxed uppercase tracking-[0.25em] opacity-60">
               {currentSlide.subtitle}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        <div className="w-full max-w-[300px] flex flex-col gap-3">
+        <div className="w-full max-w-[320px] flex flex-col gap-3">
           <AuthModal 
             defaultTab="register"
             trigger={
