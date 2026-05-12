@@ -78,7 +78,7 @@ export function AuthModal({ trigger, defaultTab = 'login' }: AuthModalProps) {
             </div>
             <SheetTitle className="text-3xl font-black tracking-tight">Access Quvora</SheetTitle>
             <SheetDescription className="text-muted-foreground text-sm font-medium mt-1">
-              Direct Email & Password Authentication
+              Secure authentication for India's AI Marketplace.
             </SheetDescription>
           </SheetHeader>
 
