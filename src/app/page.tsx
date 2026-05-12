@@ -105,6 +105,7 @@ export default function LandingPage() {
     const root = window.document.documentElement;
     setIsDark(root.classList.contains('dark'));
 
+    // Defer random generation to client to prevent hydration mismatch
     const icons = [Store, Bot, MessageCircle, Briefcase, Zap, Sparkles, ShieldCheck, Star, Rocket, Languages];
     setBgIcons(icons.map((Icon, i) => ({
       Icon,
@@ -195,6 +196,7 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none transition-colors duration-700 pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
+      {/* Background Constellation */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-20">
         {bgIcons.map((item, i) => (
           <motion.div
@@ -219,6 +221,7 @@ export default function LandingPage() {
         ))}
       </div>
 
+      {/* Premium iOS Header */}
       <header className="shrink-0 pt-3 px-8 z-50">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-3">
@@ -256,6 +259,7 @@ export default function LandingPage() {
         </div>
       </header>
 
+      {/* Main Art Canvas */}
       <main className="flex-[3] relative flex items-center justify-center overflow-hidden cursor-grab active:cursor-grabbing">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
@@ -312,30 +316,32 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      <footer className="shrink-0 w-full bg-card rounded-t-[4rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-12 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
+      {/* Premium iOS Footer Card */}
+      <footer className="shrink-0 w-full glass-thick rounded-t-[4rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-12 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-700">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="flex flex-col gap-3 mb-12 w-full"
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+            className="flex flex-col gap-3 mb-10 w-full"
           >
-            <h1 className="text-3xl font-black tracking-tighter text-foreground leading-tight">
+            <h1 className="text-4xl font-black tracking-tighter text-foreground leading-tight">
               {currentSlide.title}
             </h1>
-            <p className="text-[11px] font-black text-muted-foreground/50 leading-relaxed uppercase tracking-[0.2em] max-w-[280px] mx-auto">
+            <p className="text-[11px] font-black text-muted-foreground/50 leading-relaxed uppercase tracking-[0.25em] max-w-[280px] mx-auto">
               {currentSlide.subtitle}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        <div className="w-full max-w-[320px] flex flex-col gap-5">
+        <div className="w-full max-w-[320px] flex flex-col gap-6">
           <AuthModal 
             defaultTab="register"
             trigger={
               <motion.div whileTap={{ scale: 0.96 }}>
-                <Button className="w-full h-16 rounded-[1.5rem] font-black text-xs uppercase tracking-widest bg-primary text-white shadow-[0_20px_40px_-15px_rgba(var(--primary),0.3)] hover:brightness-110 active:scale-[0.98] transition-all border-none group relative overflow-hidden">
+                <Button className="w-full h-16 rounded-[1.5rem] font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/30 hover:brightness-110 active:scale-[0.98] transition-all border-none group relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   Create Free Account
                   <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -346,7 +352,7 @@ export default function LandingPage() {
           <AuthModal 
             defaultTab="login"
             trigger={
-              <button className="group flex flex-col items-center gap-1.5 py-2">
+              <button className="group flex flex-col items-center gap-1.5 py-2 transition-transform active:scale-95">
                 <p className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest transition-colors group-hover:text-muted-foreground/60">
                   Already a member?
                 </p>
@@ -362,8 +368,8 @@ export default function LandingPage() {
               <div className="relative">
                 <ShieldCheck className="w-4 h-4" />
                 <motion.div 
-                  animate={{ opacity: [0, 0.5, 0], scale: [1, 1.5, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  animate={{ opacity: [0, 0.4, 0], scale: [1, 1.8, 1] }}
+                  transition={{ duration: 2.5, repeat: Infinity }}
                   className="absolute inset-0 bg-primary/20 rounded-full blur-sm"
                 />
               </div>
