@@ -4,11 +4,34 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+interface Particle {
+  id: number;
+  width: string;
+  height: string;
+  left: string;
+  top: string;
+  duration: number;
+  delay: number;
+}
+
 export function AppBootLoader({ children }: { children: React.ReactNode }) {
   const [isBooting, setIsBooting] = useState(true);
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    // Intelligent boot simulation - could wait for actual app readiness
+    // Generate random particles only on the client to avoid hydration mismatch
+    const newParticles = [...Array(12)].map((_, i) => ({
+      id: i,
+      width: Math.random() * 200 + 100 + 'px',
+      height: Math.random() * 200 + 100 + 'px',
+      left: Math.random() * 100 + '%',
+      top: Math.random() * 100 + '%',
+      duration: 5 + i,
+      delay: i * 0.2
+    }));
+    setParticles(newParticles);
+
+    // Intelligent boot simulation
     const timer = setTimeout(() => {
       setIsBooting(false);
     }, 2400);
@@ -32,9 +55,9 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
           >
             {/* Animated Particle Field */}
             <div className="absolute inset-0 overflow-hidden opacity-30 pointer-events-none">
-              {[...Array(12)].map((_, i) => (
+              {particles.map((p) => (
                 <motion.div
-                  key={i}
+                  key={p.id}
                   animate={{
                     y: [0, -40, 0],
                     x: [0, 20, 0],
@@ -42,17 +65,17 @@ export function AppBootLoader({ children }: { children: React.ReactNode }) {
                     scale: [1, 1.2, 1]
                   }}
                   transition={{
-                    duration: 5 + i,
+                    duration: p.duration,
                     repeat: Infinity,
                     ease: "easeInOut",
-                    delay: i * 0.2
+                    delay: p.delay
                   }}
                   className="absolute rounded-full bg-primary blur-3xl"
                   style={{
-                    width: Math.random() * 200 + 100 + 'px',
-                    height: Math.random() * 200 + 100 + 'px',
-                    left: Math.random() * 100 + '%',
-                    top: Math.random() * 100 + '%',
+                    width: p.width,
+                    height: p.height,
+                    left: p.left,
+                    top: p.top,
                   }}
                 />
               ))}

@@ -1,13 +1,36 @@
 
-"use client"
+'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+
+interface Particle {
+  id: number;
+  width: string;
+  height: string;
+  left: string;
+  top: string;
+  animationDelay: string;
+  animationDuration: string;
+}
 
 export default function SplashScreen() {
   const router = useRouter();
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
+    // Generate particles on client side to avoid hydration mismatch
+    const newParticles = [...Array(20)].map((_, i) => ({
+      id: i,
+      width: Math.random() * 300 + 100 + 'px',
+      height: Math.random() * 300 + 100 + 'px',
+      left: Math.random() * 100 + '%',
+      top: Math.random() * 100 + '%',
+      animationDelay: i * 0.5 + 's',
+      animationDuration: Math.random() * 5 + 5 + 's'
+    }));
+    setParticles(newParticles);
+
     const timer = setTimeout(() => {
       router.push('/onboarding');
     }, 2500);
@@ -16,19 +39,19 @@ export default function SplashScreen() {
 
   return (
     <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0D1B2A] overflow-hidden">
-      {/* Background animated particle field (Simplified for MVP) */}
+      {/* Background animated particle field */}
       <div className="absolute inset-0 opacity-20">
-        {[...Array(20)].map((_, i) => (
+        {particles.map((p) => (
           <div 
-            key={i}
+            key={p.id}
             className="absolute rounded-full bg-primary blur-3xl animate-pulse"
             style={{
-              width: Math.random() * 300 + 100 + 'px',
-              height: Math.random() * 300 + 100 + 'px',
-              left: Math.random() * 100 + '%',
-              top: Math.random() * 100 + '%',
-              animationDelay: i * 0.5 + 's',
-              animationDuration: Math.random() * 5 + 5 + 's'
+              width: p.width,
+              height: p.height,
+              left: p.left,
+              top: p.top,
+              animationDelay: p.animationDelay,
+              animationDuration: p.animationDuration
             }}
           />
         ))}
