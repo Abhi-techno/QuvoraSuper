@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { ChevronLeft, Bell, Sun, Moon, Search } from 'lucide-react';
+import { ChevronLeft, Bell, Sun, Moon, Search, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import { LoginSheet } from '@/components/auth/login-sheet';
 
 export function TopNav({ isScrolled }: { isScrolled: boolean }) {
   const pathname = usePathname();
@@ -79,6 +80,13 @@ export function TopNav({ isScrolled }: { isScrolled: boolean }) {
                   </motion.div>
                 </AnimatePresence>
               </Button>
+              <LoginSheet 
+                trigger={
+                  <Button size="icon" variant="ghost" className="h-9 w-9 glass rounded-full border-none shadow-sm active:scale-90 transition-all hover:bg-transparent">
+                    <LogIn className="w-4 h-4 text-primary" />
+                  </Button>
+                }
+              />
               <Link href="/notifications">
                 <Button size="icon" variant="ghost" className="h-9 w-9 glass rounded-full border-none shadow-sm relative">
                   <Bell className="w-4 h-4 text-primary" />
