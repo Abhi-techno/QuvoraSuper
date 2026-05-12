@@ -8,21 +8,24 @@ import { AuthModal } from '@/components/auth/auth-modal';
 import { useUser } from '@/firebase';
 import { cn } from '@/lib/utils';
 import { 
-  ChevronRight, 
-  ArrowRight, 
   Store, 
   Bot, 
   MessageCircle, 
   Languages, 
   Briefcase, 
-  Rocket
+  Rocket,
+  ArrowRight,
+  ChevronRight,
+  Signal,
+  Wifi,
+  Battery
 } from 'lucide-react';
 
 const SLIDES = [
   {
     id: 'buy-sell',
-    title: 'Buy & Sell Instantly',
-    subtitle: 'Mobiles, cars, homes & 100+ categories near you',
+    title: 'Buy & Sell Anything',
+    subtitle: 'Mobiles, cars, homes, jobs & 100+ categories near you',
     icon: Store,
     badge1: '💼',
     badge2: '🏷️',
@@ -31,8 +34,8 @@ const SLIDES = [
   },
   {
     id: 'ai-smart',
-    title: 'AI-Powered Search',
-    subtitle: 'Smart price suggestions & fraud detection built-in',
+    title: 'AI That Works For You',
+    subtitle: 'Smart price suggestions, auto-fill & fraud detection',
     icon: Bot,
     badge1: '✨',
     badge2: '🔍',
@@ -72,7 +75,7 @@ const SLIDES = [
   {
     id: 'community',
     title: 'Join 10M+ Indians',
-    subtitle: "India's fastest growing career & marketplace ecosystem",
+    subtitle: "India's fastest growing marketplace super-app",
     icon: Rocket,
     badge1: '⭐',
     badge2: '🎯',
@@ -81,7 +84,7 @@ const SLIDES = [
   }
 ];
 
-const springTransition = { type: 'spring', stiffness: 260, damping: 20 };
+const springTransition = { type: 'spring', stiffness: 300, damping: 30 };
 const AUTO_PLAY_INTERVAL = 4800;
 const SWIPE_THRESHOLD = 50;
 
@@ -126,7 +129,7 @@ export default function LandingPage() {
       scale: 1,
       transition: {
         x: { type: 'spring', stiffness: 300, damping: 30 },
-        opacity: { duration: 0.2 }
+        opacity: { duration: 0.3 }
       }
     },
     exit: (direction: number) => ({
@@ -136,7 +139,7 @@ export default function LandingPage() {
       scale: 0.95,
       transition: {
         x: { type: 'spring', stiffness: 300, damping: 30 },
-        opacity: { duration: 0.2 }
+        opacity: { duration: 0.3 }
       }
     })
   };
@@ -144,7 +147,7 @@ export default function LandingPage() {
   const paginate = (newDirection: number) => {
     setDirection(newDirection);
     setIndex((prev) => (prev + newDirection + SLIDES.length) % SLIDES.length);
-    startTimer(); // Reset timer on manual move
+    startTimer();
   };
 
   const handleDragEnd = (event: any, info: PanInfo) => {
@@ -155,24 +158,28 @@ export default function LandingPage() {
     }
   };
 
-  const handleSkip = () => {
-    setDirection(1);
-    setIndex(SLIDES.length - 1);
-    startTimer();
-  };
-
   if (loading) return null;
 
   const currentSlide = SLIDES[index];
   const Icon = currentSlide.icon;
 
   return (
-    <div className="fixed inset-0 bg-[#FDF8F3] flex flex-col overflow-hidden select-none">
-      {/* 1. TOP PART: Navigation & Progress */}
-      <header className="shrink-0 h-20 w-full flex flex-col justify-end px-8 gap-4 pt-2 z-50">
-        <div className="flex justify-between items-center w-full">
-          {/* iOS-Style DASH Progress indicators */}
-          <div className="flex gap-1.5 flex-1 max-w-[140px]">
+    <div className="fixed inset-0 bg-[#FDF8F3] flex flex-col overflow-hidden select-none touch-none">
+      {/* 1. TOP PART: Status & Progress */}
+      <header className="shrink-0 pt-2 px-6 z-50">
+        {/* Mock iOS Status Bar */}
+        <div className="flex justify-between items-center h-10 px-4 mb-2">
+          <span className="text-xs font-bold tracking-tight">9:41</span>
+          <div className="flex items-center gap-1.5 opacity-60">
+            <Signal size={14} strokeWidth={2.5} />
+            <Wifi size={14} strokeWidth={2.5} />
+            <Battery size={18} strokeWidth={2.5} />
+          </div>
+        </div>
+
+        {/* DASH Progress Indicators */}
+        <div className="flex justify-between items-center px-4">
+          <div className="flex gap-1.5 flex-1 max-w-[160px]">
             {SLIDES.map((_, i) => (
               <motion.div
                 key={i}
@@ -181,20 +188,20 @@ export default function LandingPage() {
                   backgroundColor: i === index ? '#1A6AFF' : '#E5E7EB',
                   opacity: i === index ? 1 : 0.4
                 }}
-                className="h-1 rounded-full transition-all duration-300"
+                className="h-1 rounded-full"
               />
             ))}
           </div>
           <button 
-            onClick={handleSkip}
-            className="text-[10px] font-black uppercase tracking-[0.1em] text-muted-foreground/60 hover:text-primary transition-all active:scale-90"
+            onClick={() => { setDirection(1); setIndex(SLIDES.length - 1); startTimer(); }}
+            className="text-[10px] font-black uppercase tracking-[0.1em] text-muted-foreground/60 active:scale-90 transition-transform"
           >
             Skip
           </button>
         </div>
       </header>
 
-      {/* 2. CENTER PART: High-Fidelity Artwork Canvas */}
+      {/* 2. CENTER PART: Interactive Canvas */}
       <main className="flex-1 relative flex items-center justify-center overflow-hidden cursor-grab active:cursor-grabbing">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
@@ -211,40 +218,40 @@ export default function LandingPage() {
             className="w-full flex flex-col items-center px-6"
           >
             <div className={cn(
-              "w-full max-w-[280px] aspect-square rounded-[3.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center",
+              "w-full max-w-[240px] aspect-square rounded-[3.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center transition-colors duration-700",
               currentSlide.bgGradient
             )}>
-              {/* Internal Liquid Animations */}
+              {/* Internal Ambient Motion */}
               <motion.div 
                 animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 opacity-20 pointer-events-none"
               >
-                <div className="absolute top-0 left-0 w-32 h-32 bg-white blur-3xl rounded-full" />
-                <div className="absolute bottom-0 right-0 w-40 h-40 bg-black/10 blur-3xl rounded-full" />
+                <div className="absolute top-0 left-0 w-24 h-24 bg-white blur-3xl rounded-full" />
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-black/10 blur-3xl rounded-full" />
               </motion.div>
 
-              {/* Central Premium Icon Box */}
+              {/* Central Premium Icon Container */}
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={springTransition}
-                className="relative z-10 p-8 bg-white/40 backdrop-blur-2xl rounded-[2.5rem] shadow-2xl border border-white/50 flex items-center justify-center"
+                className="relative z-10 p-7 bg-white/40 backdrop-blur-2xl rounded-[2.5rem] shadow-2xl border border-white/50 flex items-center justify-center"
               >
-                <Icon size={72} strokeWidth={1.5} style={{ color: currentSlide.accentColor }} className="drop-shadow-xl" />
+                <Icon size={64} strokeWidth={1.5} style={{ color: currentSlide.accentColor }} className="drop-shadow-xl" />
                 
                 {/* Floating Micro-Badges */}
                 <motion.div
-                  animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
+                  animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -top-4 -left-4 w-11 h-11 bg-white/95 rounded-2xl shadow-lg flex items-center justify-center text-lg border border-white/50"
+                  className="absolute -top-3 -left-3 w-10 h-10 bg-white/95 rounded-2xl shadow-lg flex items-center justify-center text-lg border border-white/50"
                 >
                   {currentSlide.badge1}
                 </motion.div>
                 <motion.div
-                  animate={{ y: [0, 8, 0], x: [0, -4, 0] }}
+                  animate={{ y: [0, 6, 0] }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                  className="absolute -bottom-4 -right-4 w-11 h-11 bg-white/95 rounded-2xl shadow-lg flex items-center justify-center text-lg border border-white/50"
+                  className="absolute -bottom-3 -right-3 w-10 h-10 bg-white/95 rounded-2xl shadow-lg flex items-center justify-center text-lg border border-white/50"
                 >
                   {currentSlide.badge2}
                 </motion.div>
@@ -252,16 +259,10 @@ export default function LandingPage() {
             </div>
           </motion.div>
         </AnimatePresence>
-
-        {/* Swipe Hint Side-Peeks */}
-        <div className="absolute inset-0 pointer-events-none flex items-center justify-between px-1 z-0 overflow-hidden">
-          <div className="w-12 h-32 rounded-r-3xl glass opacity-10 -ml-4" />
-          <div className="w-12 h-32 rounded-l-3xl glass opacity-10 -mr-4" />
-        </div>
       </main>
 
-      {/* 3. BOTTOM PART: High-Conversion Action Card */}
-      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.08)] pt-10 pb-[env(safe-area-inset-bottom,2.5rem)] px-8 text-center flex flex-col items-center">
+      {/* 3. BOTTOM PART: Action Card */}
+      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.1)] pt-8 pb-[env(safe-area-inset-bottom,2.5rem)] px-8 text-center flex flex-col items-center z-50">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -270,10 +271,10 @@ export default function LandingPage() {
             exit={{ opacity: 0, y: -10 }}
             className="flex flex-col gap-2 mb-8 w-full"
           >
-            <h1 className="text-[28px] font-black tracking-tighter text-[#0D1B2A] leading-[1.15]">
+            <h1 className="text-[26px] font-black tracking-tighter text-[#0D1B2A] leading-tight">
               {currentSlide.title}
             </h1>
-            <p className="text-[14px] font-medium text-muted-foreground/70 leading-relaxed max-w-[260px] mx-auto px-2">
+            <p className="text-[14px] font-medium text-muted-foreground/60 leading-relaxed max-w-[260px] mx-auto">
               {currentSlide.subtitle}
             </p>
           </motion.div>
@@ -290,30 +291,27 @@ export default function LandingPage() {
                 <AuthModal 
                   defaultTab="register"
                   trigger={
-                    <Button className="w-full h-14 rounded-2xl font-black text-sm bg-gradient-to-r from-[#1A6AFF] to-[#3B82F6] text-white shadow-[0_10px_28px_rgba(26,106,255,0.28)] transition-all active:scale-[0.98]">
+                    <Button className="w-full h-14 rounded-2xl font-black text-sm bg-gradient-to-r from-[#1A6AFF] to-[#3B82F6] text-white shadow-xl shadow-primary/20 active:scale-[0.98]">
                       CREATE FREE ACCOUNT
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   }
                 />
-                <div className="flex flex-col gap-1 items-center mt-2">
+                <div className="flex flex-col gap-1 items-center mt-1">
                   <p className="text-[10px] font-black text-primary/60 uppercase tracking-widest">
                     Trusted by 10M+ Indians
-                  </p>
-                  <p className="text-[9px] text-muted-foreground/40 font-bold">
-                    Email & Password Authentication Supported
                   </p>
                 </div>
               </motion.div>
             ) : (
               <Button 
                 onClick={() => paginate(1)}
-                className="w-full h-14 rounded-2xl font-black text-sm bg-[#1A6AFF] text-white shadow-2xl shadow-[#1A6AFF]/25 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+                className="w-full h-14 rounded-2xl font-black text-sm bg-[#1A6AFF] text-white shadow-xl shadow-primary/20 active:scale-[0.98] flex items-center justify-center gap-2"
               >
                 <span>GET STARTED</span>
-                <div className="flex -space-x-1.5 opacity-60">
-                  <ChevronRight size={16} />
-                  <ChevronRight size={16} />
+                <div className="flex -space-x-1 opacity-50">
+                  <ChevronRight size={14} />
+                  <ChevronRight size={14} />
                 </div>
               </Button>
             )}
@@ -323,7 +321,7 @@ export default function LandingPage() {
             defaultTab="login"
             trigger={
               <button className="text-[11px] font-bold text-muted-foreground/60 hover:text-primary transition-colors py-2">
-                Already have an account? <span className="text-[#1A6AFF] font-black underline underline-offset-4">Sign in</span>
+                Already have an account? <span className="text-[#1A6AFF] font-black underline underline-offset-4 decoration-2">Sign in</span>
               </button>
             }
           />
