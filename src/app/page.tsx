@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { AuthModal } from '@/components/auth/auth-modal';
 import { useUser } from '@/firebase';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 import { 
   Store, 
   Bot, 
@@ -223,41 +224,51 @@ export default function LandingPage() {
         ))}
       </div>
 
-      {/* 1. TOP: Progress & Theme */}
-      <header className="shrink-0 pt-8 px-8 z-50">
-        <div className="flex justify-between items-center px-2 mb-4">
-          <div className="flex gap-2 flex-1 max-w-[200px]">
-            {SLIDES.map((_, i) => (
-              <div key={i} className="h-1.5 flex-1 bg-black/5 dark:bg-white/10 rounded-full overflow-hidden">
+      {/* 1. TOP: Brand, Progress & Theme */}
+      <header className="shrink-0 pt-12 px-8 z-50">
+        <div className="flex justify-between items-center">
+          {/* Left: Brand Icon */}
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 rounded-2xl bg-white dark:bg-zinc-900 flex items-center justify-center shadow-xl shadow-black/5 border border-white/20 overflow-hidden">
+              <Image src="/icons/icon-192.png" alt="Quvora" width={24} height={24} priority />
+            </div>
+            <span className="text-xs font-black tracking-widest uppercase text-foreground/80">Quvora</span>
+          </div>
+
+          {/* Right: Progress & Theme */}
+          <div className="flex items-center gap-4">
+            <div className="flex gap-1.5 items-center">
+              {SLIDES.map((_, i) => (
                 <motion.div
+                  key={i}
                   initial={false}
                   animate={{ 
-                    width: i === index ? '100%' : i < index ? '100%' : '0%',
-                    backgroundColor: i === index ? currentSlide.color : '#E5E7EB'
+                    width: i === index ? 24 : 6,
+                    backgroundColor: i === index ? currentSlide.color : isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'
                   }}
-                  className="h-full rounded-full"
+                  className="h-1.5 rounded-full transition-all duration-300"
                 />
-              </div>
-            ))}
+              ))}
+            </div>
+            <Button 
+              size="icon" 
+              variant="ghost" 
+              className="h-10 w-10 glass rounded-full border-none shadow-sm" 
+              onClick={toggleTheme}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                  key={isDark ? 'dark' : 'light'}
+                  initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                  exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
+                </motion.div>
+              </AnimatePresence>
+            </Button>
           </div>
-          <Button 
-            size="icon" 
-            variant="ghost" 
-            className="h-10 w-10 glass rounded-full border-none shadow-sm ml-4" 
-            onClick={toggleTheme}
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={isDark ? 'dark' : 'light'}
-                initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
-                animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
-                transition={{ duration: 0.2 }}
-              >
-                {isDark ? <Sun className="w-4 h-4 text-primary" /> : <Moon className="w-4 h-4 text-primary" />}
-              </motion.div>
-            </AnimatePresence>
-          </Button>
         </div>
       </header>
 
