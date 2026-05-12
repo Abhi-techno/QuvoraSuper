@@ -55,7 +55,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    @apply bg-background text-foreground font-body antialiased transition-colors duration-700;
     min-height: 100svh;
     overflow-x: hidden;
     touch-action: pan-y;
