@@ -29,7 +29,7 @@ const SLIDES = [
   {
     id: 'marketplace',
     title: 'Buy & Sell Anything',
-    subtitle: 'Mobiles, cars, homes, jobs & 100+ categories near you',
+    subtitle: 'Mobiles, cars, homes, jobs & 100+ categories',
     icon: Store,
     color: '#1A6AFF',
     bg: 'from-blue-500/25 to-blue-500/10',
@@ -38,7 +38,7 @@ const SLIDES = [
   {
     id: 'ai-engine',
     title: 'AI-Powered Insights',
-    subtitle: 'Smart price suggestions, auto-fill & fraud detection',
+    subtitle: 'Smart price suggestions & fraud detection',
     icon: Bot,
     color: '#FF6B2B',
     bg: 'from-orange-500/25 to-orange-500/10',
@@ -56,7 +56,7 @@ const SLIDES = [
   {
     id: 'languages',
     title: '12 Indian Languages',
-    subtitle: 'Use Quvora in your native tongue with AI voice support',
+    subtitle: 'Use Quvora in your native tongue',
     icon: Languages,
     color: '#7C3AED',
     bg: 'from-purple-500/25 to-purple-500/10',
@@ -65,7 +65,7 @@ const SLIDES = [
   {
     id: 'careers',
     title: 'Jobs & Rentals',
-    subtitle: 'Find your next home or career move for free today',
+    subtitle: 'Find your next home or career move for free',
     icon: Briefcase,
     color: '#F59E0B',
     bg: 'from-amber-500/25 to-amber-500/10',
@@ -74,7 +74,7 @@ const SLIDES = [
   {
     id: 'community',
     title: 'Join 10M+ Indians',
-    subtitle: "India's fastest growing AI marketplace super-app",
+    subtitle: "India's fastest growing AI marketplace",
     icon: Rocket,
     color: '#EC4899',
     bg: 'from-pink-500/25 to-pink-500/10',
@@ -86,7 +86,6 @@ const AUTO_PLAY_INTERVAL = 6000;
 const SWIPE_THRESHOLD = 30;
 const VELOCITY_THRESHOLD = 400;
 
-// Snappier iOS Liquid Spring Physics
 const iosSpring = {
   type: "spring",
   stiffness: 450,
@@ -172,7 +171,7 @@ export default function LandingPage() {
       x: direction > 0 ? '100%' : '-100%',
       opacity: 0,
       scale: 0.9,
-      filter: 'blur(10px)',
+      filter: 'blur(12px)',
     }),
     center: {
       zIndex: 1,
@@ -192,7 +191,7 @@ export default function LandingPage() {
       x: direction < 0 ? '50%' : '-50%',
       opacity: 0,
       scale: 0.9,
-      filter: 'blur(10px)',
+      filter: 'blur(12px)',
       transition: {
         x: iosSpring,
         opacity: { duration: 0.2 }
@@ -206,8 +205,8 @@ export default function LandingPage() {
   const MainIcon = currentSlide.icon;
 
   return (
-    <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] gpu-accelerated">
-      {/* Background Constellation - Cinematic Depth */}
+    <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none gpu-accelerated">
+      {/* Dynamic Ambient Constellation */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.2]">
         {bgIcons.map((item) => (
           <motion.div
@@ -238,9 +237,9 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={iosSpring}
-            className="flex items-center gap-3.5 group cursor-pointer"
+            className="flex items-center gap-3.5 group"
           >
-            <div className="w-10 h-10 rounded-full glass flex items-center justify-center shadow-lg border-none overflow-hidden group-active:scale-95 transition-transform duration-300">
+            <div className="w-10 h-10 rounded-full glass flex items-center justify-center shadow-lg border-none overflow-hidden">
               <Image src="/icons/icon-192.png" alt="Quvora" width={24} height={24} priority />
             </div>
             <div className="flex flex-col">
@@ -250,7 +249,7 @@ export default function LandingPage() {
           </motion.div>
 
           <div className="flex items-center gap-4">
-            <div className="flex gap-1 items-center glass px-2.5 py-1 rounded-full border-none backdrop-blur-md">
+            <div className="flex gap-1 items-center glass px-2.5 py-1 rounded-full border-none">
               {SLIDES.map((_, i) => (
                 <motion.div
                   key={i}
@@ -280,9 +279,9 @@ export default function LandingPage() {
                   className="flex items-center justify-center w-full h-full"
                 >
                   {isDark ? (
-                    <Sun className="w-4 h-4 text-primary fill-primary/20" />
+                    <Sun className="w-4 h-4 text-primary" />
                   ) : (
-                    <Moon className="w-4 h-4 text-primary fill-primary/20" />
+                    <Moon className="w-4 h-4 text-primary" />
                   )}
                 </motion.div>
               </AnimatePresence>
@@ -306,8 +305,8 @@ export default function LandingPage() {
             onDragEnd={handleDragEnd}
             className="w-full h-full flex items-center justify-center px-10 relative z-10"
           >
-            <div className="relative w-full max-w-[260px] aspect-square overflow-visible transform-gpu">
-              {/* Liquid Interaction Stage */}
+            <div className="relative w-full max-w-[240px] aspect-square overflow-visible transform-gpu">
+              {/* Alive Stage */}
               <motion.div 
                 animate={{ 
                   scale: [1, 1.02, 1],
@@ -317,12 +316,12 @@ export default function LandingPage() {
                   duration: 5, repeat: Infinity, ease: "easeInOut"
                 }}
                 className={cn(
-                  "w-full h-full rounded-[4.5rem] shadow-[0_50px_120px_-30px_rgba(0,0,0,0.3)] relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-1 transition-all duration-1000",
+                  "w-full h-full rounded-[4rem] shadow-[0_50px_100px_-30px_rgba(0,0,0,0.3)] relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-1 transition-all duration-1000",
                   currentSlide.bg
                 )}
               >
                 <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl" />
-                <div className="w-full h-full glass rounded-[4rem] border-none shadow-2xl flex items-center justify-center relative z-10">
+                <div className="w-full h-full glass rounded-[3.8rem] border-none shadow-2xl flex items-center justify-center relative z-10">
                    <motion.div
                       animate={{ 
                         filter: [
@@ -339,14 +338,14 @@ export default function LandingPage() {
                    </motion.div>
                 </div>
                 
-                {/* Dynamic Aura */}
+                {/* Dynamic Glow */}
                 <div 
-                  className="absolute inset-0 opacity-40 blur-[90px] rounded-full" 
+                  className="absolute inset-0 opacity-40 blur-[80px] rounded-full" 
                   style={{ backgroundColor: currentSlide.color }} 
                 />
               </motion.div>
 
-              {/* Liquid Motion Badges - 5-Point Non-Linear Path */}
+              {/* Liquid Motion Badges */}
               <div className="absolute inset-0 pointer-events-none z-30 overflow-visible">
                 {currentSlide.badges.map((BadgeIcon, i) => (
                   <motion.div
@@ -364,11 +363,11 @@ export default function LandingPage() {
                       delay: i * 0.6
                     }}
                     className={cn(
-                      "absolute w-14 h-14 glass-thick rounded-[1.8rem] border-none shadow-2xl flex items-center justify-center overflow-visible z-40",
+                      "absolute w-14 h-14 glass-thick rounded-3xl border-none shadow-2xl flex items-center justify-center z-40",
                       i === 0 ? "-top-8 -left-8" : "-bottom-8 -right-8"
                     )}
                   >
-                    <BadgeIcon size={28} style={{ color: currentSlide.color }} className="brightness-125 drop-shadow-2xl" />
+                    <BadgeIcon size={28} style={{ color: currentSlide.color }} className="brightness-125" />
                   </motion.div>
                 ))}
               </div>
@@ -378,7 +377,6 @@ export default function LandingPage() {
       </main>
 
       <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.15)] pt-6 pb-[env(safe-area-inset-bottom,1.5rem)] px-8 text-center flex flex-col items-center z-50">
-        {/* iOS Fluid Handle */}
         <div className="w-12 h-1 bg-foreground/10 rounded-full mb-6" />
 
         <AnimatePresence mode="wait">
@@ -393,7 +391,7 @@ export default function LandingPage() {
             <h1 className="text-2xl font-black tracking-tighter text-foreground leading-none">
               {currentSlide.title}
             </h1>
-            <p className="text-[8px] font-black text-muted-foreground leading-relaxed uppercase tracking-[0.25em] opacity-60">
+            <p className="text-[8px] font-black text-muted-foreground uppercase tracking-[0.25em] opacity-60">
               {currentSlide.subtitle}
             </p>
           </motion.div>
@@ -404,7 +402,7 @@ export default function LandingPage() {
             defaultTab="register"
             trigger={
               <motion.div whileTap={{ scale: 0.96 }}>
-                <Button className="w-full h-14 rounded-[1.5rem] font-black text-sm uppercase tracking-[0.1em] bg-primary text-white shadow-lg shadow-primary/20 transition-all border-none hover:brightness-110">
+                <Button className="w-full h-14 rounded-2xl font-black text-sm uppercase tracking-[0.1em] bg-primary text-white shadow-lg shadow-primary/20 transition-all border-none">
                   Create Free Account
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
