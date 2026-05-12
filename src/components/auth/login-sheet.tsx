@@ -70,28 +70,28 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
       </SheetTrigger>
       <SheetContent 
         side="bottom" 
-        className="h-fit max-h-[92vh] glass-thick rounded-t-[3rem] p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
+        className="h-fit max-h-[85vh] glass-thick rounded-t-[3rem] p-0 border-none shadow-2xl gpu-accelerated focus:outline-none"
       >
         {/* iOS Drag Handle */}
-        <div className="flex flex-col items-center pt-3 pb-2 shrink-0">
+        <div className="flex flex-col items-center pt-3 pb-1 shrink-0">
           <div className="w-10 h-1.5 bg-foreground/10 rounded-full opacity-30" />
         </div>
         
-        <div className="max-w-md mx-auto flex flex-col px-6 pb-12 pt-2">
-          <div className="flex flex-col items-center mb-8 text-center">
-            <div className="w-16 h-16 rounded-[1.8rem] bg-white flex items-center justify-center mb-4 shadow-xl border border-black/5 overflow-hidden">
-              <Image src="/icons/icon-192.png" alt="Quvora" width={40} height={40} priority />
+        <div className="max-w-md mx-auto flex flex-col px-6 pb-10 pt-2">
+          <div className="flex flex-col items-center mb-6 text-center">
+            <div className="w-14 h-14 rounded-[1.5rem] bg-white flex items-center justify-center mb-3 shadow-lg border border-black/5 overflow-hidden">
+              <Image src="/icons/icon-192.png" alt="Quvora" width={36} height={36} priority />
             </div>
             <SheetHeader className="space-y-1">
-              <SheetTitle className="text-2xl font-black tracking-tighter">Welcome Back</SheetTitle>
-              <SheetDescription className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
-                Secure AI Superapp Dashboard
+              <SheetTitle className="text-xl font-black tracking-tighter">Welcome Back</SheetTitle>
+              <SheetDescription className="text-[9px] font-black uppercase tracking-[0.2em] text-primary">
+                Secure AI Superapp Login
               </SheetDescription>
             </SheetHeader>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               <div className="space-y-1.5 px-1">
                 <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Email Address</Label>
                 <div className="relative">
@@ -107,7 +107,7 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
                 </div>
               </div>
               <div className="space-y-1.5 px-1">
-                <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Secret Password</Label>
+                <Label className="text-[9px] font-black uppercase tracking-widest text-muted-foreground ml-1">Password</Label>
                 <div className="relative">
                   <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
                   <Input 
@@ -125,7 +125,7 @@ export function LoginSheet({ trigger }: LoginSheetProps) {
               </div>
             </div>
             <Button 
-              className="w-full h-16 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-4" 
+              className="w-full h-16 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-4" 
               disabled={loading}
             >
               {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <ArrowRight className="w-5 h-5 mr-2" />}
