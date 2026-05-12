@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -53,14 +54,14 @@
   * {
     @apply border-border;
     -webkit-tap-highlight-color: transparent;
-    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   body {
     @apply bg-background text-foreground font-body antialiased;
     min-height: 100svh;
     overflow-x: hidden;
-    touch-action: pan-y;
+    touch-action: none;
     overscroll-behavior: none;
     user-select: none;
     -webkit-user-select: none;
@@ -69,7 +70,7 @@
 }
 
 .glass {
-  @apply backdrop-blur-[24px] saturate-[180%] border border-white/20;
+  @apply backdrop-blur-[28px] saturate-[190%] border border-white/20;
   background-color: hsla(0, 0%, 100%, 0.6);
   transform: translateZ(0);
 }
@@ -80,7 +81,7 @@
 }
 
 .glass-thick {
-  @apply backdrop-blur-[32px] saturate-[160%] border border-white/30;
+  @apply backdrop-blur-[40px] saturate-[170%] border border-white/30;
   background-color: hsla(0, 0%, 100%, 0.75);
   transform: translateZ(0);
 }
@@ -92,7 +93,7 @@
 
 .ios-tab-bar {
   @apply fixed bottom-6 left-6 right-6 h-16 rounded-[2.5rem] glass-thick flex items-center justify-around px-4 z-50;
-  box-shadow: 0 10px 40px -5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 45px -10px rgba(0, 0, 0, 0.15);
   margin-bottom: env(safe-area-inset-bottom, 0px);
 }
 

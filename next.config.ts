@@ -1,3 +1,4 @@
+
 import type {NextConfig} from 'next';
 
 const nextConfig: NextConfig = {
@@ -12,7 +13,8 @@ const nextConfig: NextConfig = {
     // This allows HMR and dev resources to work across cloud workstation origins
     allowedDevOrigins: [
       '6000-firebase-studio-1778421706854.cluster-a6zx3cwnb5hnuwbgyxmofxpkfe.cloudworkstations.dev',
-      '*.cloudworkstations.dev'
+      '*.cloudworkstations.dev',
+      '*.vercel.app'
     ]
   },
   images: {

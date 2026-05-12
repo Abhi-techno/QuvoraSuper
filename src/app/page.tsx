@@ -171,8 +171,9 @@ export default function LandingPage() {
     enter: (direction: number) => ({
       x: direction > 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.85,
-      filter: 'blur(10px)'
+      scale: 0.8,
+      filter: 'blur(10px)',
+      rotateY: direction > 0 ? 45 : -45
     }),
     center: {
       zIndex: 1,
@@ -180,11 +181,13 @@ export default function LandingPage() {
       opacity: 1,
       scale: 1,
       filter: 'blur(0px)',
+      rotateY: 0,
       transition: {
         x: { type: 'spring', stiffness: 400, damping: 35 },
         opacity: { duration: 0.3 },
-        scale: { duration: 0.3 },
-        filter: { duration: 0.3 }
+        scale: { duration: 0.4 },
+        filter: { duration: 0.4 },
+        rotateY: { type: 'spring', stiffness: 300, damping: 30 }
       }
     },
     exit: (direction: number) => ({
@@ -192,10 +195,11 @@ export default function LandingPage() {
       x: direction < 0 ? '50%' : '-50%',
       opacity: 0,
       scale: 0.85,
-      filter: 'blur(10px)',
+      filter: 'blur(15px)',
+      rotateY: direction < 0 ? 25 : -25,
       transition: {
         x: { type: 'spring', stiffness: 400, damping: 35 },
-        opacity: { duration: 0.2 }
+        opacity: { duration: 0.25 }
       }
     })
   };
@@ -206,15 +210,17 @@ export default function LandingPage() {
   const MainIcon = currentSlide.icon;
 
   return (
-    <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
-      {/* Background Constellation - Optimized Visibility */}
+    <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] transition-colors duration-1000">
+      {/* Background Constellation - Drifting & Alive */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.2]">
         {bgIcons.map((item) => (
           <motion.div
             key={item.id}
             animate={{ 
               y: [0, -40, 0],
-              opacity: [0.5, 0.8, 0.5]
+              x: [0, 20, 0],
+              rotate: [0, 10, 0],
+              opacity: [0.4, 0.7, 0.4]
             }}
             transition={{
               duration: item.duration,
@@ -225,7 +231,7 @@ export default function LandingPage() {
             className="absolute text-primary"
             style={{ top: item.top, left: item.left }}
           >
-            <item.Icon size={48} strokeWidth={1.5} />
+            <item.Icon size={48} strokeWidth={1.2} />
           </motion.div>
         ))}
       </div>
@@ -248,8 +254,8 @@ export default function LandingPage() {
                 <motion.div
                   key={i}
                   animate={{ 
-                    width: i === index ? 20 : 6,
-                    backgroundColor: i === index ? currentSlide.color : (isDark ? '#3f3f46' : '#e2e8f0')
+                    width: i === index ? 22 : 6,
+                    backgroundColor: i === index ? currentSlide.color : (isDark ? '#3f3f46' : '#cbd5e1')
                   }}
                   transition={springConfig}
                   className="h-1.5 rounded-full"
@@ -303,60 +309,73 @@ export default function LandingPage() {
             exit="exit"
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.4}
+            dragElastic={0.5}
             onDragEnd={handleDragEnd}
             className="w-full h-full flex items-center justify-center px-10 relative z-10"
           >
-            {/* Interaction Wrapper to allow overflow for badges */}
-            <div className="relative w-full max-w-[240px] aspect-square">
+            <div className="relative w-full max-w-[260px] aspect-square">
+              {/* Alive Central Container */}
               <motion.div 
-                initial={{ scale: 0.8, opacity: 0, y: 20 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                transition={{ ...springConfig, delay: 0.1 }}
+                animate={{ 
+                  scale: [1, 1.02, 1],
+                  rotateZ: [0, 0.5, -0.5, 0],
+                }}
+                transition={{
+                  scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                  rotateZ: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+                }}
                 className={cn(
-                  "w-full h-full rounded-[4.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-1",
+                  "w-full h-full rounded-[4.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-1.5 transition-all duration-700",
                   currentSlide.bg
                 )}
               >
                 <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl" />
                 <motion.div
-                  initial={{ scale: 0.9, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={springConfig}
-                  className="w-full h-full glass rounded-[4rem] border-none shadow-2xl flex items-center justify-center relative z-10"
+                  className="w-full h-full glass rounded-[4rem] border-none shadow-2xl flex items-center justify-center relative z-10 group"
                 >
-                  <MainIcon size={80} style={{ color: currentSlide.color }} className="drop-shadow-2xl brightness-110" />
+                   <motion.div
+                      animate={{ 
+                        filter: [
+                          `drop-shadow(0 0 0px ${currentSlide.color}00)`,
+                          `drop-shadow(0 0 25px ${currentSlide.color}50)`,
+                          `drop-shadow(0 0 0px ${currentSlide.color}00)`
+                        ]
+                      }}
+                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                   >
+                     <MainIcon size={84} style={{ color: currentSlide.color }} className="drop-shadow-2xl brightness-125" />
+                   </motion.div>
                 </motion.div>
                 
-                {/* Radial Glow - Higher Opacity for Visibility */}
+                {/* Radial Glow */}
                 <div 
-                  className="absolute inset-0 opacity-40 blur-[60px] rounded-full" 
+                  className="absolute inset-0 opacity-40 blur-[70px] rounded-full" 
                   style={{ backgroundColor: currentSlide.color }} 
                 />
               </motion.div>
 
-              {/* Floating Badges - High-Fidelity "Alive" Motion */}
+              {/* High-Fidelity Floating Badges */}
               {currentSlide.badges.map((BadgeIcon, i) => (
                 <motion.div
                   key={i}
                   animate={{ 
-                    y: [0, -22, 8, -14, 0],
-                    x: [0, i % 2 === 0 ? -14 : 14, i % 2 === 0 ? 10 : -10, 0],
-                    rotate: [0, i % 2 === 0 ? -18 : 18, i % 2 === 0 ? 12 : -12, 0],
-                    scale: [1, 1.1, 0.94, 1.06, 1],
+                    y: [0, -28, 10, -18, 0],
+                    x: [0, i % 2 === 0 ? -18 : 18, i % 2 === 0 ? 12 : -12, 0],
+                    rotate: [0, i % 2 === 0 ? -22 : 22, i % 2 === 0 ? 15 : -15, 0],
+                    scale: [1, 1.15, 0.9, 1.08, 1],
                   }}
                   transition={{ 
-                    duration: 6 + i, 
+                    duration: 7 + i, 
                     repeat: Infinity, 
                     ease: "easeInOut",
-                    delay: i * 0.8
+                    delay: i * 0.5
                   }}
                   className={cn(
-                    "absolute w-14 h-14 glass-thick rounded-2xl border-none shadow-2xl flex items-center justify-center z-30",
-                    i === 0 ? "-top-8 -left-8" : "-bottom-8 -right-8"
+                    "absolute w-15 h-15 glass-thick rounded-2xl border-none shadow-2xl flex items-center justify-center z-30",
+                    i === 0 ? "-top-10 -left-10" : "-bottom-10 -right-10"
                   )}
                 >
-                  <BadgeIcon size={28} style={{ color: currentSlide.color }} className="brightness-125 drop-shadow-2xl" />
+                  <BadgeIcon size={30} style={{ color: currentSlide.color }} className="brightness-125 drop-shadow-2xl" />
                 </motion.div>
               ))}
             </div>
@@ -364,31 +383,31 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] pt-10 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-500">
+      <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-15px_50px_rgba(0,0,0,0.1)] pt-12 pb-[env(safe-area-inset-bottom,2.5rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-500">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="flex flex-col gap-1.5 mb-8 w-full"
+            initial={{ opacity: 0, y: 15, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -15, scale: 0.95 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="flex flex-col gap-2 mb-10 w-full"
           >
             <h1 className="text-3xl font-black tracking-tighter text-foreground leading-tight">
               {currentSlide.title}
             </h1>
-            <p className="text-[10px] font-black text-muted-foreground leading-relaxed uppercase tracking-[0.2em] opacity-60">
+            <p className="text-[10px] font-black text-muted-foreground leading-relaxed uppercase tracking-[0.25em] opacity-70">
               {currentSlide.subtitle}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        <div className="w-full max-w-[300px] flex flex-col gap-5">
+        <div className="w-full max-w-[320px] flex flex-col gap-6">
           <AuthModal 
             defaultTab="register"
             trigger={
               <motion.div whileTap={{ scale: 0.96 }}>
-                <Button className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/30 transition-transform border-none">
+                <Button className="w-full h-15 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-2xl shadow-primary/30 transition-all border-none hover:brightness-110 active:scale-[0.98]">
                   Create Free Account
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -398,11 +417,11 @@ export default function LandingPage() {
           <AuthModal 
             defaultTab="login"
             trigger={
-              <button className="flex flex-col items-center gap-0.5 py-1 group">
+              <button className="flex flex-col items-center gap-1 py-1 group outline-none">
                 <p className="text-[9px] font-black text-muted-foreground/50 uppercase tracking-widest group-hover:text-muted-foreground/70 transition-colors">
                   Already a member?
                 </p>
-                <span className="text-[11px] font-black text-primary uppercase tracking-widest group-active:opacity-70">
+                <span className="text-[11px] font-black text-primary uppercase tracking-widest group-active:opacity-70 transition-opacity">
                   Sign in to Quvora
                 </span>
               </button>
@@ -410,9 +429,9 @@ export default function LandingPage() {
           />
         </div>
 
-        <div className="mt-8 flex items-center gap-2 opacity-40">
-          <ShieldCheck size={12} className="text-primary" />
-          <span className="text-[9px] font-black uppercase tracking-[0.2em] text-foreground">
+        <div className="mt-10 flex items-center gap-2 opacity-30">
+          <ShieldCheck size={14} className="text-primary" />
+          <span className="text-[9px] font-black uppercase tracking-[0.4em] text-foreground">
             Trusted by 10M+ Indians
           </span>
         </div>
@@ -420,3 +439,4 @@ export default function LandingPage() {
     </div>
   );
 }
+
