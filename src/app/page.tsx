@@ -86,6 +86,7 @@ const AUTO_PLAY_INTERVAL = 6000;
 const SWIPE_THRESHOLD = 30;
 const VELOCITY_THRESHOLD = 400;
 
+// High-fidelity iOS Spring Physics
 const iosSpring = {
   type: "spring",
   stiffness: 400,
@@ -110,10 +111,10 @@ export default function LandingPage() {
     setBgIcons(icons.map((Icon, i) => ({
       id: i,
       Icon,
-      top: `${10 + (i * 12)}%`,
-      left: `${(i % 2 === 0 ? 15 : 85)}%`,
+      top: `${15 + (i * 10)}%`,
+      left: `${(i % 2 === 0 ? 12 : 88)}%`,
       delay: i * 0.4,
-      duration: 12 + i
+      duration: 10 + i
     })));
   }, []);
 
@@ -170,7 +171,7 @@ export default function LandingPage() {
     enter: (direction: number) => ({
       x: direction > 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.9,
+      scale: 0.92,
       filter: 'blur(12px)',
     }),
     center: {
@@ -181,7 +182,7 @@ export default function LandingPage() {
       filter: 'blur(0px)',
       transition: {
         x: iosSpring,
-        opacity: { duration: 0.35 },
+        opacity: { duration: 0.3 },
         scale: { duration: 0.45, ease: "easeOut" },
         filter: { duration: 0.4 }
       }
@@ -190,7 +191,7 @@ export default function LandingPage() {
       zIndex: 0,
       x: direction < 0 ? '50%' : '-50%',
       opacity: 0,
-      scale: 0.8,
+      scale: 0.88,
       filter: 'blur(15px)',
       transition: {
         x: iosSpring,
@@ -206,7 +207,7 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)] gpu-accelerated">
-      {/* Background Constellation - Deep Living Atmosphere */}
+      {/* Background Constellation - Atmospheric Depth */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.2]">
         {bgIcons.map((item) => (
           <motion.div
@@ -215,7 +216,7 @@ export default function LandingPage() {
               y: [0, -40, 0],
               x: [0, 20, 0],
               rotate: [0, 10, 0],
-              opacity: [0.1, 0.3, 0.1]
+              opacity: [0.15, 0.35, 0.15]
             }}
             transition={{
               duration: item.duration,
@@ -226,7 +227,7 @@ export default function LandingPage() {
             className="absolute text-primary/30"
             style={{ top: item.top, left: item.left }}
           >
-            <item.Icon size={52} strokeWidth={1} />
+            <item.Icon size={48} strokeWidth={1} />
           </motion.div>
         ))}
       </div>
@@ -234,31 +235,31 @@ export default function LandingPage() {
       <header className="shrink-0 pt-4 px-8 z-50">
         <div className="flex justify-between items-center w-full">
           <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={iosSpring}
             className="flex items-center gap-3.5 group"
           >
-            <div className="w-11 h-11 rounded-full glass flex items-center justify-center shadow-lg border-none overflow-hidden group-active:scale-95 transition-transform duration-300">
-              <Image src="/icons/icon-192.png" alt="Quvora" width={28} height={28} priority />
+            <div className="w-10 h-10 rounded-full glass flex items-center justify-center shadow-lg border-none overflow-hidden group-active:scale-95 transition-transform duration-300">
+              <Image src="/icons/icon-192.png" alt="Quvora" width={24} height={24} priority />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] font-black tracking-[0.25em] uppercase text-primary/80">Quvora</span>
-              <span className="text-[14px] font-black tracking-tighter text-foreground -mt-1 opacity-80">Super App</span>
+              <span className="text-[9px] font-black tracking-[0.25em] uppercase text-primary/80">Quvora</span>
+              <span className="text-[12px] font-black tracking-tighter text-foreground -mt-1 opacity-70">Super App</span>
             </div>
           </motion.div>
 
-          <div className="flex items-center gap-6">
-            <div className="flex gap-1.5 items-center glass px-3 py-1.5 rounded-full border-none backdrop-blur-md">
+          <div className="flex items-center gap-4">
+            <div className="flex gap-1 items-center glass px-2.5 py-1 rounded-full border-none backdrop-blur-md">
               {SLIDES.map((_, i) => (
                 <motion.div
                   key={i}
                   animate={{ 
-                    width: i === index ? 24 : 6,
+                    width: i === index ? 20 : 6,
                     backgroundColor: i === index ? currentSlide.color : (isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)')
                   }}
                   transition={iosSpring}
-                  className="h-1.5 rounded-full"
+                  className="h-1 rounded-full"
                 />
               ))}
             </div>
@@ -266,22 +267,22 @@ export default function LandingPage() {
             <Button 
               size="icon" 
               variant="ghost" 
-              className="h-11 w-11 glass rounded-full border-none shadow-sm relative overflow-hidden group active:scale-90 transition-transform" 
+              className="h-9 w-9 glass rounded-full border-none shadow-sm relative overflow-hidden group active:scale-90 transition-transform" 
               onClick={toggleTheme}
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={isDark ? 'dark' : 'light'}
-                  initial={{ y: 25, opacity: 0, scale: 0.5, rotate: -90 }}
+                  initial={{ y: 20, opacity: 0, scale: 0.5, rotate: -90 }}
                   animate={{ y: 0, opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ y: -25, opacity: 0, scale: 0.5, rotate: 90 }}
+                  exit={{ y: -20, opacity: 0, scale: 0.5, rotate: 90 }}
                   transition={iosSpring}
                   className="flex items-center justify-center w-full h-full"
                 >
                   {isDark ? (
-                    <Sun className="w-4.5 h-4.5 text-primary fill-primary/20" />
+                    <Sun className="w-4 h-4 text-primary fill-primary/20" />
                   ) : (
-                    <Moon className="w-4.5 h-4.5 text-primary fill-primary/20" />
+                    <Moon className="w-4 h-4 text-primary fill-primary/20" />
                   )}
                 </motion.div>
               </AnimatePresence>
@@ -305,12 +306,12 @@ export default function LandingPage() {
             onDragEnd={handleDragEnd}
             className="w-full h-full flex items-center justify-center px-10 relative z-10"
           >
-            <div className="relative w-full max-w-[280px] aspect-square overflow-visible">
-              {/* Alive Central Stage */}
+            <div className="relative w-full max-w-[260px] aspect-square overflow-visible">
+              {/* Interaction Stage */}
               <motion.div 
                 animate={{ 
                   scale: [1, 1.03, 1],
-                  y: [0, -4, 0]
+                  y: [0, -5, 0]
                 }}
                 transition={{
                   duration: 5, repeat: Infinity, ease: "easeInOut"
@@ -326,48 +327,48 @@ export default function LandingPage() {
                       animate={{ 
                         filter: [
                           `drop-shadow(0 0 0px ${currentSlide.color}00)`,
-                          `drop-shadow(0 0 35px ${currentSlide.color}60)`,
+                          `drop-shadow(0 0 30px ${currentSlide.color}60)`,
                           `drop-shadow(0 0 0px ${currentSlide.color}00)`
                         ],
-                        scale: [1, 1.08, 1],
+                        scale: [1, 1.1, 1],
                         rotate: [0, 2, 0, -2, 0]
                       }}
                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                    >
-                     <MainIcon size={96} style={{ color: currentSlide.color }} className="drop-shadow-2xl brightness-125" />
+                     <MainIcon size={84} style={{ color: currentSlide.color }} className="drop-shadow-2xl brightness-125" />
                    </motion.div>
                 </div>
                 
-                {/* Volumetric Glow */}
+                {/* Volumetric Pulse */}
                 <div 
                   className="absolute inset-0 opacity-40 blur-[80px] rounded-full" 
                   style={{ backgroundColor: currentSlide.color }} 
                 />
               </motion.div>
 
-              {/* Staggered "Alive" Badges - Move to interaction wrapper for overflow safety */}
+              {/* Liquid Motion Badges */}
               <div className="absolute inset-0 pointer-events-none z-30">
                 {currentSlide.badges.map((BadgeIcon, i) => (
                   <motion.div
                     key={i}
                     animate={{ 
-                      y: [0, -32, 12, -22, 0],
-                      x: [0, i % 2 === 0 ? -22 : 22, i % 2 === 0 ? 15 : -15, 0],
-                      rotate: [0, i % 2 === 0 ? -25 : 25, i % 2 === 0 ? 18 : -18, 0],
-                      scale: [1, 1.2, 0.9, 1.1, 1],
+                      y: [0, -28, 10, -20, 0],
+                      x: [0, i % 2 === 0 ? -20 : 20, i % 2 === 0 ? 12 : -12, 0],
+                      rotate: [0, i % 2 === 0 ? -20 : 20, i % 2 === 0 ? 15 : -15, 0],
+                      scale: [1, 1.15, 0.95, 1.1, 1],
                     }}
                     transition={{ 
-                      duration: 8 + i, 
+                      duration: 7 + i, 
                       repeat: Infinity, 
                       ease: "easeInOut",
                       delay: i * 0.7
                     }}
                     className={cn(
-                      "absolute w-16 h-16 glass-thick rounded-[1.75rem] border-none shadow-2xl flex items-center justify-center",
-                      i === 0 ? "-top-10 -left-10" : "-bottom-10 -right-10"
+                      "absolute w-14 h-14 glass-thick rounded-[1.5rem] border-none shadow-2xl flex items-center justify-center overflow-visible",
+                      i === 0 ? "-top-8 -left-8" : "-bottom-8 -right-8"
                     )}
                   >
-                    <BadgeIcon size={34} style={{ color: currentSlide.color }} className="brightness-125 drop-shadow-2xl" />
+                    <BadgeIcon size={28} style={{ color: currentSlide.color }} className="brightness-125 drop-shadow-2xl" />
                   </motion.div>
                 ))}
               </div>
@@ -377,7 +378,7 @@ export default function LandingPage() {
       </main>
 
       <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-20px_60px_rgba(0,0,0,0.15)] pt-6 pb-[env(safe-area-inset-bottom,1.5rem)] px-8 text-center flex flex-col items-center z-50">
-        {/* iOS Handle Indicator */}
+        {/* iOS Handle */}
         <div className="w-12 h-1 bg-foreground/10 rounded-full mb-6" />
 
         <AnimatePresence mode="wait">
@@ -392,13 +393,13 @@ export default function LandingPage() {
             <h1 className="text-2xl font-black tracking-tighter text-foreground leading-none">
               {currentSlide.title}
             </h1>
-            <p className="text-[9px] font-black text-muted-foreground leading-relaxed uppercase tracking-[0.2em] opacity-60">
+            <p className="text-[8px] font-black text-muted-foreground leading-relaxed uppercase tracking-[0.2em] opacity-60">
               {currentSlide.subtitle}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        <div className="w-full max-w-[320px] flex flex-col gap-3">
+        <div className="w-full max-w-[300px] flex flex-col gap-3">
           <AuthModal 
             defaultTab="register"
             trigger={
