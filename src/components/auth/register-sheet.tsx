@@ -128,7 +128,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
                     <div className="relative">
                       <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
                       <Input 
-                        className="h-13 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
+                        className="h-12 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
                         placeholder="Arjun Varma" 
                         autoComplete="name"
                         value={name} 
@@ -142,7 +142,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
                       <Input 
-                        className="h-13 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
+                        className="h-12 pl-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
                         placeholder="name@email.com" 
                         type="email" 
                         autoComplete="email"
@@ -157,7 +157,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
                     <div className="relative">
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground/40" />
                       <Input 
-                        className="h-13 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
+                        className="h-12 pl-12 pr-12 rounded-2xl bg-foreground/[0.04] border-none font-bold text-sm" 
                         placeholder="Min. 6 characters" 
                         type={showPassword ? "text" : "password"} 
                         autoComplete="new-password"
@@ -177,7 +177,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
                     </label>
                   </div>
                 </div>
-                <Button className="w-full h-15 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-4" disabled={loading || !termsAccepted}>
+                <Button className="w-full h-14 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] bg-primary text-white shadow-xl shadow-primary/20 hover:scale-[1.01] active:scale-[0.97] transition-all mt-4" disabled={loading || !termsAccepted}>
                   {loading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <Sparkles className="w-4 h-4 mr-2" />}
                   {loading ? "Creating..." : "Join Quvora"}
                 </Button>
@@ -198,7 +198,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
               <div className="w-full space-y-2.5">
                 <Button 
                   variant="outline" 
-                  className="w-full h-14 rounded-2xl border-none glass font-black text-[9px] uppercase tracking-widest active:scale-[0.97] transition-all"
+                  className="w-full h-12 rounded-2xl border-none glass font-black text-[9px] uppercase tracking-widest active:scale-[0.97] transition-all"
                   disabled={resendTimer > 0}
                   onClick={handleResendEmail}
                 >
@@ -206,7 +206,7 @@ export function RegisterSheet({ trigger }: RegisterSheetProps) {
                 </Button>
                 
                 <Button 
-                  className="w-full h-14 rounded-2xl font-black text-[9px] uppercase tracking-widest bg-foreground text-background active:scale-[0.97] transition-all"
+                  className="w-full h-12 rounded-2xl font-black text-[9px] uppercase tracking-widest bg-foreground text-background active:scale-[0.97] transition-all"
                   onClick={() => setShowVerifyPrompt(false)}
                 >
                   Back to Registration

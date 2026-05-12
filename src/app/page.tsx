@@ -193,7 +193,6 @@ export default function LandingPage() {
   return (
     <div className="h-svh w-full bg-background flex flex-col overflow-hidden select-none touch-none gpu-accelerated relative">
       
-      {/* Optimized Background Mesh Layer */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-30 dark:opacity-60 transform-gpu">
         <motion.div 
           animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
@@ -207,7 +206,6 @@ export default function LandingPage() {
         />
       </div>
 
-      {/* Header Section */}
       <header className="shrink-0 z-50 px-8 pt-4" style={{ paddingTop: 'calc(1rem + env(safe-area-inset-top))' }}>
         <div className="flex justify-between items-center w-full">
           <motion.div 
@@ -274,7 +272,6 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* Main Adaptive Stage */}
       <main className="flex-1 min-h-0 relative flex items-center justify-center">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
@@ -286,7 +283,6 @@ export default function LandingPage() {
             className="w-full h-full flex items-center justify-center px-8 relative"
           >
             <div className="relative w-full max-w-[320px] aspect-square flex items-center justify-center">
-              {/* Main Icon Orb */}
               <motion.div 
                 animate={{ 
                   y: [0, -15, 0],
@@ -307,7 +303,6 @@ export default function LandingPage() {
                 </div>
               </motion.div>
 
-              {/* Feature Chips Constellation */}
               {currentSlide.chips.map((chip, i) => {
                 const angle = (i / currentSlide.chips.length) * Math.PI * 2;
                 const radius = 135;
@@ -340,7 +335,6 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      {/* Compact System Footer */}
       <footer 
         className="shrink-0 w-full glass-thick rounded-t-[3rem] shadow-2xl pt-6 px-8 text-center flex flex-col items-center z-50 border-t border-white/10 transform-gpu"
         style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}
