@@ -16,9 +16,6 @@ import {
   Rocket,
   ArrowRight,
   ChevronRight,
-  Signal,
-  Wifi,
-  Battery,
   Sparkles,
   ShieldCheck,
   Zap
@@ -168,18 +165,8 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-[#FDF8F3] flex flex-col overflow-hidden select-none touch-none">
-      {/* 1. TOP PART: Status & Progress */}
-      <header className="shrink-0 pt-2 px-6 z-50">
-        {/* Mock iOS Status Bar */}
-        <div className="flex justify-between items-center h-10 px-4 mb-2">
-          <span className="text-xs font-bold tracking-tight">9:41</span>
-          <div className="flex items-center gap-1.5 opacity-60">
-            <Signal size={14} strokeWidth={2.5} />
-            <Wifi size={14} strokeWidth={2.5} />
-            <Battery size={18} strokeWidth={2.5} />
-          </div>
-        </div>
-
+      {/* 1. TOP PART: Progress */}
+      <header className="shrink-0 pt-6 px-6 z-50">
         {/* DASH Progress Indicators */}
         <div className="flex justify-between items-center px-4">
           <div className="flex gap-1.5 flex-1 max-w-[160px]">
