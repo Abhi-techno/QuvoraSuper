@@ -32,7 +32,7 @@ const SLIDES = [
     subtitle: 'Mobiles, cars, homes, jobs & 100+ categories near you',
     icon: Store,
     color: '#1A6AFF',
-    bg: 'from-blue-500/10 to-blue-500/5',
+    bg: 'from-blue-500/25 to-blue-500/10',
     badges: [Zap, ShieldCheck]
   },
   {
@@ -41,7 +41,7 @@ const SLIDES = [
     subtitle: 'Smart price suggestions, auto-fill & fraud detection',
     icon: Bot,
     color: '#FF6B2B',
-    bg: 'from-orange-500/10 to-orange-500/5',
+    bg: 'from-orange-500/25 to-orange-500/10',
     badges: [Sparkles, Zap]
   },
   {
@@ -50,7 +50,7 @@ const SLIDES = [
     subtitle: 'Direct peer-to-peer chat with AI safety scanning',
     icon: MessageCircle,
     color: '#10B981',
-    bg: 'from-emerald-500/10 to-emerald-500/5',
+    bg: 'from-emerald-500/25 to-emerald-500/10',
     badges: [Shield, MessageCircle]
   },
   {
@@ -59,7 +59,7 @@ const SLIDES = [
     subtitle: 'Use Quvora in your native tongue with AI voice support',
     icon: Languages,
     color: '#7C3AED',
-    bg: 'from-purple-500/10 to-purple-500/5',
+    bg: 'from-purple-500/25 to-purple-500/10',
     badges: [Languages, Sparkles]
   },
   {
@@ -68,7 +68,7 @@ const SLIDES = [
     subtitle: 'Find your next home or career move for free today',
     icon: Briefcase,
     color: '#F59E0B',
-    bg: 'from-amber-500/10 to-amber-500/5',
+    bg: 'from-amber-500/25 to-amber-500/10',
     badges: [Briefcase, Star]
   },
   {
@@ -77,7 +77,7 @@ const SLIDES = [
     subtitle: "India's fastest growing AI marketplace super-app",
     icon: Rocket,
     color: '#EC4899',
-    bg: 'from-pink-500/10 to-pink-500/5',
+    bg: 'from-pink-500/25 to-pink-500/10',
     badges: [Rocket, ShieldCheck]
   }
 ];
@@ -170,7 +170,7 @@ export default function LandingPage() {
     enter: (direction: number) => ({
       x: direction > 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.9,
+      scale: 0.85,
       filter: 'blur(10px)'
     }),
     center: {
@@ -190,7 +190,7 @@ export default function LandingPage() {
       zIndex: 0,
       x: direction < 0 ? '50%' : '-50%',
       opacity: 0,
-      scale: 0.9,
+      scale: 0.85,
       filter: 'blur(10px)',
       transition: {
         x: { type: 'spring', stiffness: 400, damping: 35 },
@@ -206,14 +206,14 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
-      {/* Background Constellation */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.08]">
+      {/* Background Constellation - Increased Opacity for Visibility */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.15]">
         {bgIcons.map((item) => (
           <motion.div
             key={item.id}
             animate={{ 
               y: [0, -30, 0],
-              opacity: [0.3, 0.6, 0.3]
+              opacity: [0.4, 0.7, 0.4]
             }}
             transition={{
               duration: item.duration,
@@ -224,7 +224,7 @@ export default function LandingPage() {
             className="absolute text-primary"
             style={{ top: item.top, left: item.left }}
           >
-            <item.Icon size={44} strokeWidth={1} />
+            <item.Icon size={44} strokeWidth={1.5} />
           </motion.div>
         ))}
       </div>
@@ -236,7 +236,7 @@ export default function LandingPage() {
               <Image src="/icons/icon-192.png" alt="Quvora" width={28} height={28} priority />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] font-black tracking-widest uppercase text-primary/60">Quvora</span>
+              <span className="text-[10px] font-black tracking-widest uppercase text-primary/80">Quvora</span>
               <span className="text-sm font-black tracking-tight text-foreground -mt-1">Super App</span>
             </div>
           </div>
@@ -248,7 +248,7 @@ export default function LandingPage() {
                   key={i}
                   animate={{ 
                     width: i === index ? 20 : 6,
-                    backgroundColor: i === index ? currentSlide.color : '#e2e8f0'
+                    backgroundColor: i === index ? currentSlide.color : (isDark ? '#3f3f46' : '#e2e8f0')
                   }}
                   transition={springConfig}
                   className="h-1.5 rounded-full"
@@ -304,7 +304,7 @@ export default function LandingPage() {
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.4}
             onDragEnd={handleDragEnd}
-            className="w-full h-full flex items-center justify-center px-10"
+            className="w-full h-full flex items-center justify-center px-10 relative z-10"
           >
             <motion.div 
               initial={{ scale: 0.8, opacity: 0, y: 20 }}
@@ -323,9 +323,9 @@ export default function LandingPage() {
                 transition={springConfig}
                 className="w-full h-full glass rounded-[4rem] border-none shadow-2xl flex items-center justify-center relative z-10"
               >
-                <MainIcon size={80} style={{ color: currentSlide.color }} className="drop-shadow-2xl" />
+                <MainIcon size={80} style={{ color: currentSlide.color }} className="drop-shadow-2xl brightness-110" />
                 
-                {/* Floating Badges */}
+                {/* Floating Badges - Organic Floating Logic */}
                 {currentSlide.badges.map((BadgeIcon, i) => (
                   <motion.div
                     key={i}
@@ -345,14 +345,14 @@ export default function LandingPage() {
                       i === 0 ? "-top-6 -left-6" : "-bottom-6 -right-6"
                     )}
                   >
-                    <BadgeIcon size={28} style={{ color: currentSlide.color }} />
+                    <BadgeIcon size={28} style={{ color: currentSlide.color }} className="brightness-125" />
                   </motion.div>
                 ))}
               </motion.div>
               
-              {/* Radial Glow */}
+              {/* Radial Glow - Higher Opacity for Visibility */}
               <div 
-                className="absolute inset-0 opacity-20 blur-[60px] rounded-full" 
+                className="absolute inset-0 opacity-40 blur-[60px] rounded-full" 
                 style={{ backgroundColor: currentSlide.color }} 
               />
             </motion.div>
@@ -360,7 +360,7 @@ export default function LandingPage() {
         </AnimatePresence>
       </main>
 
-      <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.05)] pt-10 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-500">
+      <footer className="shrink-0 w-full glass-thick rounded-t-[3.5rem] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] pt-10 pb-[env(safe-area-inset-bottom,2rem)] px-10 text-center flex flex-col items-center z-50 transition-colors duration-500">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -373,7 +373,7 @@ export default function LandingPage() {
             <h1 className="text-3xl font-black tracking-tighter text-foreground leading-tight">
               {currentSlide.title}
             </h1>
-            <p className="text-[10px] font-black text-muted-foreground/50 leading-relaxed uppercase tracking-[0.2em]">
+            <p className="text-[10px] font-black text-muted-foreground leading-relaxed uppercase tracking-[0.2em] opacity-60">
               {currentSlide.subtitle}
             </p>
           </motion.div>
@@ -384,7 +384,7 @@ export default function LandingPage() {
             defaultTab="register"
             trigger={
               <motion.div whileTap={{ scale: 0.96 }}>
-                <Button className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 transition-transform border-none">
+                <Button className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/30 transition-transform border-none">
                   Create Free Account
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -395,7 +395,7 @@ export default function LandingPage() {
             defaultTab="login"
             trigger={
               <button className="flex flex-col items-center gap-0.5 py-1 group">
-                <p className="text-[9px] font-black text-muted-foreground/40 uppercase tracking-widest group-hover:text-muted-foreground/60 transition-colors">
+                <p className="text-[9px] font-black text-muted-foreground/50 uppercase tracking-widest group-hover:text-muted-foreground/70 transition-colors">
                   Already a member?
                 </p>
                 <span className="text-[11px] font-black text-primary uppercase tracking-widest group-active:opacity-70">
@@ -406,7 +406,7 @@ export default function LandingPage() {
           />
         </div>
 
-        <div className="mt-8 flex items-center gap-2 opacity-30">
+        <div className="mt-8 flex items-center gap-2 opacity-40">
           <ShieldCheck size={12} className="text-primary" />
           <span className="text-[9px] font-black uppercase tracking-[0.2em] text-foreground">
             Trusted by 10M+ Indians
