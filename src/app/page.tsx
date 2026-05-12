@@ -203,7 +203,6 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
-      {/* Background icon field - Light & Fast */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.08]">
         {bgIcons.map((item) => (
           <motion.div
@@ -245,9 +244,11 @@ export default function LandingPage() {
                   key={i}
                   animate={{ 
                     width: i === index ? 20 : 6,
-                    backgroundColor: i === index ? currentSlide.color : 'currentColor'
+                    // Use a concrete HSL value instead of currentColor to avoid animation errors
+                    backgroundColor: i === index ? currentSlide.color : 'hsla(var(--foreground), 0.1)'
                   }}
-                  className="h-1.5 rounded-full opacity-20"
+                  transition={springConfig}
+                  className="h-1.5 rounded-full"
                 />
               ))}
             </div>
@@ -316,7 +317,7 @@ export default function LandingPage() {
             transition={{ duration: 0.2 }}
             className="flex flex-col gap-2 mb-6 w-full"
           >
-            <h1 className="text-2xl font-black tracking-tighter text-foreground leading-tight">
+            <h1 className="text-3xl font-black tracking-tighter text-foreground leading-tight">
               {currentSlide.title}
             </h1>
             <p className="text-[10px] font-black text-muted-foreground/50 leading-relaxed uppercase tracking-[0.2em]">
@@ -329,10 +330,12 @@ export default function LandingPage() {
           <AuthModal 
             defaultTab="register"
             trigger={
-              <Button className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 active:scale-95 transition-transform border-none">
-                Create Free Account
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+              <motion.div whileTap={{ scale: 0.96 }}>
+                <Button className="w-full h-14 rounded-2xl font-black text-xs uppercase tracking-widest bg-primary text-white shadow-xl shadow-primary/20 transition-transform border-none">
+                  Create Free Account
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </motion.div>
             }
           />
           <AuthModal 
