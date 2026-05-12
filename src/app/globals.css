@@ -53,7 +53,7 @@
   * {
     @apply border-border;
     -webkit-tap-highlight-color: transparent;
-    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   body {
@@ -71,6 +71,7 @@
 .glass {
   @apply backdrop-blur-[24px] saturate-[180%] border border-white/20;
   background-color: hsla(0, 0%, 100%, 0.6);
+  transform: translateZ(0);
 }
 
 .dark .glass {
@@ -81,6 +82,7 @@
 .glass-thick {
   @apply backdrop-blur-[32px] saturate-[160%] border border-white/30;
   background-color: hsla(0, 0%, 100%, 0.75);
+  transform: translateZ(0);
 }
 
 .dark .glass-thick {
