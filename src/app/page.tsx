@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { AuthModal } from '@/components/auth/auth-modal';
@@ -14,7 +14,7 @@ import {
   Bot, 
   MessageCircle, 
   Languages, 
-  Home, 
+  Briefcase, 
   Rocket
 } from 'lucide-react';
 
@@ -63,8 +63,8 @@ const SLIDES = [
     id: 'homes-jobs',
     title: 'Homes & Careers',
     subtitle: 'Find rentals and post jobs for free today',
-    icon: Home,
-    badge1: '💼',
+    icon: Briefcase,
+    badge1: '🏠',
     badge2: '💎',
     bgGradient: 'from-[#FFFBEB] to-[#FFF3C4]',
     accentColor: '#F59E0B'
@@ -82,12 +82,15 @@ const SLIDES = [
 ];
 
 const springTransition = { type: 'spring', stiffness: 260, damping: 20 };
+const AUTO_PLAY_INTERVAL = 4800;
+const SWIPE_THRESHOLD = 50;
 
 export default function LandingPage() {
   const router = useRouter();
   const { user, loading } = useUser();
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (!loading && user) {
@@ -95,42 +98,67 @@ export default function LandingPage() {
     }
   }, [user, loading, router]);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
+  const startTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
       setDirection(1);
       setIndex((prev) => (prev + 1) % SLIDES.length);
-    }, 4800);
-    return () => clearInterval(timer);
+    }, AUTO_PLAY_INTERVAL);
+  };
+
+  useEffect(() => {
+    startTimer();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, []);
 
   const variants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 300 : -300,
+      x: direction > 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.9
+      scale: 0.95
     }),
     center: {
       zIndex: 1,
       x: 0,
       opacity: 1,
-      scale: 1
+      scale: 1,
+      transition: {
+        x: { type: 'spring', stiffness: 300, damping: 30 },
+        opacity: { duration: 0.2 }
+      }
     },
     exit: (direction: number) => ({
       zIndex: 0,
-      x: direction < 0 ? 300 : -300,
+      x: direction < 0 ? '100%' : '-100%',
       opacity: 0,
-      scale: 0.8
+      scale: 0.95,
+      transition: {
+        x: { type: 'spring', stiffness: 300, damping: 30 },
+        opacity: { duration: 0.2 }
+      }
     })
   };
 
-  const handleNext = () => {
-    setDirection(1);
-    setIndex((prev) => (prev + 1) % SLIDES.length);
+  const paginate = (newDirection: number) => {
+    setDirection(newDirection);
+    setIndex((prev) => (prev + newDirection + SLIDES.length) % SLIDES.length);
+    startTimer(); // Reset timer on manual move
+  };
+
+  const handleDragEnd = (event: any, info: PanInfo) => {
+    if (info.offset.x < -SWIPE_THRESHOLD) {
+      paginate(1);
+    } else if (info.offset.x > SWIPE_THRESHOLD) {
+      paginate(-1);
+    }
   };
 
   const handleSkip = () => {
     setDirection(1);
     setIndex(SLIDES.length - 1);
+    startTimer();
   };
 
   if (loading) return null;
@@ -141,18 +169,19 @@ export default function LandingPage() {
   return (
     <div className="fixed inset-0 bg-[#FDF8F3] flex flex-col overflow-hidden select-none">
       {/* 1. TOP PART: Navigation & Progress */}
-      <header className="shrink-0 h-20 w-full flex flex-col justify-end px-8 gap-4 pt-2">
+      <header className="shrink-0 h-20 w-full flex flex-col justify-end px-8 gap-4 pt-2 z-50">
         <div className="flex justify-between items-center w-full">
+          {/* iOS-Style DASH Progress indicators */}
           <div className="flex gap-1.5 flex-1 max-w-[140px]">
             {SLIDES.map((_, i) => (
               <motion.div
                 key={i}
                 animate={{
-                  flex: i === index ? 2 : 1,
+                  flex: i === index ? 3 : 1,
                   backgroundColor: i === index ? '#1A6AFF' : '#E5E7EB',
                   opacity: i === index ? 1 : 0.4
                 }}
-                className="h-1 rounded-full"
+                className="h-1 rounded-full transition-all duration-300"
               />
             ))}
           </div>
@@ -165,13 +194,8 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* 2. CENTER PART: Illustration Canvas */}
-      <main className="flex-1 relative flex items-center justify-center px-6 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none flex items-center justify-between px-1 z-0">
-          <div className="w-12 h-32 rounded-r-3xl glass opacity-20 -ml-4" />
-          <div className="w-12 h-32 rounded-l-3xl glass opacity-20 -mr-4" />
-        </div>
-
+      {/* 2. CENTER PART: High-Fidelity Artwork Canvas */}
+      <main className="flex-1 relative flex items-center justify-center overflow-hidden cursor-grab active:cursor-grabbing">
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={index}
@@ -180,41 +204,36 @@ export default function LandingPage() {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{
-              x: { type: "spring", stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 }
-            }}
-            className="w-full flex flex-col items-center"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={handleDragEnd}
+            className="w-full flex flex-col items-center px-6"
           >
             <div className={cn(
               "w-full max-w-[280px] aspect-square rounded-[3.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center",
               currentSlide.bgGradient
             )}>
+              {/* Internal Liquid Animations */}
               <motion.div 
                 animate={{ rotate: 360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 opacity-20 pointer-events-none"
               >
                 <div className="absolute top-0 left-0 w-32 h-32 bg-white blur-3xl rounded-full" />
                 <div className="absolute bottom-0 right-0 w-40 h-40 bg-black/10 blur-3xl rounded-full" />
               </motion.div>
 
-              <motion.div 
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1.3, opacity: 0 }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
-                style={{ borderColor: currentSlide.accentColor }}
-                className="absolute inset-8 border-2 rounded-[3rem]"
-              />
-
+              {/* Central Premium Icon Box */}
               <motion.div
-                initial={{ scale: 0, rotate: -15 }}
-                animate={{ scale: 1, rotate: 0 }}
-                transition={{ delay: 0.2, ...springTransition }}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={springTransition}
                 className="relative z-10 p-8 bg-white/40 backdrop-blur-2xl rounded-[2.5rem] shadow-2xl border border-white/50 flex items-center justify-center"
               >
                 <Icon size={72} strokeWidth={1.5} style={{ color: currentSlide.accentColor }} className="drop-shadow-xl" />
                 
+                {/* Floating Micro-Badges */}
                 <motion.div
                   animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -233,10 +252,16 @@ export default function LandingPage() {
             </div>
           </motion.div>
         </AnimatePresence>
+
+        {/* Swipe Hint Side-Peeks */}
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-between px-1 z-0 overflow-hidden">
+          <div className="w-12 h-32 rounded-r-3xl glass opacity-10 -ml-4" />
+          <div className="w-12 h-32 rounded-l-3xl glass opacity-10 -mr-4" />
+        </div>
       </main>
 
-      {/* 3. BOTTOM PART: High-Conversion Card */}
-      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.08)] pt-10 pb-[env(safe-area-inset-bottom,2rem)] px-8 text-center flex flex-col items-center">
+      {/* 3. BOTTOM PART: High-Conversion Action Card */}
+      <footer className="shrink-0 w-full bg-white rounded-t-[3.5rem] shadow-[0_-15px_60px_-15px_rgba(0,0,0,0.08)] pt-10 pb-[env(safe-area-inset-bottom,2.5rem)] px-8 text-center flex flex-col items-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
@@ -271,13 +296,18 @@ export default function LandingPage() {
                     </Button>
                   }
                 />
-                <p className="text-[10px] font-bold text-muted-foreground/60 mt-1 uppercase tracking-widest">
-                  Trusted by 10M+ Indians
-                </p>
+                <div className="flex flex-col gap-1 items-center mt-2">
+                  <p className="text-[10px] font-black text-primary/60 uppercase tracking-widest">
+                    Trusted by 10M+ Indians
+                  </p>
+                  <p className="text-[9px] text-muted-foreground/40 font-bold">
+                    Email & Password Authentication Supported
+                  </p>
+                </div>
               </motion.div>
             ) : (
               <Button 
-                onClick={handleNext}
+                onClick={() => paginate(1)}
                 className="w-full h-14 rounded-2xl font-black text-sm bg-[#1A6AFF] text-white shadow-2xl shadow-[#1A6AFF]/25 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
               >
                 <span>GET STARTED</span>

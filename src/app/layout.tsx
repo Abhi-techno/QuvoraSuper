@@ -17,7 +17,6 @@ export const metadata: Metadata = {
     statusBarStyle: 'black-translucent',
     title: 'Quvora',
   },
-  // manifest: '/manifest.webmanifest', // Disabled to resolve Cloud Workstation CORS/Auth Proxy spam
 };
 
 export const viewport: Viewport = {

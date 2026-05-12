@@ -73,10 +73,10 @@ export function AuthModal({ trigger, defaultTab = 'login' }: AuthModalProps) {
         <div className="max-w-md mx-auto h-full flex flex-col p-8 pt-14">
           <SheetHeader className="mb-10 text-center">
             <div className="w-20 h-20 rounded-3xl bg-white flex items-center justify-center mb-6 mx-auto shadow-2xl shadow-black/5 overflow-hidden">
-              <Image src="/icons/icon-192.png" alt="Quvora" width={64} height={64} />
+              <Image src="/icons/icon-192.png" alt="Quvora" width={64} height={64} priority />
             </div>
             <SheetTitle className="text-3xl font-black tracking-tight">Access Quvora</SheetTitle>
-            <p className="text-muted-foreground text-sm font-medium mt-1">India's AI superapp ecosystem</p>
+            <p className="text-muted-foreground text-sm font-medium mt-1">Direct Email & Password Authentication</p>
           </SheetHeader>
 
           <Tabs defaultValue={defaultTab} className="w-full">
@@ -139,7 +139,7 @@ export function AuthModal({ trigger, defaultTab = 'login' }: AuthModalProps) {
                   <div className="flex items-start gap-3 p-1">
                     <Checkbox id="terms" checked={termsAccepted} onCheckedChange={c => setTermsAccepted(c as boolean)} />
                     <label htmlFor="terms" className="text-[10px] font-medium leading-tight text-muted-foreground">
-                      I agree to the <span className="text-primary font-bold">Terms of Service</span> and Privacy Protocol.
+                      I agree to the <span className="text-primary font-bold">Terms of Service</span>.
                     </label>
                   </div>
                 </div>
