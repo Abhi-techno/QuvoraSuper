@@ -106,14 +106,14 @@ export default function LandingPage() {
     const root = window.document.documentElement;
     setIsDark(root.classList.contains('dark'));
 
-    const icons = [Store, Bot, MessageCircle, Briefcase, Zap, Sparkles];
+    const icons = [Store, Bot, MessageCircle, Briefcase, Zap, Sparkles, Rocket, Languages, ShieldCheck];
     setBgIcons(icons.map((Icon, i) => ({
       id: i,
       Icon,
-      top: `${10 + (i * 15)}%`,
-      left: `${(i % 2 === 0 ? 15 : 75)}%`,
-      delay: i * 0.5,
-      duration: 12 + i
+      top: `${10 + (i * 12)}%`,
+      left: `${(i % 2 === 0 ? 15 : 85)}%`,
+      delay: i * 0.4,
+      duration: 10 + i
     })));
   }, []);
 
@@ -206,14 +206,14 @@ export default function LandingPage() {
 
   return (
     <div className="fixed inset-0 bg-background flex flex-col overflow-hidden select-none touch-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]">
-      {/* Background Constellation - Increased Opacity for Visibility */}
-      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.15]">
+      {/* Background Constellation - Optimized Visibility */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-[0.2]">
         {bgIcons.map((item) => (
           <motion.div
             key={item.id}
             animate={{ 
-              y: [0, -30, 0],
-              opacity: [0.4, 0.7, 0.4]
+              y: [0, -40, 0],
+              opacity: [0.5, 0.8, 0.5]
             }}
             transition={{
               duration: item.duration,
@@ -224,7 +224,7 @@ export default function LandingPage() {
             className="absolute text-primary"
             style={{ top: item.top, left: item.left }}
           >
-            <item.Icon size={44} strokeWidth={1.5} />
+            <item.Icon size={48} strokeWidth={1.5} />
           </motion.div>
         ))}
       </div>
@@ -306,56 +306,58 @@ export default function LandingPage() {
             onDragEnd={handleDragEnd}
             className="w-full h-full flex items-center justify-center px-10 relative z-10"
           >
-            <motion.div 
-              initial={{ scale: 0.8, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              transition={{ ...springConfig, delay: 0.1 }}
-              className={cn(
-                "w-full max-w-[240px] aspect-square rounded-[4.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-1",
-                currentSlide.bg
-              )}
-            >
-              <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl" />
-              
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={springConfig}
-                className="w-full h-full glass rounded-[4rem] border-none shadow-2xl flex items-center justify-center relative z-10"
+            {/* Interaction Wrapper to allow overflow for badges */}
+            <div className="relative w-full max-w-[240px] aspect-square">
+              <motion.div 
+                initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                transition={{ ...springConfig, delay: 0.1 }}
+                className={cn(
+                  "w-full h-full rounded-[4.5rem] shadow-2xl relative overflow-hidden bg-gradient-to-br flex items-center justify-center p-1",
+                  currentSlide.bg
+                )}
               >
-                <MainIcon size={80} style={{ color: currentSlide.color }} className="drop-shadow-2xl brightness-110" />
+                <div className="absolute inset-0 bg-white/10 backdrop-blur-3xl" />
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={springConfig}
+                  className="w-full h-full glass rounded-[4rem] border-none shadow-2xl flex items-center justify-center relative z-10"
+                >
+                  <MainIcon size={80} style={{ color: currentSlide.color }} className="drop-shadow-2xl brightness-110" />
+                </motion.div>
                 
-                {/* Floating Badges - Organic Floating Logic */}
-                {currentSlide.badges.map((BadgeIcon, i) => (
-                  <motion.div
-                    key={i}
-                    animate={{ 
-                      y: [0, -12, 0],
-                      x: [0, i % 2 === 0 ? -5 : 5, 0],
-                      rotate: [0, i % 2 === 0 ? -10 : 10, 0]
-                    }}
-                    transition={{ 
-                      duration: 4 + i, 
-                      repeat: Infinity, 
-                      ease: "easeInOut",
-                      delay: i * 0.5
-                    }}
-                    className={cn(
-                      "absolute w-14 h-14 glass rounded-2xl border-none shadow-xl flex items-center justify-center z-20",
-                      i === 0 ? "-top-6 -left-6" : "-bottom-6 -right-6"
-                    )}
-                  >
-                    <BadgeIcon size={28} style={{ color: currentSlide.color }} className="brightness-125" />
-                  </motion.div>
-                ))}
+                {/* Radial Glow - Higher Opacity for Visibility */}
+                <div 
+                  className="absolute inset-0 opacity-40 blur-[60px] rounded-full" 
+                  style={{ backgroundColor: currentSlide.color }} 
+                />
               </motion.div>
-              
-              {/* Radial Glow - Higher Opacity for Visibility */}
-              <div 
-                className="absolute inset-0 opacity-40 blur-[60px] rounded-full" 
-                style={{ backgroundColor: currentSlide.color }} 
-              />
-            </motion.div>
+
+              {/* Floating Badges - Outside overflow-hidden container for full visibility */}
+              {currentSlide.badges.map((BadgeIcon, i) => (
+                <motion.div
+                  key={i}
+                  animate={{ 
+                    y: [0, -15, 0],
+                    x: [0, i % 2 === 0 ? -8 : 8, 0],
+                    rotate: [0, i % 2 === 0 ? -12 : 12, 0]
+                  }}
+                  transition={{ 
+                    duration: 4 + i, 
+                    repeat: Infinity, 
+                    ease: "easeInOut",
+                    delay: i * 0.5
+                  }}
+                  className={cn(
+                    "absolute w-14 h-14 glass rounded-2xl border-none shadow-2xl flex items-center justify-center z-30",
+                    i === 0 ? "-top-6 -left-6" : "-bottom-6 -right-6"
+                  )}
+                >
+                  <BadgeIcon size={28} style={{ color: currentSlide.color }} className="brightness-125 drop-shadow-md" />
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </AnimatePresence>
       </main>
